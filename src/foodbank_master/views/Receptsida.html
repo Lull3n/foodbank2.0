@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Food Bank</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
+    <style>
+    
+@import url('https://fonts.googleapis.com/css?family=Lato|Pacifico|Righteous|Roboto+Condensed|Ubuntu');
+
+
+body {
+    padding: 0%;
+    margin: 0%;
+    font-family: 'Lato';
+}
+
+.navbar-brand {
+    font-family: 'Pacifico';
+    font-size: 35px;
+    color: rgb(46, 104, 32) !important
+}
+
+.nav-link {
+                font-size: 25px;
+                margin: 10px 20px;
+                font-family: 'Roboto Condensed';
+                
+                color: black !important;
+
+                background-color: white; 
+                border-radius: 16px;
+                background-position: center;
+
+                -webkit-transition-duration: 0.5s; 
+                transition-duration: 0.5s;
+                cursor: pointer;
+            }
+
+            .nav-link:hover {
+                text-decoration: none;
+                color: #4CAF50 !important;
+            }
+
+/* .active .nav-link {
+    color: rgb(29, 136, 91) !important;
+} */
+
+.menu-right-btn {
+    padding: 13px 46px;
+    margin-right: 4%;
+    background-color: transparent;
+    transition: all 300ms ease-in;
+}
+
+.menu-right-btn:hover {
+    color: white;
+    background-color: rgb(29, 136, 91);
+}
+
+.site-content {
+    background-image: url('Stock/gronsaker.jpg');
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+.site-title, .site-desc {
+    color: white;
+    font-family: 'Righteous';
+    margin-bottom: 50%;
+}
+
+.site-title {
+    margin-top: 30%;
+    margin-bottom: 6%;
+    font-size: 50px;
+}
+
+.site-desc {
+    font-size: 14px;
+    padding-left: 15%; 
+}
+
+.site-btn1 {
+    margin-left: 20%;
+    background-color: black;
+    color: white;
+}
+
+.site-btn2 {
+    background-color: white;
+}
+
+.site-btn1, .site-btn2 {
+    margin-top: 5%;
+    margin-bottom: 40%;
+}
+
+/* Section-2 */
+
+.section-2 .container-fluid {
+    background-image: url('https://drive.google.com/uc?id=1L3DTRAWIVsO8TUKTgmwBsUwTNIiTGLqZ');
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+
+
+.section-2 .infinite 
+{
+    width: 100%;
+    height: 100%;
+    margin-left: 20px;
+    margin-top: 40px;
+}
+
+.section-2 .infinite div 
+{
+    
+    width: 1200px;
+    height: 8000px;
+    margin-bottom: 60px;
+    margin-top: 80px;
+}
+
+
+
+/*---------------------------------------*/
+
+/* RECEPT */
+.section-2 .headone{
+    color: white;
+    margin-left: 20px;
+    padding-top: 40px;
+}
+
+/*---------------------------------------*/
+
+
+
+
+  .section-2 .cardy {
+      background: white;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    max-width: 1200px;
+    max-height: 2100px;
+    margin-bottom: 200px;
+    text-align: left;
+    font-family: arial;
+  }
+
+
+  .section-2 .recipe-title {
+    color:rgb(59, 59, 59);
+    font-family: 'Pacifico';
+    font-size: 38px;
+    margin-left:10px;
+  }
+  .section-2 .recipe-description {
+      
+      font-family: 'Lato';
+      font-size: 24px;
+      margin-left:10px;
+  }
+  .section-2 .recipe-totalPrice {
+    color:rgb(0, 100, 0);
+    font-family: 'Pacifico';
+    font-size: 32px;
+    margin-left:10px;
+    
+  }
+  .section-2 .recipe-portions {
+    color:rgb(100, 0, 0);
+    font-family: 'Pacifico';
+    font-size: 22px;
+    margin-left:10px;
+    
+  }
+
+  .section-2 .recipe-portionPrice {
+    color:rgb(70, 70, 70);
+    font-family: 'Pacifico';
+    font-size: 22px;
+    margin-left:10px;
+  }
+
+
+
+  .section-2 .bilden {
+    margin-top: 20px;
+    position: relative;
+    float: left;
+    margin-left: 20px;
+    width: 400px;
+    height: 350px;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 4px;
+  }
+
+.social .i{
+    color: #EF5651;
+    font-size: 20px;
+}
+
+@media screen and (max-width: 768px) {
+    .section-1 .card{
+        width: 14rem;
+    }
+
+    .section-4 .col-md-7 img {
+        width: 350px;
+    }
+}
+
+@media screen and (max-width: 320px) {
+    .site-content .site-title{
+        font-size: 30px;
+        padding-left: 15%;
+    }
+
+    .site-content .site-btn2 {
+        display: none;
+    }
+
+    .site-content .site-btn1 {
+        margin-left: 15%;
+    }
+
+    .section-1 .heading-1, .section-1 .heading-2 {
+        font-size: 25px;
+    }
+
+    .section-1 .col-md-4 {
+        padding: 5%;
+        margin-left: 8%;
+    }
+
+    .section-1 .card {
+        width: 15rem;
+    }
+
+    .section-4 .col-md-5 {
+        padding: 0% 15%;
+    }
+
+    footer input[type="button"] {
+        margin-top: 5%;
+    }
+}
+    </style>
+
+</head>
+
+<body>
+
+    <header>
+        
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <a href="/" class="navbar-brand ml-3">Food<span style="color:rgb(29, 136, 91);">()Bank</span></a>
+            <!--nedan e button för nedanstående kommentar-->
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarMenu"
+                aria-controls="navbarMenu" aria-expanded="false" aria-label="Toggle Navigation">
+                <span class="navbar-toggler-icon"></span>
+                <!--gör skärmen mindre och se uppe åt höger en navigeringsbutton-->
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarMenu">
+                <ul class="navbar-nav mr-auto" style="margin-left: 25px;">
+                    <li class="nav-item active">
+                        <a href="/" class="nav-link">Hem</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/kategorier/0" class="nav-link">Recept</a>
+                    </li>
+                   
+                    <li class="nav-item">
+                        <a href="/kontakt" class="nav-link">Kontakta oss</a>
+                    </li>
+                </ul>
+                
+                <form class="form-inline my-2 my-lg-0">
+                    
+
+                    
+
+                    
+
+                </form>
+            </div>
+        </nav>
+    </header>
+
+
+
+    <main>
+         
+                
+
+        <div class="section-2">
+            <div class="container-fluid py-5">
+                        
+               
+                            <!--     RECEPT     -->
+                            <%- result %>
+
+
+                        
+                        
+             </div>
+         </div>
+
+
+
+    </main>
+
+    
+
+    <footer style="padding: 2rem;">
+        <h5 style="color:black; text-align: center;">FoodBank  Grupp  21  -  Ali,  Miroslav,  Jakob,  Joel  &copy;2019</h5>
+    </footer>
+
+
+
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+
+
+        <script src="https://unpkg.com/scrollreveal/dist/scrollreveal.min.js"></script>
+
+        <script>
+            
+            window.sr = ScrollReveal({ duration : 2000});
+            sr.reveal('.site-content .d-flex');
+            sr.reveal('.section-1 .card');
+            sr.reveal('.section-2 .d-flex');
+            sr.reveal('.section-3 .col-md-4');
+            sr.reveal('.section-4 .col-md-7, .col-md-5');
+
+        </script>
+        
+
+</body>
+
+
+
+</html>
