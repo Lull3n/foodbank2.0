@@ -14,8 +14,8 @@ public class Connector {
 	public Connector() {
 		try {
 			System.out.println("Connecting to MySQL database...");
-			Class.forName("com.mysql.jdbc.Driver");
-			connection = DriverManager.getConnection("jdbc:mysql://195.178.232.16:3306/aj1757","aj1757","foodbank123");
+			//Class.forName("com.mysql.jdbc.Driver");
+			connection = DriverManager.getConnection("jdbc:sqlite:../../database/sqliteDb.db");
 			System.out.println("Successfully connected");
 		} catch (Exception e) {
 			e.printStackTrace();
