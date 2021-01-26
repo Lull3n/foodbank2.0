@@ -2,20 +2,19 @@ package rpi;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Date;
+import java.util.ArrayList;
 
 public class Connector {
 	private Connection connection;
-	
+	String dbURL = "jdbc:sqlite:../../database/sqliteDb.db";
+
 	public Connector() {
 		try {
 			System.out.println("Connecting to MySQL database...");
 			//Class.forName("com.mysql.jdbc.Driver");
-			connection = DriverManager.getConnection("jdbc:sqlite:../../database/sqliteDb.db");
+			//connection = DriverManager.getConnection("jdbc:sqlite:../../database/sqliteDb.db");
 			System.out.println("Successfully connected");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -24,7 +23,7 @@ public class Connector {
 	
 	public ResultSet loadRelations(int recipeId) {
 		try {
-			String query = "SELECT * FROM aj1757.relations WHERE recipe_id=" + recipeId;
+			String query = "SELECT * FROM relations WHERE recipe_id=" + recipeId;
 			Statement statement = connection.createStatement();
 			return statement.executeQuery(query);
 		} catch (Exception e) {
@@ -33,22 +32,48 @@ public class Connector {
 		return null;
 	}
 	
-	public ResultSet loadAllRelations() {
+	public ArrayList<String> loadAllRelations() {
 		try {
-			String query = "SELECT * FROM aj1757.relations";
+			connection = DriverManager.getConnection(dbURL);
+			String query = "SELECT * FROM relations";
 			Statement statement = connection.createStatement();
-			return statement.executeQuery(query);
+			ResultSet set = statement.executeQuery(query);
+			ArrayList<String> ret = null;
+			while (set.next()){
+				if(ret == null) ret = new ArrayList<>();
+				String string = set.getInt("relation_id") + " " + set.getInt("recipe_id") + " " + set.getInt("ingredients_id") + " " + set.getInt("units");
+				ret.add(string);
+			}
+			connection.close();
+			return ret;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return null;
 	}
 
-	public ResultSet loadIngredient(int id) {
+	public ArrayList<String> loadIngredient(int id, String[] array) {
 		try {
-			String query = "SELECT * FROM aj1757.ingredients2 WHERE id=" + id;
+			connection = DriverManager.getConnection(dbURL);
+			String query = "SELECT * FROM ingredients2 WHERE id=" + id;
 			Statement statement = connection.createStatement();
-			return statement.executeQuery(query);
+			ResultSet set = statement.executeQuery(query);
+			ArrayList<String> relationPrices = null;
+			while(set.next()) {
+				System.out.println("Calculating price for ingredient id: " + array[2]);
+				float relationUnits = Float.parseFloat(array[3]);
+				System.out.println("Relation units before division: " + relationUnits);
+				float relationUnitsDivided = (relationUnits / 1000);
+				System.out.println("Relation units after division: " + relationUnitsDivided);
+				float relationPrice = relationUnitsDivided * set.getFloat("price");
+				System.out.println("Calculated price: " + relationPrice);
+				System.out.println("Inserting string into array: " + array[0] + " " + relationPrice);
+				relationPrices.add(array[0] + " " + relationPrice);
+				System.out.println("------------------------------------------------");
+			}
+
+			connection.close();
+			return relationPrices;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -57,7 +82,7 @@ public class Connector {
 
 	public boolean insertRelationPrice(int id, float price) {
 		try {
-			String query = "UPDATE aj1757.relations SET price=" + price + " WHERE relation_id=" + id;
+			String query = "UPDATE relations SET price=" + price + " WHERE relation_id=" + id;
 			Statement statement = connection.createStatement();
 			statement.executeUpdate(query);
 			return true;
