@@ -1,0 +1,105 @@
+5
+vitlök
+salt
+peppar
+svartpeppar
+muskotnöt
+basilika
+dill
+salvia
+-
+10
+herrgård
+rädisor
+-
+15
+olivolja
+rapsolja
+koriander
+vitpeppar
+margarin
+smör
+persilja
+timjan
+-
+20
+bacon
+-
+28
+taco
+-
+50
+peppar röd
+lasagne
+lök schalotten
+-
+80
+morot
+selleri
+tacokrydda
+saltgurka
+hamburgerbröd
+kyckling lårfilé
+kyckling lårfile
+kiwi
+-
+90
+lime
+-
+100
+salladslök
+rucola
+parmigiano
+lök röd
+krasse
+-
+125
+laxfile
+laxfilé
+äpple
+-
+150
+lök gul
+paprika röd
+paprika grön
+paprika
+kycklingklubba
+makrill
+avokado
+-
+180
+banan
+-
+200
+kycklingfile
+kycklingfilé
+fänkål
+-
+250
+citron
+sallad
+broccoli
+ost riven
+cocktailtomat
+salsa
+mango
+-
+350
+purjolök
+-
+400
+gurka
+-
+500
+spaghetti
+jasminris
+gräddfil
+-
+600
+rotselleri
+-
+1000
+ägg
+kyckling grillad
+lagerblad
+-
