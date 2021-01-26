@@ -1,6 +1,5 @@
 package rpi;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -19,30 +18,21 @@ public class Controller {
 	}
 	
 	private void loadRelations() throws SQLException {
-		ResultSet set = connector.loadAllRelations();
-		
-		while(set.next()) {
-			relationStrings.add(set.getInt("relation_id") + " " + set.getInt("recipe_id") + " " + set.getInt("ingredients_id") + " " + set.getInt("units"));
+		ArrayList<String> strings = connector.loadAllRelations();
+		if(strings != null) {
+			for (String string : strings) {
+				relationStrings.add(string);
+			}
 		}
 	}
 	
 	private void insertPrices() throws SQLException {
 		for(String s : relationStrings) {
 			String[] array = s.split(" ");
-			ResultSet set = connector.loadIngredient(Integer.parseInt(array[2]));
+			relationPrices = connector.loadIngredient(Integer.parseInt(array[2]), array);
 			System.out.println("Fetching ingredient id: " + array[2]);
-			while(set.next()) {
-				System.out.println("Calculating price for ingredient id: " + array[2]);
-				float relationUnits = Float.parseFloat(array[3]);
-				System.out.println("Relation units before division: " + relationUnits);
-				float relationUnitsDivided = (relationUnits / 1000);
-				System.out.println("Relation units after division: " + relationUnitsDivided);
-				float relationPrice = relationUnitsDivided * set.getFloat("price");
-				System.out.println("Calculated price: " + relationPrice);
-				System.out.println("Inserting string into array: " + array[0] + " " + relationPrice);
-				relationPrices.add(array[0] + " " + relationPrice);
-				System.out.println("------------------------------------------------");
-			}
+			//for (String string : prices) relationPrices.add(string);
+
 		}
 		System.out.println("Successfully added " + relationPrices.size() + " items:");
 		
