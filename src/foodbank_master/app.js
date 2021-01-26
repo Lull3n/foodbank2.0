@@ -1,17 +1,25 @@
 const express = require("express");
 const mysql = require("mysql");
+const sqlite = require ("sqlite3").verbose();
 
 const path = require("path");
 
 const bodyParser = require("body-parser");
+const db = new sqlite.Database('./../database/sqliteDb.db', (err) => {
+    if (err) {
+      console.error(err.message);
+    }
+    console.log('Connected to the database.');
+  });
 
+/*
 const db = mysql.createConnection({
     host: "195.178.232.16",
     user: "aj1757",
     password: "foodbank123",
     database: "aj1757"
 });
-
+*/
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -24,10 +32,10 @@ app.set("view engine", "html");
 
 app.use(express.static(path.join(__dirname, "public")));
 
-const queryRelationsWhereRecipeId = `SELECT * FROM aj1757.relations WHERE recipe_id=`;
-const queryRecipesWhereRecipeId = `SELECT * FROM aj1757.recipes WHERE recipe_id=`;
-const queryRecipesWhereCategory = `SELECT * FROM aj1757.recipes WHERE category=`;
-const queryIngredientsWhereId = `SELECT * FROM aj1757.ingredients2 WHERE id =`;
+const queryRelationsWhereRecipeId = `SELECT * FROM relations WHERE recipe_id=`;
+const queryRecipesWhereRecipeId = `SELECT * FROM recipes WHERE recipe_id=`;
+const queryRecipesWhereCategory = `SELECT * FROM recipes WHERE category=`;
+const queryIngredientsWhereId = `SELECT * FROM ingredients2 WHERE id =`;
 
 /*
 
@@ -96,7 +104,7 @@ async function getRecipesPrices(array, res, array2) {
     await Promise.all(
         array.map(async item => {
             return new Promise((resolve, reject) => {
-                db.query(
+                db.all(
                     queryIngredientsWhereId + item.ingredients_id,
                     (err, result) => {
                         if (err) reject();
@@ -242,7 +250,7 @@ async function getCategoryPrices(category, res, req) {
 
     let array;
 
-    db.query(queryRecipesWhereCategory + category, async (err, result) => {
+    db.all(queryRecipesWhereCategory + category, async (err, result) => {
         totalPrice = new Array(result.length);
         totalPrice.fill(0);
         array = result;
@@ -251,7 +259,7 @@ async function getCategoryPrices(category, res, req) {
         await Promise.all(
             result.map(async item => {
                 return new Promise((resolve, reject) => {
-                    db.query(
+                    db.all(
                         queryRelationsWhereRecipeId + item.recipe_id,
                         async (err, result2) => {
                             await Promise.all(

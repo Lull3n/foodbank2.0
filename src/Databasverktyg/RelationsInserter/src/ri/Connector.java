@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedList;
 
 public class Connector {
 	private Connection connection;
@@ -109,13 +110,27 @@ public class Connector {
 		}
 	}
 
-	public ResultSet loadDatabaseIngredient(String result) {
+	public LinkedList<String> loadDatabaseIngredient(String result) {
 		try {
 			connection = DriverManager.getConnection(dbURL);
 			String query = "SELECT * FROM ingredients2 WHERE title LIKE '%" + result + "%'";
 			Statement statement = connection.createStatement();
+			ResultSet ingredient = statement.executeQuery(query);
+			LinkedList<String> ingredientsList = new LinkedList<>();
+			while (ingredient.next()) {
+				System.out.println("Got ingredient: " + ingredient.getString("title"));
+				String res = "#";
+				res += ingredient.getInt("id") + " ";
+				res += ingredient.getString("title") + " - ";
+				res += ingredient.getFloat("price") + " ";
+				res += ingredient.getString("pricetype");
+				ingredientsList.add(res);
+				System.out.println("Got ingredient result: " + res);
+			}
+
 			System.out.println("Got ingredient with query: " + query);
-			return statement.executeQuery(query);
+			connection.close();
+			return ingredientsList;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

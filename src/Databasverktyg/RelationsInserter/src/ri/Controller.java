@@ -69,23 +69,9 @@ public class Controller {
 			result = result.substring(0, result.length() - 1);
 			result = wordMap.get(result);
 			System.out.println("Result: " + result);
-			ingredient = connector.loadDatabaseIngredient(result);
+			//ingredient = connector.loadDatabaseIngredient(result);
 		}
-		LinkedList<String> ingredientsList = new LinkedList<String>();
-		try {
-			while (ingredient.next()) {
-				System.out.println("Got ingredient: " + ingredient.getString("title"));
-				String res = "#";
-				res += ingredient.getInt("id") + " ";
-				res += ingredient.getString("title") + " - ";
-				res += ingredient.getFloat("price") + " ";
-				res += ingredient.getString("pricetype");
-				ingredientsList.add(res);
-				System.out.println("Got ingredient result: " + res);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		LinkedList<String> ingredientsList = connector.loadDatabaseIngredient(result);
 		String[] ingredientsListArray = new String[ingredientsList.size()];
 		for (int i = 0; i < ingredientsListArray.length; i++) {
 			ingredientsListArray[i] = ingredientsList.get(i);
