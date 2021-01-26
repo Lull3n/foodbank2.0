@@ -14,8 +14,8 @@ public class Connector {
 	public Connector() {
 		try {
 			System.out.println("Connecting to MySQL database...");
-			Class.forName("com.mysql.jdbc.Driver");
-			connection = DriverManager.getConnection("jdbc:mysql://195.178.232.16:3306/aj1757","aj1757","foodbank123");
+			//Class.forName("com.mysql.jdbc.Driver");
+			connection = DriverManager.getConnection("jdbc:sqlite:../../database/sqliteDb.db");
 			System.out.println("Successfully connected");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -25,7 +25,7 @@ public class Connector {
 	public boolean query(int category, String title, String description, int portions, String link, String imageLink,
 			String ingredients, String instructions) {
 		try {
-			String query = "INSERT INTO aj1757.recipes (category,title,portions,descr,ingredients,instructions,image,link) VALUES (?,?,?,?,?,?,?,?)";
+			String query = "INSERT INTO recipes (category,title,portions,descr,ingredients,instructions,image,link) VALUES (?,?,?,?,?,?,?,?)";
 			try {
 				PreparedStatement statement = connection.prepareStatement(query);
 				statement.setInt(1, category);

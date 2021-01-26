@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?><sqlb_project><db path="C:/Users/Tim/Desktop/Skola/Repos/foodbank2.0/src/database/sqliteDb.db" readonly="0" foreign_keys="" case_sensitive_like="" temp_store="" wal_autocheckpoint="" synchronous=""/><attached/><window><main_tabs open="structure browser pragmas query" current="1"/></window><tab_structure><column_width id="0" width="300"/><column_width id="1" width="0"/><column_width id="2" width="100"/><column_width id="3" width="1374"/><column_width id="4" width="0"/></tab_structure><tab_browse><current_table name="0,0:"/><default_encoding codec=""/><browse_table_settings/></tab_browse><tab_sql><sql name="SQL 1">CREATE TABLE recipes (
+recipe_id INTEGER PRIMARY KEY AUTOINCREMENT,
+catergory int,
+title varchar(255),
+portions int,
+[descr] varchar(255),
+ingredients varchar(510),
+instructions varchar(3000),
+image varchar(510),
+link varchar(510)
+)
+</sql><sql name="SQL 2">CREATE TABLE ingredients2 (
+id INTEGER PRIMARY KEY AUTOINCREMENT,
+title varchar(255),
+price float,
+pricetype varchar(45)
+);</sql><sql name="SQL 3">CREATE TABLE relations (
+relation_id INTEGER PRIMARY KEY AUTOINCREMENT,
+recipe_id INTEGER,
+ingredients_id INTEGER,
+FOREIGN KEY (recipe_id) REFERENCES recipes(recipe_id),
+FOREIGN KEY (ingredients_id) REFERENCES ingredients2(id),
+units INTEGER,
+price float
+);
+</sql><sql name="SQL 4">CREATE TABLE relations(
+relation_id INTEGER,
+recipe_id INTEGER,
+
+ingredients_id INTEGER,
+units INTEGER,
+price float,
+FOREIGN KEY (recipe_id) REFERENCES recipes(recipe_id),
+FOREIGN KEY (ingredients_id) REFERENCES ingredients2(id)
+);</sql><sql name="SQL 5">INSERT INTO recipes ( catergory, title, portions,descr,ingredients,instructions,image,link)
+VALUES (2, 'köttbullar', 2, 'hejsan', 'test', 'stek dom', 'asd', 'asd');</sql><sql name="SQL 6">ALTER TABLE recipes
+rename catergory TO category;</sql><current_tab id="5"/></tab_sql></sqlb_project>

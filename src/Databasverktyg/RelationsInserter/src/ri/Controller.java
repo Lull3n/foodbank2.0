@@ -2,6 +2,7 @@ package ri;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class Controller {
@@ -30,34 +31,18 @@ public class Controller {
 	}
 
 	public void LoadRecipes() {
-		recipes = connector.loadRecipes();
-		String[] recipesArray = { "" };
-		try {
-			recipes.last();
-			recipesArray = new String[recipes.getRow()];
-			recipes.first();
-			int index = 0;
-			do {
-				System.out.println(recipes.getString("title"));
-				recipesArray[index] = recipes.getString("title");
-				index++;
-			} while (recipes.next());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		gui.setRecipes(recipesArray);
+
+		ArrayList <String > recipesArray = connector.loadRecipes();
+		String[] strings = {""};
+		recipesArray.toArray(strings);
+		strings = recipesArray.toArray(strings);
+		gui.setRecipes(strings);
 	}
 
 	public void LoadRecipeIngredients(Object item) {
 		String title = (String) item;
-		recipeIngredients = connector.loadRecipeIngredients(title);
-		String ingredientsString = null;
-		try {
-			recipeIngredients.next();
-			ingredientsString = recipeIngredients.getString("ingredients").toLowerCase();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		String ingredientsString = connector.loadRecipeIngredients(title).toLowerCase();
+
 		System.out.println(ingredientsString);
 		String[] ingredientsStringArray = ingredientsString.split("\\\\");
 		for (String s : ingredientsStringArray) {
