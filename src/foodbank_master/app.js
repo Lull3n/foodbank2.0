@@ -46,11 +46,11 @@ Efteråt beräknas sammanlagt pris ut av getRecipesPrices() och renderar HTML-si
 app.get("/recept/:id", (req, res) => {
     var result1;
 
-    db.query(queryRelationsWhereRecipeId + req.params.id, (err, result) => {
+    db.all(queryRelationsWhereRecipeId + req.params.id, (err, result) => {
         if (err) throw err;
         result1 = result;
     });
-    db.query(queryRecipesWhereRecipeId + req.params.id, (err, result) => {
+    db.all(queryRecipesWhereRecipeId + req.params.id, (err, result) => {
         if (err) throw err;
 
         getRecipesPrices(result1, res, result);
