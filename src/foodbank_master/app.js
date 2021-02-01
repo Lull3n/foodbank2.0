@@ -258,12 +258,14 @@ async function getCategoryPrices(category, res, req) {
         // Nestade Promise.all-funktioner löser problemet med att synkronisera flera databashämtningar och beräkningar
         await Promise.all(
             result.map(async item => {
+                console.log(item);
                 return new Promise((resolve, reject) => {
                     db.all(
                         queryRelationsWhereRecipeId + item.recipe_id,
                         async (err, result2) => {
                             await Promise.all(
                                 result2.map(async item2 => {
+                                    console.log(item2);
                                     return new Promise((resolve2, reject) => {
                                         totalPrice[
                                             result

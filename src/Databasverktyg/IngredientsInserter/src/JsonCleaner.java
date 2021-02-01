@@ -1,9 +1,8 @@
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
-import com.google.gson.JsonNull;
 import com.google.gson.JsonObject;
 
-import javax.sound.midi.Soundbank;
+
 import java.util.ArrayList;
 
 public class JsonCleaner {
@@ -25,28 +24,36 @@ public class JsonCleaner {
 
     }
 
-    /*
-    Exempel på ostädad data.
-  {
-    "web-scraper-order": "1612049449-8578",
-    "web-scraper-start-url": "https://www.coop.se/handla/",
-    "Category": "Skafferi\n                    \n                        \n                            \n                                Pil",
-    "Category-href": "https://www.coop.se/handla/varor/skafferi",
-    "product": "",
-    "product-href": "https://www.coop.se/handla/varor/skafferi/flingor-musli/gryn/polenta-7317731525003",
-    "prod_name": "Polenta",
-    "prod_price": "29:95 /st",
-    "prod_compPrice": "Jfr-pris 59.90/kr/kg.",
-    "subCat_link": "Flingor & Müsli\n                                \n                                    \n                                        \n                                            Pil",
-    "subCat_link-href": "https://www.coop.se/handla/varor/skafferi/flingor-musli",
-    "subcat_low": "Gryn",
-    "subcat_low-href": "https://www.coop.se/handla/varor/skafferi/flingor-musli/gryn",
-    "prod_contents": "Saltå Kvarn.\n500 gr.\n\n                                        Jfr-pris 59.90/kr/kg."
-  }
+
+
+
+    /**
+     * The method takes a JsonArray, and attempts to clean the containing data.
+     * 1. Removes objects of unwanted category.
+     * 2. Changes the field-name  "Category" to "prod_category" for consistency.
+     * 3. Cleans out the prod_cost value.
+     * 4. Cleans out, and adds fields prod_compPrice and prod_compUnit.
+     * compPrice is the comparable price. For example kr/kg. and compUnit is the unit. Usually kg or lit.
+     * @param array array to be cleaned.
+     *
+     *     Example raw data:
+     *    {
+     *     "web-scraper-order": "1612049449-8578",
+     *     "web-scraper-start-url": "https://www.coop.se/handla/",
+     *     "Category": "Skafferi\n                    \n                        \n        \n   Pil",
+     *     "Category-href": "https://www.coop.se/handla/varor/skafferi",
+     *     "product": "",
+     *     "product-href": "https://www.coop.se/handla/varor/skafferi/flingor-musli/gryn/polenta-7317731525003",
+     *     "prod_name": "Polenta",
+     *     "prod_price": "29:95 /st",
+     *     "prod_compPrice": "Jfr-pris 59.90/kr/kg.",
+     *     "subCat_link": "Flingor & Müsli\n  \n   \n      \n        Pil",
+     *     "subCat_link-href": "https://www.coop.se/handla/varor/skafferi/flingor-musli",
+     *     "subcat_low": "Gryn",
+     *     "subcat_low-href": "https://www.coop.se/handla/varor/skafferi/flingor-musli/gryn",
+     *     "prod_contents": "Saltå Kvarn.\n500 gr.\n\n                                        Jfr-pris 59.90/kr/kg."
+     *   }
      */
-
-
-
     public static void cleanArray (JsonArray array){
         for(int i = 0; i < array.size(); i++) {
             JsonObject cur = (JsonObject) array.get(i);
@@ -104,10 +111,7 @@ public class JsonCleaner {
                     }
                 } else {
                     ;
-                   // System.out.println("REMOVED: " + cat);
                     array.remove(i--);
-
-                    //System.out.println( array.remove(i));
                 }
             }
         }

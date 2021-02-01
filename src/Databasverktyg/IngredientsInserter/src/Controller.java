@@ -1,11 +1,12 @@
 import com.google.gson.*;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
 
-import java.io.BufferedReader;
 import java.io.FileReader;
-import java.io.FileWriter;
 
+
+
+/**
+ * This class runs the application. First sends the array for cleaning, then for insertion into the database.
+ */
 public class Controller {
     public static void main(String[] args) {
         Database db = new Database();
@@ -13,9 +14,6 @@ public class Controller {
         try {
             JsonArray array  = (JsonArray) JsonParser.parseReader(new FileReader("files/coopSort.json"));
             JsonCleaner.cleanArray(array);
-
-
-
             db.insertJsonArray(array);
         } catch (Exception e){
             e.printStackTrace();

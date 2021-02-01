@@ -1,9 +1,11 @@
+/**
+ * Class to handle database connection.
+ */
+
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import java.sql.*;
-import java.util.ArrayList;
 
 public class Database {
     Connection connection;
@@ -13,9 +15,11 @@ public class Database {
 
     }
 
-
-
-    public boolean insertJsonArray(JsonArray array){
+    /**
+     * Takes a JsonArray of ingredients, and adds it to the database.
+     * @param array Cleaned array of ingredients.
+     */
+    public void insertJsonArray(JsonArray array){
         String sql = "INSERT INTO ingredients2 (title, price, pricetype, pricePerUnit, compUnit) VALUES(?,?,'kr',?,?)";
 
         try {
@@ -24,22 +28,19 @@ public class Database {
                 JsonObject cur = array.get(i).getAsJsonObject();
                 PreparedStatement statement = connection.prepareStatement(sql);
                 statement.setString(1, cur.get("prod_name").getAsString());
-                try {
-                    statement.setString(2, cur.get("prod_price").getAsString());
-                } catch (NumberFormatException e){
-
-                    System.out.println(array.get(i));
-                }
+                statement.setString(2, cur.get("prod_price").getAsString());
                 statement.setString(3, cur.get("prod_compPrice").getAsString());
                 statement.setString(4, cur.get("prod_compUnit").getAsString());
-                System.out.println(((JsonObject) array.get(i)).get("prod_name").getAsString() + " price: " + ((JsonObject) array.get(i)).get("prod_price"));
+
+                System.out.println("ADDED: " + ((JsonObject) array.get(i)).get("prod_name").getAsString() +
+                        " price: " + ((JsonObject) array.get(i)).get("prod_price"));
                 statement.execute();
             }
             connection.close();
         } catch (SQLException e){
             e.printStackTrace();
         }
-        return true;
+
     }
 
 }
