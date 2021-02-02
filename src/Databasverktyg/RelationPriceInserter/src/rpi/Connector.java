@@ -8,7 +8,8 @@ import java.util.ArrayList;
 
 public class Connector {
 	private Connection connection;
-	String dbURL = "jdbc:sqlite:../../database/sqliteDb.db";
+	private String dbURL = "jdbc:sqlserver://localhost:1433;" +
+			"databaseName=FoodBank;user=javaConnection;password=hejDatabasenFood;";
 
 	public Connector() {
 		try {

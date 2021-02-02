@@ -9,13 +9,15 @@ import java.sql.Statement;
 import java.util.Date;
 
 public class Connector {
-	private Connection connection;
-	
+	private Connection connection; //com.microsoft.sqlserver:mssql-jdbc:8.4.1.jre14
+	private String dbURL = "jdbc:sqlserver://localhost:1433;" +
+			"databaseName=FoodBank;user=javaConnection;password=hejDatabasenFood;";
+
 	public Connector() {
 		try {
 			System.out.println("Connecting to MySQL database...");
 			//Class.forName("com.mysql.jdbc.Driver");
-			connection = DriverManager.getConnection("jdbc:sqlite:../../database/sqliteDb.db");
+			connection = DriverManager.getConnection(dbURL);
 			System.out.println("Successfully connected");
 		} catch (Exception e) {
 			e.printStackTrace();
