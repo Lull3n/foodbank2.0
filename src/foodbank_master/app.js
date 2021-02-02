@@ -1,25 +1,31 @@
 const express = require("express");
-const mysql = require("mysql");
-const sqlite = require ("sqlite3").verbose();
+//const mysql = require("mysql");
+//const sqlite = require ("sqlite3").verbose();
+const mssql = require ("mssql");
 
 const path = require("path");
 
 const bodyParser = require("body-parser");
-const db = new sqlite.Database('./../database/sqliteDb.db', (err) => {
+/*const db = new sqlite.Database('./../database/sqliteDb.db', (err) => {
     if (err) {
       console.error(err.message);
     }
     console.log('Connected to the database.');
   });
-
-/*
-const db = mysql.createConnection({
-    host: "195.178.232.16",
-    user: "aj1757",
-    password: "foodbank123",
-    database: "aj1757"
-});
 */
+const config = {
+    host: "localhost",
+    user: "javaConnection",
+    password: "hejDatabasenFood",
+    database: "FoodBank"
+}
+
+
+
+const conn = new mssql.ConnectionPool('mssql://javaConnection:hejDatabasenFood@localhost/FoodBank')
+conn.connect();
+var db = new mssql.Request(conn);
+
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -46,14 +52,14 @@ Efteråt beräknas sammanlagt pris ut av getRecipesPrices() och renderar HTML-si
 app.get("/recept/:id", (req, res) => {
     var result1;
 
-    db.all(queryRelationsWhereRecipeId + req.params.id, (err, result) => {
+    db.query(queryRelationsWhereRecipeId + req.params.id, (err, result) => {
         if (err) throw err;
-        result1 = result;
+        result1 = result.recordset;
     });
-    db.all(queryRecipesWhereRecipeId + req.params.id, (err, result) => {
+    db.query(queryRecipesWhereRecipeId + req.params.id, (err, result) => {
         if (err) throw err;
 
-        getRecipesPrices(result1, res, result);
+        getRecipesPrices(result1, res, result.recordset);
     });
 });
 
@@ -100,11 +106,11 @@ async function getRecipesPrices(array, res, array2) {
     let listBuildString = ``;
     let instructionsBuildString = ``;
     let priceArray = [];
-
+    
     await Promise.all(
         array.map(async item => {
             return new Promise((resolve, reject) => {
-                db.all(
+                     db.query(
                     queryIngredientsWhereId + item.ingredients_id,
                     (err, result) => {
                         if (err) reject();
@@ -249,22 +255,23 @@ async function getCategoryPrices(category, res, req) {
     let categoryS = `btn-`+ category;
 
     let array;
-
-    db.all(queryRecipesWhereCategory + category, async (err, result) => {
+    db.query(queryRecipesWhereCategory + category, async (err, result) => {
         totalPrice = new Array(result.length);
         totalPrice.fill(0);
-        array = result;
-
+        array = result.recordset;
+        result = result.recordset;
+        console.log(result);
+        console.log("RESULT LOGGED!");
         // Nestade Promise.all-funktioner löser problemet med att synkronisera flera databashämtningar och beräkningar
         await Promise.all(
             result.map(async item => {
                 console.log(item);
                 return new Promise((resolve, reject) => {
-                    db.all(
+                    db.query(
                         queryRelationsWhereRecipeId + item.recipe_id,
                         async (err, result2) => {
                             await Promise.all(
-                                result2.map(async item2 => {
+                                result2.recordset.map(async item2 => {
                                     console.log(item2);
                                     return new Promise((resolve2, reject) => {
                                         totalPrice[
