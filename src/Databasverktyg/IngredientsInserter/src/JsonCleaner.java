@@ -73,6 +73,9 @@ public class JsonCleaner {
                         if(slashIndex < 0) slashIndex = price.length();
                         price = price.substring(0, slashIndex);
                         price = price.replace(":", ".");
+                        if(price.length() > 5){
+                            if(price.contains("\n")) price = price.substring(0, price.indexOf("\n"));
+                        }
                         try{
                             Float.parseFloat(price);
                         } catch (NumberFormatException e){
@@ -92,6 +95,10 @@ public class JsonCleaner {
                         compPrice = elementComp.getAsString();
                         String[] strings = compPrice.split("/");
                         compPrice = strings[0].substring(9);
+                        if(compPrice.length() > 5){
+                            if(compPrice.contains(" ")) compPrice = compPrice.replace(" ", "");
+                            // compPrice = compPrice.substring(0, 5);
+                        }
                         compUnit = strings[strings.length -1];
                         compUnit = compUnit.substring(0, compUnit.length() -1);
 

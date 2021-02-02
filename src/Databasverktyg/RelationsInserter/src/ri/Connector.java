@@ -12,7 +12,9 @@ import java.util.LinkedList;
 
 public class Connector {
 	private Connection connection;
-	String dbURL = "jdbc:sqlite:../../database/sqliteDb.db";
+	//com.microsoft.sqlserver:mssql-jdbc:8.4.1.jre14
+	private String dbURL = "jdbc:sqlserver://localhost:1433;" +
+			"databaseName=FoodBank;user=javaConnection;password=hejDatabasenFood;";
 	public Connector() {
 
 		try {
