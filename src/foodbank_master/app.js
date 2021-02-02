@@ -51,12 +51,12 @@ Efteråt beräknas sammanlagt pris ut av getRecipesPrices() och renderar HTML-si
 */
 app.get("/recept/:id", (req, res) => {
     var result1;
-
+    
     db.query(queryRelationsWhereRecipeId + req.params.id, (err, result) => {
         if (err) throw err;
         result1 = result.recordset;
     });
-    db.query(queryRecipesWhereRecipeId + req.params.id, (err, result) => {
+     db.query(queryRecipesWhereRecipeId + req.params.id, (err, result) => {
         if (err) throw err;
 
         getRecipesPrices(result1, res, result.recordset);
@@ -260,8 +260,6 @@ async function getCategoryPrices(category, res, req) {
         totalPrice.fill(0);
         array = result.recordset;
         result = result.recordset;
-        console.log(result);
-        console.log("RESULT LOGGED!");
         // Nestade Promise.all-funktioner löser problemet med att synkronisera flera databashämtningar och beräkningar
         await Promise.all(
             result.map(async item => {
