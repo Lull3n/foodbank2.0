@@ -21,7 +21,7 @@ public class Controller {
 
 
 	
-	private int currentRecipeId = 37;
+	private int currentRecipeId = 8;
 	
 	private int recipePortions;
 	
@@ -44,20 +44,15 @@ public class Controller {
 	}
 	
 	private void getRecipeIngredients() {
-		ResultSet set = connector.loadRecipe(currentRecipeId);
-		String[] ingredientsArray = null;
-		try {
-			while(set.next()) {
-				ingredientsArray = set.getString("ingredients").split("\\\\");
-				recipePortions = set.getInt("portions");
+	 	RecipeEntity recipe = connector.loadRecipe(currentRecipeId);
+	 	if(recipe != null) {
+			recipePortions = recipe.getPortions();
+			String[] ingredientsArray = recipe.getIngredients();
+			for (String s : ingredientsArray) {
+				getIngredients(s);
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
+			combineLists();
 		}
-		for(String s : ingredientsArray) {
-			getIngredients(s);
-		}
-		combineLists();
 	}
 	
 	public int getRecipeId() {
@@ -135,26 +130,9 @@ public class Controller {
 
 	private void getDatabaseIngredients(String query) {
 		System.out.println("Getting ingredients like: " + query);
-		ResultSet set = connector.getDatabaseIngredients(query);
-		if(set != null) {
-			try {
-				priceItems.clear();
-				if(set.next() == false) {
-					priceItems.add(new PriceItem(0, "EMPTY", 0, "EMPTY"));
-				} else {
-					do {
-						priceItems.add(new PriceItem(set.getInt("id"), set.getString("title"), set.getFloat("price"), set.getString("pricetype")));
-					} while(set.next());
-				}
-			} catch (Exception e) {
-				
-			}
-			Collections.sort(priceItems);
-			for(PriceItem pi : priceItems) {
-				System.out.println(pi.toString());
-			}
-			excludeItems(query);
-		}
+		priceItems = connector.getDatabaseIngredients(query);
+
+		if(priceItems != null) excludeItems(query);
 	}
 	
 	private void excludeItems(String item) {

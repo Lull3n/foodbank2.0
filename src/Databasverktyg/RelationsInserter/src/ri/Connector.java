@@ -79,6 +79,7 @@ public class Connector {
 
 	public int getRecipeId(String selectedRecipe) {
 		try {
+			connection = DriverManager.getConnection(dbURL);
 			String query = "SELECT * FROM recipes WHERE title='" + selectedRecipe + "'";
 			Statement statement = connection.createStatement();
 			ResultSet resultSet = statement.executeQuery(query);
@@ -86,6 +87,7 @@ public class Connector {
 				resultSet.next();
 				return resultSet.getInt("recipe_id");
 			}
+			connection.close();
 				
 		} catch (Exception e) {
 			e.printStackTrace();

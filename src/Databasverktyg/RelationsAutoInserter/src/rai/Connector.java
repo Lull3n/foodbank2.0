@@ -5,6 +5,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class Connector {
 private Connection connection;
@@ -21,26 +23,46 @@ private Connection connection;
 		}
 	}
 	
-	public ResultSet loadRecipe(int id) {
+	public RecipeEntity loadRecipe(int id) {
+		RecipeEntity ret = null;
 		try {
 			connection = DriverManager.getConnection(dbURL);
 
-			String query = "SELECT * FROM aj1757.recipes WHERE recipe_id =" + id;
+			String query = "SELECT * FROM recipes WHERE recipe_id =" + id;
 			Statement statement = connection.createStatement();
-			return statement.executeQuery(query);
+			ResultSet set = statement.executeQuery(query);
+			if(set.next()) {
+				ret = new RecipeEntity( set.getString("ingredients").split("\\\\"), set.getInt("portions"));
+				connection.close();
+				return ret;
+			}
+			connection.close();
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return null;
+		return ret;
 	}
 	
-	public ResultSet getDatabaseIngredients(String like) {
+	public LinkedList<PriceItem> getDatabaseIngredients(String like) {
+		LinkedList<PriceItem> ret = new LinkedList<>();
 		try {
-			String query = "SELECT * FROM aj1757.ingredients2 WHERE title LIKE '%" + like + "%'";
+			connection = DriverManager.getConnection(dbURL);
+			String query = "SELECT * FROM ingredients2 WHERE title LIKE '%" + like + "%'";
 			System.out.println(query);
 			Statement statement = connection.createStatement();
 			ResultSet set = statement.executeQuery(query);
-			return set;
+
+
+			if(!set.next()) {
+				ret.add(new PriceItem(0, "EMPTY", 0, "EMPTY"));
+			} else {
+				do {
+					ret.add(new PriceItem(set.getInt("id"), set.getString("title"), set.getFloat("price"), set.getString("pricetype")));
+				} while(set.next());
+			}
+			connection.close();
+			return ret;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -62,7 +84,8 @@ private Connection connection;
 
 	public void sendRelation(Item i, int recipeId) {
 		try {
-			String query = "INSERT INTO aj1757.relations (recipe_id,ingredients_id,units) VALUES (?,?,?)";
+			connection = DriverManager.getConnection(dbURL);
+			String query = "INSERT INTO relations (recipe_id,ingredients_id,units) VALUES (?,?,?)";
 			String queryTest;
 			queryTest = "INSERTING: " + recipeId + " " + i.getPriceItem().getId() + " " + i.getUnits();
 			System.out.println(queryTest);
@@ -71,6 +94,7 @@ private Connection connection;
 //			statement.setInt(2, i.getPriceItem().getId());
 //			statement.setFloat(3, i.getUnits());
 //			statement.executeUpdate();
+			connection.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

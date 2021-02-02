@@ -61,6 +61,7 @@ public class Connector {
 			ResultSet set = statement.executeQuery(query);
 			ArrayList<String> relationPrices = null;
 			while(set.next()) {
+				if(relationPrices == null) relationPrices = new ArrayList<>();
 				System.out.println("Calculating price for ingredient id: " + array[2]);
 				float relationUnits = Float.parseFloat(array[3]);
 				System.out.println("Relation units before division: " + relationUnits);
@@ -83,9 +84,11 @@ public class Connector {
 
 	public boolean insertRelationPrice(int id, float price) {
 		try {
+			connection = DriverManager.getConnection(dbURL);
 			String query = "UPDATE relations SET price=" + price + " WHERE relation_id=" + id;
 			Statement statement = connection.createStatement();
 			statement.executeUpdate(query);
+			connection.close();
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
