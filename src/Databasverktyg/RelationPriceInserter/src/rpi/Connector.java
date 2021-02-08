@@ -59,7 +59,7 @@ public class Connector {
 
 	public ArrayList<String> loadIngredient(int id, String[] array) {
 		try {
-			connection = DriverManager.getConnection(dbURL);
+			connection = DriverManager.getConnection(dbURL, user, password);
 			String query = "SELECT * FROM Foodbank.dbo.ingredients2 WHERE id=" + id;
 			Statement statement = connection.createStatement();
 			ResultSet set = statement.executeQuery(query);
@@ -88,7 +88,7 @@ public class Connector {
 
 	public boolean insertRelationPrice(int id, float price) {
 		try {
-			connection = DriverManager.getConnection(dbURL);
+			connection = DriverManager.getConnection(dbURL, user, password);
 			String query = "UPDATE Foodbank.dbo.relations SET price=" + price + " WHERE relation_id=" + id;
 			Statement statement = connection.createStatement();
 			statement.executeUpdate(query);

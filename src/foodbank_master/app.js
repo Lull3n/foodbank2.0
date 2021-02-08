@@ -16,7 +16,7 @@ const bodyParser = require("body-parser");
 const config = {
     host: "localhost",
     user: "onlinestore",
-    password: "project5",
+    password: "project50",
     database: "Foodbank"
 }
 
