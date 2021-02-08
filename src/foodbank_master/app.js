@@ -15,14 +15,14 @@ const bodyParser = require("body-parser");
 */
 const config = {
     host: "localhost",
-    user: "javaConnection",
-    password: "hejDatabasenFood",
-    database: "FoodBank"
+    user: "onlinestore",
+    password: "project5",
+    database: "Foodbank"
 }
 
 
 
-const conn = new mssql.ConnectionPool('mssql://javaConnection:hejDatabasenFood@localhost/FoodBank')
+const conn = new mssql.ConnectionPool('mssql://onlinestore:project50@localhost/Foodbank')
 conn.connect();
 var db = new mssql.Request(conn);
 
@@ -38,10 +38,10 @@ app.set("view engine", "html");
 
 app.use(express.static(path.join(__dirname, "public")));
 
-const queryRelationsWhereRecipeId = `SELECT * FROM relations WHERE recipe_id=`;
-const queryRecipesWhereRecipeId = `SELECT * FROM recipes WHERE recipe_id=`;
-const queryRecipesWhereCategory = `SELECT * FROM recipes WHERE category=`;
-const queryIngredientsWhereId = `SELECT * FROM ingredients2 WHERE id =`;
+const queryRelationsWhereRecipeId = `SELECT * FROM Foodbank.dbo.relations WHERE recipe_id=`;
+const queryRecipesWhereRecipeId = `SELECT * FROM Foodbank.dbo.recipes WHERE recipe_id=`;
+const queryRecipesWhereCategory = `SELECT * FROM Foodbank.dbo.recipes WHERE category=`;
+const queryIngredientsWhereId = `SELECT * FROM Foodbank.dbo.ingredients2 WHERE id =`;
 
 /*
 
