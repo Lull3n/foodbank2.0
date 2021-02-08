@@ -7,15 +7,19 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 public class Connector {
-	private Connection connection;
-	private String dbURL = "jdbc:sqlserver://localhost:1433;" +
-			"databaseName=FoodBank;user=javaConnection;password=hejDatabasenFood;";
+	private Connection connection; //com.microsoft.sqlserver:mssql-jdbc:8.4.1.jre14
+	private String dbURL;
+	private String user, password;
 
 	public Connector() {
 		try {
+			Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+			user = "onlinestore";
+			password = "project50";
+
+			dbURL = "jdbc:sqlserver://localhost";
 			System.out.println("Connecting to MySQL database...");
-			//Class.forName("com.mysql.jdbc.Driver");
-			//connection = DriverManager.getConnection("jdbc:sqlite:../../database/sqliteDb.db");
+
 			System.out.println("Successfully connected");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -24,7 +28,7 @@ public class Connector {
 	
 	public ResultSet loadRelations(int recipeId) {
 		try {
-			String query = "SELECT * FROM relations WHERE recipe_id=" + recipeId;
+			String query = "SELECT * FROM Foodbank.dbo.relations WHERE recipe_id=" + recipeId;
 			Statement statement = connection.createStatement();
 			return statement.executeQuery(query);
 		} catch (Exception e) {
@@ -35,8 +39,8 @@ public class Connector {
 	
 	public ArrayList<String> loadAllRelations() {
 		try {
-			connection = DriverManager.getConnection(dbURL);
-			String query = "SELECT * FROM relations";
+			connection = DriverManager.getConnection(dbURL, user, password);
+			String query = "SELECT * FROM Foodbank.dbo.relations";
 			Statement statement = connection.createStatement();
 			ResultSet set = statement.executeQuery(query);
 			ArrayList<String> ret = null;
@@ -56,7 +60,7 @@ public class Connector {
 	public ArrayList<String> loadIngredient(int id, String[] array) {
 		try {
 			connection = DriverManager.getConnection(dbURL);
-			String query = "SELECT * FROM ingredients2 WHERE id=" + id;
+			String query = "SELECT * FROM Foodbank.dbo.ingredients2 WHERE id=" + id;
 			Statement statement = connection.createStatement();
 			ResultSet set = statement.executeQuery(query);
 			ArrayList<String> relationPrices = null;
@@ -85,7 +89,7 @@ public class Connector {
 	public boolean insertRelationPrice(int id, float price) {
 		try {
 			connection = DriverManager.getConnection(dbURL);
-			String query = "UPDATE relations SET price=" + price + " WHERE relation_id=" + id;
+			String query = "UPDATE Foodbank.dbo.relations SET price=" + price + " WHERE relation_id=" + id;
 			Statement statement = connection.createStatement();
 			statement.executeUpdate(query);
 			connection.close();

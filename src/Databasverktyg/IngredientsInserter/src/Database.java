@@ -10,11 +10,19 @@ import java.sql.*;
 public class Database {
     Connection connection;
     //com.microsoft.sqlserver:mssql-jdbc:8.4.1.jre14
-    private String dbURL = "jdbc:sqlserver://localhost:1433;" +
-            "databaseName=FoodBank;user=javaConnection;password=hejDatabasenFood;";
+    private String dbURL;
+    private String user, password;
 
     public Database(){
+        try {
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+         user = "onlinestore";
+         password = "project50";
 
+         dbURL = "jdbc:sqlserver://localhost";
     }
 
     /**
@@ -22,10 +30,10 @@ public class Database {
      * @param array Cleaned array of ingredients.
      */
     public void insertJsonArray(JsonArray array){
-        String sql = "INSERT INTO ingredients2 (title, price, pricetype, pricePerUnit, compUnit) VALUES(?,?,'kr',?,?)";
+        String sql = "INSERT INTO Foodbank.dbo.ingredients2 (title, price, pricetype, pricePerUnit, compUnit) VALUES(?,?,'kr',?,?)";
 
         try {
-            connection = DriverManager.getConnection(dbURL);
+            connection = DriverManager.getConnection(dbURL, user, password);
 
             for (int i = 0; i < array.size(); i++) {
 

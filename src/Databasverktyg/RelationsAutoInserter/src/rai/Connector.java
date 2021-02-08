@@ -9,17 +9,17 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class Connector {
-private Connection connection;
-	//com.microsoft.sqlserver:mssql-jdbc:8.4.1.jre14
-	private String dbURL = "jdbc:sqlserver://localhost:1433;" +
-			"databaseName=FoodBank;user=javaConnection;password=hejDatabasenFood;";
-	
+	private Connection connection; //com.microsoft.sqlserver:mssql-jdbc:8.4.1.jre14
+	private String dbURL;
+	private String user, password;
 	public Connector() {
 		try {
-			//System.out.println("Connecting to MySQL database...");
-			//Class.forName("com.mysql.jdbc.Driver");
-			//connection = DriverManager.getConnection("jdbc:mysql://195.178.232.16:3306/aj1757","aj1757","foodbank123");
-			//System.out.println("Successfully connected");
+			Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+			user = "onlinestore";
+			password = "project50";
+
+			dbURL = "jdbc:sqlserver://localhost";
+			System.out.println("Successfully connected");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -28,9 +28,9 @@ private Connection connection;
 	public RecipeEntity loadRecipe(int id) {
 		RecipeEntity ret = null;
 		try {
-			connection = DriverManager.getConnection(dbURL);
+			connection = DriverManager.getConnection(dbURL, user, password);
 
-			String query = "SELECT * FROM recipes WHERE recipe_id =" + id;
+			String query = "SELECT * FROM Foodbank.dbo.recipes WHERE recipe_id =" + id;
 			Statement statement = connection.createStatement();
 			ResultSet set = statement.executeQuery(query);
 			if(set.next()) {
@@ -50,7 +50,7 @@ private Connection connection;
 		LinkedList<PriceItem> ret = new LinkedList<>();
 		try {
 			connection = DriverManager.getConnection(dbURL);
-			String query = "SELECT * FROM ingredients2 WHERE title LIKE '%" + like + "%'";
+			String query = "SELECT * FROM Foodbank.dbo.ingredients2 WHERE title LIKE '%" + like + "%'";
 			System.out.println(query);
 			Statement statement = connection.createStatement();
 			ResultSet set = statement.executeQuery(query);
@@ -73,7 +73,7 @@ private Connection connection;
 	
 	public ResultSet getRecipePortions(String title) {
 		try {
-			String query = "SELECT * FROM aj1757.recipes WHERE title='" + title + "'";
+			String query = "SELECT * FROM Foodbank.dbo.recipes WHERE title='" + title + "'";
 			System.out.println(query);
 			Statement statement = connection.createStatement();
 			ResultSet set = statement.executeQuery(query);
@@ -87,7 +87,7 @@ private Connection connection;
 	public void sendRelation(Item i, int recipeId) {
 		try {
 			connection = DriverManager.getConnection(dbURL);
-			String query = "INSERT INTO relations (recipe_id,ingredients_id,units) VALUES (?,?,?)";
+			String query = "INSERT INTO Foodbank.dbo.relations (recipe_id,ingredients_id,units) VALUES (?,?,?)";
 			String queryTest;
 			queryTest = "INSERTING: " + recipeId + " " + i.getPriceItem().getId() + " " + i.getUnits();
 			System.out.println(queryTest);
