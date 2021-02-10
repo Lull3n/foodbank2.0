@@ -31,6 +31,7 @@ public class Connector {
 	
 	public boolean query(int category, String title, String description, int portions, String link, String imageLink,
 			String ingredients, String instructions) {
+		boolean done;
 		try {
 			String query = "INSERT INTO Foodbank.dbo.recipes (category,title,portions,descr,ingredients,instructions,image,link) VALUES (?,?,?,?,?,?,?,?)";
 			try {
@@ -44,13 +45,15 @@ public class Connector {
 				statement.setString(7, imageLink);
 				statement.setString(8, link);
 				statement.executeUpdate();
+				done = true;
 			} catch (Exception e) {
-				e.printStackTrace();
+				System.out.println(e);
+				done = false;
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
-			return false;
+			System.out.println(e);
+			done = false;
 		}
-		return true;
+		return done;
 	}
 }

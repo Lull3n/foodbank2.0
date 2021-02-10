@@ -22,7 +22,7 @@ public class Controller {
 		connector = new Connector();
 	}
 
-	public void submit(int category, String title, String description, int portions, String link, String imageLink,
+	public String submit(int category, String title, String description, int portions, String link, String imageLink,
 			String ingredients, String instructions) {
 		System.out.println("Formatting strings...");
 		String ingredientsFix;
@@ -33,6 +33,10 @@ public class Controller {
 		System.out.println(
 				"Issuing statement to MySQL database: " + MessageFormat.format("{0} {1} {2} {3} {4} {5} {6} {7}",
 						category, title, description, portions, link, imageLink, ingredientsFix, instructionsFix));
-		connector.query(category, title, description, portions, link, imageLink, ingredientsFix, instructionsFix);
+		 boolean test = connector.query(category, title, description, portions, link, imageLink, ingredientsFix, instructionsFix);
+		 if (test)
+		 	return "Passed";
+		 else
+		 	return "Failed";
 	}
 }

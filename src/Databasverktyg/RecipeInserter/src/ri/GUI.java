@@ -27,7 +27,7 @@ public class GUI extends JPanel {
 	private Controller controller;
 
 	private JLabel lblCategories = new JLabel("Kategori: ");
-	private String[] categories = { "Kött", "Kyckling", "Fisk", "Pasta" };
+	private String[] categories = { "KÃ¶tt", "Kyckling", "Fisk", "Pasta" };
 	private JComboBox<String> boxCategories = new JComboBox<String>(categories);
 
 	private JLabel lblTitle = new JLabel("Titel: ");
@@ -40,10 +40,10 @@ public class GUI extends JPanel {
 	private String[] portions = { "2", "3", "4", "5", "6", "7", "8", "9", "10" };
 	private JComboBox<String> boxPortions = new JComboBox<String>(portions);
 
-	private JLabel lblLink = new JLabel("Länk: ");
+	private JLabel lblLink = new JLabel("LÃ¤nk: ");
 	private JTextField tfLink = new JTextField("");
 
-	private JLabel lblImage = new JLabel("Bildlänk: ");
+	private JLabel lblImage = new JLabel("BildlÃ¤nk: ");
 	private JTextField tfImage = new JTextField("");
 
 	private JLabel lblIngredients = new JLabel("Ingredienser", SwingUtilities.CENTER);
