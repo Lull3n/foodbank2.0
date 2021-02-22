@@ -9,7 +9,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
-
 public class Connector {
 	private Connection connection;
 	//com.microsoft.sqlserver:mssql-jdbc:8.4.1.jre14
@@ -97,21 +96,25 @@ public class Connector {
 		return -1;
 	}
 
-	public void sendRelation(int recipeId, String ingredientId, String ingredientUnit) {
-		try {
+	public int sendRelation(int recipeId, String ingredientId, String ingredientUnit) {
+		int ret = 0;
+		try { connection = DriverManager.getConnection(dbURL);
 			String query = "INSERT INTO relations (recipe_id,ingredients_id,units) VALUES (?,?,?)";
 			try {
 				PreparedStatement statement = connection.prepareStatement(query);
 				statement.setInt(1, recipeId);
 				statement.setInt(2, Integer.parseInt(ingredientId));
 				statement.setInt(3, Integer.parseInt(ingredientUnit));
-				statement.executeUpdate();
+				ret = statement.executeUpdate();
+				connection.close();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+
+		return ret;
 	}
 
 	public LinkedList<String> loadDatabaseIngredient(String result) {
