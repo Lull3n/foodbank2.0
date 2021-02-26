@@ -10,7 +10,7 @@ public class Server {
 
         API.initAPI();
 
-        System.out.println("Server living the life of a server, hehe");
+        System.out.println("Post API request");
     }
 
 
