@@ -9,8 +9,25 @@ public class Recipe {
     private String instructions;
     private String image;
     private String link;
+    private Ingredients [] ingredientsArray = new Ingredients[100];
 
     // price
+
+
+    public Ingredients[] getIngredientsArray() {
+        return ingredientsArray;
+    }
+
+    public void setIngredientsArray(Ingredients[] ingredientsArray) {
+        this.ingredientsArray = ingredientsArray;
+    }
+
+    public void addToArray(Ingredients ingredient){
+        for (int i =0; i<ingredientsArray.length;i++){
+            ingredientsArray[i] = ingredient;
+        }
+    }
+
 
     public String getIngredientsString() {
         return ingredientsString;

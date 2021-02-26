@@ -11,16 +11,16 @@ import java.util.ArrayList;
  * end user is sending request to the API.
  */
 public class Controller {
-    private DatabaseRunner dbo;
+    //private DatabaseRunner dbo;
 
     /**
      * This method may be excessive and could possible be done in the setDataReturn method
      * nevertheless, it gets the arraylist of recipes from the DatabaseRunner
      * */
-    public ArrayList<Recipe> getRecipeFromDatabase() {
-        dbo = new DatabaseRunner();
+    public static ArrayList<Recipe> getRecipeFromDatabase() {
+       // dbo = new DatabaseRunner();
 
-        ArrayList<Recipe> list = dbo.selectRecipe();
+        ArrayList<Recipe> list =DatabaseRunner.selectRecipe();
 
         return list;
     }
@@ -28,13 +28,18 @@ public class Controller {
      * This method may be excessive and could possible be done in the setDataReturn method
      * nevertheless, it gets the arraylist of relations from the DatabaseRunner
      * */
-    public ArrayList<Relations> getRelationsFromDatabase() {
-        dbo = new DatabaseRunner();
-        ArrayList<Relations> list = dbo.selectRelations();
+    public static ArrayList<Relations> getRelationsFromDatabase() {
+        //dbo = new DatabaseRunner();
+        ArrayList<Relations> list = DatabaseRunner.selectRelations();
         return list;
     }
 
-    public DataReturn setDataReturn() {
+    public static ArrayList<Ingredients> getIngredientsFromDatabase(){
+       // ArrayList<Ingredients> list = DatabaseRunner.ingredientsRelation(3) ;
+        return null;
+    }
+
+    public static DataReturn setDataReturn() {
         ArrayList<Recipe> recipes = getRecipeFromDatabase();
         ArrayList<Relations> relations = getRelationsFromDatabase();
         DataReturn dataReturn = new DataReturn();
@@ -43,7 +48,8 @@ public class Controller {
             dataReturn.setPortions(rec.getPortions());
             dataReturn.setDescr(rec.getDescr());
             dataReturn.setInstructions(rec.getInstructions());
-            dataReturn.setIngredientString(rec.getIngredientsString());// fixme + fix amount
+            //dataReturn.setIngredientString(rec.getIngredientsString());// fixme + fix amount
+         //   dataReturn.setIngredientsArray(rec.getIngredientsArray()); //fixme
 
         }
 
@@ -57,7 +63,7 @@ public class Controller {
     }
 
 
-    public JsonObject javaToJson() {
+    public static JsonObject javaToJson() {
         DataReturn data = setDataReturn();
 
         Gson gson = new Gson();
@@ -66,7 +72,8 @@ public class Controller {
         JsonElement description = gson.toJsonTree(data.getDescr());
         JsonElement instructions = gson.toJsonTree(data.getInstructions());
         //JsonElement amount = gson.toJsonTree(data.getAmount()); //fixme
-        JsonElement ingredients = gson.toJsonTree(data.getIngredientString()); //fixme
+       // JsonElement ingredients = gson.toJsonTree(data.getIngredientString()); //fixme
+       // JsonElement ingredient = gson.toJsonTree(data.getIngredientsArray()); // fixme ARRAY
         JsonElement unit = gson.toJsonTree(data.getUnit()); //fixme
         JsonElement price = gson.toJsonTree(data.getPrice());
 
@@ -77,7 +84,7 @@ public class Controller {
         obj.add("description", description);
         obj.add("instructions", instructions);
        // obj.add("amount", amount); //fixme
-        obj.add("ingredients", ingredients); //fixme
+       // obj.add("ingredients", ingredient); //fixme ARRAY
         obj.add("unit", unit);//fixme
         obj.add("price", price);
 
@@ -86,7 +93,7 @@ public class Controller {
     }
 
     public static void main(String[] args) {
-        Controller controller = new Controller();
-        controller.javaToJson();
+        Controller.javaToJson();
     }
+
 }
