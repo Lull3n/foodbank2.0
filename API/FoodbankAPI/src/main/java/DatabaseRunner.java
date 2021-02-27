@@ -33,10 +33,10 @@ public class DatabaseRunner {
     }
 
     /**
-     * This method selects all recipes from the database and sets the Recipe object
+     * Selects all recipes from the database and sets the Recipe object
      * with the collected data.
      *
-     * @return Arraylist</ Recipe> of recipes
+     * @return Arraylist</ Recipe> of recipe objects
      */
     public static ArrayList<Recipe> selectRecipe() {
         ArrayList<Recipe> list = new ArrayList<Recipe>();
@@ -52,20 +52,13 @@ public class DatabaseRunner {
                 recipe.setCategory(resultSet.getInt(2));
                 recipe.setTitle(resultSet.getString(3));
                 recipe.setPortions(resultSet.getInt(4));
-                recipe.setDescr(resultSet.getString(5));
-
-                //todo finn en løsning på ingredienser
-               // recipe.setIngredientsString(resultSet.getString(6));
-                //recipe.setIngredients((Ingredients) resultSet.getObject(6));
-
-
-
+                recipe.setDescription(resultSet.getString(5));
+                recipe.setIngredientsString(resultSet.getString(6));
                 recipe.setInstructions(resultSet.getString(7));
-                recipe.setImage(resultSet.getString(8));
+                recipe.setImageLink(resultSet.getString(8));
                 recipe.setLink(resultSet.getString(9));
-               // getI(recipe, recipe.getTitle());
-                list.add(recipe);
 
+                list.add(recipe);
             }
 
         } catch (SQLException throwables) {
@@ -77,10 +70,10 @@ public class DatabaseRunner {
     }
 
     /**
-     * This method selects all relations from the database and sets the Relations object
+     * Selects all relations from the database and sets the Relations object
      * with the collected data.
      *
-     * @return Arraylist</ Relations> of relations data
+     * @return Arraylist</ Relations> of relations objects
      */
     public static ArrayList<Relations> selectRelations() {
         ArrayList<Relations> list = new ArrayList<Relations>();
@@ -97,6 +90,7 @@ public class DatabaseRunner {
                 relations.setIngredient_id(resultSet.getInt(3));
                 relations.setUnits(resultSet.getInt(4));
                 relations.setPrice(resultSet.getFloat(5));
+
                 list.add(relations);
             }
 
@@ -108,12 +102,10 @@ public class DatabaseRunner {
         return list;
     }
 
-
-
     /**
-     * This method selects all ingredietns from the database
+     * Selects all ingredietns from the database
      *
-     * @return Arraylist</ Ingredient> of ingredient data
+     * @return Arraylist</ Ingredient> of ingredient objects
      */
     public static ArrayList<Ingredient> selectIngredients() {
         ArrayList<Ingredient> list = new ArrayList<Ingredient>();
@@ -131,6 +123,7 @@ public class DatabaseRunner {
                 ingredient.setPriceType(resultSet.getString(4));
                 ingredient.setPricePerUnit(resultSet.getFloat(5));
                 ingredient.setCompUnit(resultSet.getString(6));
+
                 list.add(ingredient);
             }
 

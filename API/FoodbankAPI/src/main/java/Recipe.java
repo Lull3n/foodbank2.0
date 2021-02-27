@@ -1,36 +1,20 @@
 import java.util.ArrayList;
 
+/**
+ * Class representing a tuple in the recipe table in the database
+ */
+
 public class Recipe {
     private int recipe_id;
     private int category;
     private String title;
     private int portions;
-    private String descr;
-    private Ingredients ingredients;
+    private String description;
     private String ingredientsString;
     private String instructions;
-    private String image;
+    private String imageLink;
     private String link;
-    //private Ingredients [] ingredientsArray = new Ingredients[100];
-    private ArrayList<Ingredients> ingredientsArray = new ArrayList<>();
-
-    // price
-
-
-    public ArrayList<Ingredients> getIngredientsArray() {
-        return ingredientsArray;
-    }
-
-    public void setIngredientsArray(ArrayList<Ingredients> ingredientsArray) {
-        this.ingredientsArray = ingredientsArray;
-    }
-
-//    public void addToArray(Ingredients ingredient){
-//        for (int i =0; i<ingredientsArray.size;i++){
-//            ingredientsArray.add(ingredient);
-//        }
-//    }
-
+    private ArrayList<String> ingredientArray;
 
     public String getIngredientsString() {
         return ingredientsString;
@@ -40,12 +24,12 @@ public class Recipe {
         this.ingredientsString = ingredientsString;
     }
 
-    public String getDescr() {
-        return descr;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDescr(String descr) {
-        this.descr = descr;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public int getRecipe_id() {
@@ -80,14 +64,6 @@ public class Recipe {
         this.portions = portions;
     }
 
-    public Ingredients getIngredients() {
-        return ingredients;
-    }
-
-    public void setIngredients(Ingredients ingredients) {
-        this.ingredients = ingredients;
-    }
-
     public String getInstructions() {
         return instructions;
     }
@@ -96,12 +72,12 @@ public class Recipe {
         this.instructions = instructions;
     }
 
-    public String getImage() {
-        return image;
+    public String getImageLink() {
+        return imageLink;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setImageLink(String imageLink) {
+        this.imageLink = imageLink;
     }
 
     public String getLink() {

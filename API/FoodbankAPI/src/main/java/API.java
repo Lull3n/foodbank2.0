@@ -5,7 +5,6 @@
  */
 
 import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 
 import static spark.Spark.*;
 
@@ -13,16 +12,14 @@ public class API {
 /**
  * Noting works
  * localhost:7000
- *
- *
- * */
+ **/
     public static void initAPI() {
 
         // bare et utkast
         get("/recipe", (request, response) -> {
            // Controller controller = new Controller();
             System.out.println("Get all recipes");
-            JsonArray recipeData = Controller.javaToJson();
+            JsonArray recipeData = Controller.convertAllRecipesToJson();
 
             response.header("Content-Type", "application/json");
             return recipeData;
@@ -33,7 +30,7 @@ public class API {
             String id = request.params("id");
             //Controller controller = new Controller();
             System.out.println("Get recipe by id, but why would you?");
-            JsonArray recipeData = Controller.javaToJson();
+            JsonArray recipeData = Controller.convertAllRecipesToJson();
 
             response.header("Content-Type", "application/json");
             return recipeData;

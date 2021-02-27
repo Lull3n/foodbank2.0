@@ -1,3 +1,7 @@
+/**
+ * Class representing a tuple in the relation table in the database
+ */
+
 public class Relations {
     private int relations_id;
     private int recipe_id;

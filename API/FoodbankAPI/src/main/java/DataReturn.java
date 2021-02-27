@@ -1,29 +1,30 @@
 import java.util.ArrayList;
 
+/**
+ * Class representing an recipe object as it should be returned to a client
+ */
 public class DataReturn {
 
     private String title;
     private int portions;
-    private String descr;
+    private String description;
     private String instructions;
-    private String amount;
     private String ingredientString;
     private int unit;
     private double price;
-    private Ingredients ingredients;
     private ArrayList<Ingredient> ingredientsArray = new ArrayList<>();
 
-    public DataReturn() {//ArrayList<Recipe> recipe, ArrayList<Relations> relations
-        ingredients = new Ingredients();
-    }
+    public String getImageLink() { return imageLink;}
+
+    public void setImageLink(String imageLink) { this.imageLink = imageLink;}
+
+    private String imageLink;
 
     public ArrayList<Ingredient> getIngredientsArray() {
         return ingredientsArray;
     }
 
-    public void setIngredientsArray(ArrayList<Ingredient> ingredientsArray) {
-        this.ingredientsArray = ingredientsArray;
-    }
+    public void setIngredientsArray(ArrayList<Ingredient> ingredientsArray) { this.ingredientsArray = ingredientsArray;}
 
     public String getTitle() {
         return title;
@@ -41,12 +42,12 @@ public class DataReturn {
         this.portions = portions;
     }
 
-    public String getDescr() {
-        return descr;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDescr(String descr) {
-        this.descr = descr;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getInstructions() {
@@ -55,14 +56,6 @@ public class DataReturn {
 
     public void setInstructions(String instructions) {
         this.instructions = instructions;
-    }
-
-    public String getAmount() {
-        return amount;
-    }
-
-    public void setAmount(String amount) {
-        this.amount = amount;
     }
 
     public String getIngredientString() {
@@ -87,16 +80,5 @@ public class DataReturn {
 
     public void setPrice(double price) {
         this.price = price;
-    }
-
-    public Ingredients getIngredients() {
-        return ingredients;
-    }
-
-    public void setIngredients(Ingredients ingredients) {
-
-//        ingredients.setUnit(getUnit());
-  //      ingredients.setName(getTitle());
-        this.ingredients = ingredients;
     }
 }

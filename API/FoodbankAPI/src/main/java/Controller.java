@@ -2,7 +2,6 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -13,35 +12,35 @@ import java.util.HashMap;
  * end user is sending request to the API.
  */
 public class Controller {
-    //private DatabaseRunner dbo;
 
     /**
-     * This method may be excessive and could possible be done in the setDataReturn method
-     * nevertheless, it gets the arraylist of recipes from the DatabaseRunner
-     * */
+     * Creates an arrayList with Recipe-objects, representing the recipe table in the database
+     **/
     public static ArrayList<Recipe> getRecipeFromDatabase() {
-       // dbo = new DatabaseRunner();
-
         ArrayList<Recipe> list =DatabaseRunner.selectRecipe();
-
         return list;
     }
+
     /**
-     * This method may be excessive and could possible be done in the setDataReturn method
-     * nevertheless, it gets the arraylist of relations from the DatabaseRunner
-     * */
+     * Creates an arrayList with Relations-objects, representing the relations table in the database
+     **/
     public static ArrayList<Relations> getRelationsFromDatabase() {
-        //dbo = new DatabaseRunner();
         ArrayList<Relations> list = DatabaseRunner.selectRelations();
         return list;
     }
 
+    /**
+     * Creates an arrayList with Ingredient-objects, representing the ingredient table in the database
+     **/
     public static ArrayList<Ingredient> getIngredientsFromDatabase(){
         ArrayList<Ingredient> list = DatabaseRunner.selectIngredients();
         return list;
     }
 
-    public static ArrayList<DataReturn> setDataReturn() {
+    /**
+     * Creates an arrayList with representations of all recipes and included relations from the database
+     **/
+    public static ArrayList<DataReturn> createDataReturnAllRecipes() {
         ArrayList<Recipe> recipes = getRecipeFromDatabase();
         ArrayList<Relations> relations = getRelationsFromDatabase();
         ArrayList<Ingredient> ingredientsInDb = getIngredientsFromDatabase();
@@ -55,8 +54,10 @@ public class Controller {
             DataReturn newDataReturn = new DataReturn();
             newDataReturn.setTitle(rec.getTitle());
             newDataReturn.setPortions(rec.getPortions());
-            newDataReturn.setDescr(rec.getDescr());
+            newDataReturn.setDescription(rec.getDescription());
             newDataReturn.setInstructions(rec.getInstructions());
+            newDataReturn.setImageLink(rec.getImageLink());
+            double price=0;
 
             ArrayList<Ingredient> ingredientList = new ArrayList<>();
 
@@ -64,9 +65,11 @@ public class Controller {
                 if (rec.getRecipe_id() == relations.get(i).getRecipe_id()) {
                     Ingredient ingredient = ingredientHashMap.get(relations.get(i).getIngredient_id());
                     ingredientList.add(ingredient);
+                    price+=(relations.get(i).getPrice());
                 }
             }
 
+            newDataReturn.setPrice(price);
             newDataReturn.setIngredientsArray(ingredientList);
             dataReturnObjects.add(newDataReturn);
         }
@@ -74,48 +77,40 @@ public class Controller {
           return dataReturnObjects;
     }
 
-
-    public static JsonArray javaToJson() {
-        ArrayList<DataReturn> dataFromDb = setDataReturn();
+    public static JsonArray convertAllRecipesToJson() {
+        ArrayList<DataReturn> dataFromDb = createDataReturnAllRecipes();
         Gson gson = new Gson();
 
-        JsonArray jsonArray=new JsonArray();
+        JsonArray allRecipes=new JsonArray();
 
         for(int i=0; i<dataFromDb.size(); i++) {
             JsonElement title = gson.toJsonTree(dataFromDb.get(i).getTitle());
             JsonElement portions = gson.toJsonTree(dataFromDb.get(i).getPortions());
-            JsonElement description = gson.toJsonTree(dataFromDb.get(i).getDescr());
+            JsonElement description = gson.toJsonTree(dataFromDb.get(i).getDescription());
             JsonElement instructions = gson.toJsonTree(dataFromDb.get(i).getInstructions());
             JsonElement ingredients = gson.toJsonTree(dataFromDb.get(i).getIngredientsArray());
             System.out.println(dataFromDb.get(i).getIngredientsArray());
             JsonElement unit = gson.toJsonTree(dataFromDb.get(i).getUnit());
             JsonElement price = gson.toJsonTree(dataFromDb.get(i).getPrice());
+            JsonElement imageLink = gson.toJsonTree(dataFromDb.get(i).getImageLink());
 
-            JsonObject obj = new JsonObject();
-            obj.add("title", title);
-            obj.add("portions", portions);
-            obj.add("description", description);
-            obj.add("instructions", instructions);
-            // obj.add("amount", amount); //fixme
-            obj.add("ingredients", ingredients); //fixme ARRAY
-            obj.add("unit", unit);//fixme
-            obj.add("price", price);
+            JsonObject recipeObject = new JsonObject();
+            recipeObject.add("title", title);
+            recipeObject.add("portions", portions);
+            recipeObject.add("description", description);
+            recipeObject.add("instructions", instructions);
+            recipeObject.add("ingredients", ingredients);
+            recipeObject.add("price", price);
+            recipeObject.add("image link", imageLink);
 
-            jsonArray.add(obj);
+            allRecipes.add(recipeObject);
         }
 
-
-        //JsonElement amount = gson.toJsonTree(data.getAmount()); //fixme
-       // JsonElement ingredients = gson.toJsonTree(data.getIngredientString()); //fixme
-       // JsonElement ingredient = gson.toJsonTree(data.getIngredientsArray()); // fixme ARRAY
-
-
-         System.out.println(jsonArray);
-        return jsonArray;
+         System.out.println(allRecipes);
+        return allRecipes;
     }
 
     public static void main(String[] args) {
-        Controller.javaToJson();
+        Controller.convertAllRecipesToJson();
     }
-
 }
