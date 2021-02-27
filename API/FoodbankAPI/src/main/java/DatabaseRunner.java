@@ -15,8 +15,8 @@ public class DatabaseRunner {
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             //fixme Skriv inn ditt brukernavn og passord til databasen
-            String user = "sa";
-            String pw = "MauHjelp1!";
+            String user = "javaConnection";
+            String pw = "hejDatabasenFood";
 
             String dbURL = "jdbc:sqlserver://localhost";
 
@@ -98,6 +98,40 @@ public class DatabaseRunner {
                 relations.setUnits(resultSet.getInt(4));
                 relations.setPrice(resultSet.getFloat(5));
                 list.add(relations);
+            }
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+
+
+    /**
+     * This method selects all ingredietns from the database
+     *
+     * @return Arraylist</ Ingredient> of ingredient data
+     */
+    public static ArrayList<Ingredient> selectIngredients() {
+        ArrayList<Ingredient> list = new ArrayList<Ingredient>();
+        try {
+            Connection connection = connect();
+            Statement stmt = connection.createStatement();
+            String query = "select * from FoodBank.dbo.ingredients2";
+            ResultSet resultSet = stmt.executeQuery(query);
+
+            while (resultSet.next()) {
+                Ingredient ingredient = new Ingredient();
+                ingredient.setIngredient_id(resultSet.getInt(1));
+                ingredient.setIngredientTitle(resultSet.getString(2));
+                ingredient.setPrice(resultSet.getInt(3));
+                ingredient.setPriceType(resultSet.getString(4));
+                ingredient.setPricePerUnit(resultSet.getFloat(5));
+                ingredient.setCompUnit(resultSet.getString(6));
+                list.add(ingredient);
             }
 
         } catch (SQLException throwables) {

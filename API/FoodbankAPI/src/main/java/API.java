@@ -4,6 +4,7 @@
  * GET
  */
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import static spark.Spark.*;
@@ -21,7 +22,7 @@ public class API {
         get("/recipe", (request, response) -> {
            // Controller controller = new Controller();
             System.out.println("Get all recipes");
-            JsonObject recipeData = Controller.javaToJson();
+            JsonArray recipeData = Controller.javaToJson();
 
             response.header("Content-Type", "application/json");
             return recipeData;
@@ -32,7 +33,7 @@ public class API {
             String id = request.params("id");
             //Controller controller = new Controller();
             System.out.println("Get recipe by id, but why would you?");
-            JsonObject recipeData = Controller.javaToJson();
+            JsonArray recipeData = Controller.javaToJson();
 
             response.header("Content-Type", "application/json");
             return recipeData;

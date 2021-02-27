@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class Recipe {
     private int recipe_id;
     private int category;
@@ -9,24 +11,25 @@ public class Recipe {
     private String instructions;
     private String image;
     private String link;
-    private Ingredients [] ingredientsArray = new Ingredients[100];
+    //private Ingredients [] ingredientsArray = new Ingredients[100];
+    private ArrayList<Ingredients> ingredientsArray = new ArrayList<>();
 
     // price
 
 
-    public Ingredients[] getIngredientsArray() {
+    public ArrayList<Ingredients> getIngredientsArray() {
         return ingredientsArray;
     }
 
-    public void setIngredientsArray(Ingredients[] ingredientsArray) {
+    public void setIngredientsArray(ArrayList<Ingredients> ingredientsArray) {
         this.ingredientsArray = ingredientsArray;
     }
 
-    public void addToArray(Ingredients ingredient){
-        for (int i =0; i<ingredientsArray.length;i++){
-            ingredientsArray[i] = ingredient;
-        }
-    }
+//    public void addToArray(Ingredients ingredient){
+//        for (int i =0; i<ingredientsArray.size;i++){
+//            ingredientsArray.add(ingredient);
+//        }
+//    }
 
 
     public String getIngredientsString() {

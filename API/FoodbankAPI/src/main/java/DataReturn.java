@@ -11,16 +11,17 @@ public class DataReturn {
     private int unit;
     private double price;
     private Ingredients ingredients;
-    private Ingredients [] ingredientsArray = new Ingredients[100];
+    private ArrayList<Ingredient> ingredientsArray = new ArrayList<>();
+
     public DataReturn() {//ArrayList<Recipe> recipe, ArrayList<Relations> relations
         ingredients = new Ingredients();
     }
 
-    public Ingredients[] getIngredientsArray() {
+    public ArrayList<Ingredient> getIngredientsArray() {
         return ingredientsArray;
     }
 
-    public void setIngredientsArray(Ingredients[] ingredientsArray) {
+    public void setIngredientsArray(ArrayList<Ingredient> ingredientsArray) {
         this.ingredientsArray = ingredientsArray;
     }
 
