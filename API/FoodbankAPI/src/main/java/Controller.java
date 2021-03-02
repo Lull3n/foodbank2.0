@@ -4,7 +4,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
 
 /**
  * This class is a controller
@@ -60,12 +59,15 @@ public class Controller {
             newDataReturn.setImageLink(rec.getImageLink());
             double price=0;
 
-            ArrayList<Ingredient> ingredientList = new ArrayList<Ingredient>();
+            ArrayList<IngredientsInRecipe> ingredientList = new ArrayList<IngredientsInRecipe>();
 
             for (int i = 0; i < relationsList.size(); i++) {
                 if (rec.getRecipe_id() == relationsList.get(i).getRecipe_id()) {
-                    Ingredient ingredient = ingredientHashMap.get(relationsList.get(i).getIngredient_id());
-                    ingredientList.add(ingredient);
+                    IngredientsInRecipe ingredientsInRecipe=new IngredientsInRecipe();
+                    ingredientsInRecipe.setIngredientName(ingredientHashMap.get(relationsList.get(i).getIngredient_id()).getIngredientTitle());
+                    ingredientsInRecipe.setUnitsOfIngredient(relationsList.get(i).getUnits());
+                    ingredientsInRecipe.setIngredientPriceInRecipe(relationsList.get(i).getPrice());
+                    ingredientList.add(ingredientsInRecipe);
                     price+=(relationsList.get(i).getPrice());
                 }
             }
@@ -78,58 +80,45 @@ public class Controller {
           return dataReturnObjects;
     }
 
-
-
     public static JsonArray convertAllRecipesToJson() {
         ArrayList<DataReturn> dataFromDb = createDataReturnAllRecipes();
         Gson gson = new Gson();
-
         JsonArray allRecipes=new JsonArray();
-
-
 
         for(int i=0; i<dataFromDb.size(); i++) {
             JsonElement title = gson.toJsonTree(dataFromDb.get(i).getTitle());
             JsonElement portions = gson.toJsonTree(dataFromDb.get(i).getPortions());
             JsonElement description = gson.toJsonTree(dataFromDb.get(i).getDescription());
             JsonElement instructions = gson.toJsonTree(dataFromDb.get(i).getInstructions());
-
-
- //           JsonElement ingredients = gson.toJsonTree(dataFromDb.get(i).getIngredientsArray());
+            JsonElement price = gson.toJsonTree(dataFromDb.get(i).getPrice());
+            JsonElement imageLink = gson.toJsonTree(dataFromDb.get(i).getImageLink());
 
             JsonArray ingredientsArray=new JsonArray();
 
             int nbrOfIngredientsInRecipe=dataFromDb.get(i).getIngredientsArray().size();
             for (int j=0; j<nbrOfIngredientsInRecipe; j++) {
                 JsonObject ingredientObject=new JsonObject();
-                JsonElement ingredientName=gson.toJsonTree(dataFromDb.get(i).getIngredientsArray().get(j).getIngredientTitle());
-                JsonElement ingredientUnits=gson.toJsonTree(dataFromDb.get(i).getIngredientsArray().get(j).getCompUnit());
-                JsonElement ingredientPrice=gson.toJsonTree(dataFromDb.get(i).getIngredientsArray().get(j).getPrice());
+                JsonElement ingredientName=gson.toJsonTree(dataFromDb.get(i).getIngredientsArray().get(j).getIngredientName());
+                JsonElement ingredientUnits=gson.toJsonTree(dataFromDb.get(i).getIngredientsArray().get(j).getUnitsOfIngredient());
+                JsonElement ingredientPrice=gson.toJsonTree(dataFromDb.get(i).getIngredientsArray().get(j).getIngredientPriceInRecipe());
                 ingredientObject.add("name", ingredientName);
                 ingredientObject.add("units", ingredientUnits);
                 ingredientObject.add("price", ingredientPrice);
                 ingredientsArray.add(ingredientObject);
             }
-
-            //JsonElement unit = gson.toJsonTree(dataFromDb.get(i).getUnit());
-            JsonElement price = gson.toJsonTree(dataFromDb.get(i).getPrice());
-            JsonElement imageLink = gson.toJsonTree(dataFromDb.get(i).getImageLink());
-            JsonObject recipeObject = new JsonObject();
             JsonObject ingArr = new JsonObject();
+            ingArr.add("ingredients", ingredientsArray);
+
+            JsonObject recipeObject = new JsonObject();
             recipeObject.add("title", title);
             recipeObject.add("portions", portions);
             recipeObject.add("description", description);
             recipeObject.add("instructions", instructions);
-
-            //recipeObject.add("ingredients", ingredientsArray);
-            ingArr.add("ingredients", ingredientsArray);
-            recipeObject.add("listOfIngredient",ingArr);
-            recipeObject.add("price", price);
-            recipeObject.add("image link", imageLink);
+            recipeObject.add("listOfIngredients", ingArr);
+            recipeObject.add("totalPrice", price);
+            recipeObject.add("imageLink", imageLink);
 
            allRecipes.add(recipeObject);
-
-            //allRecipes.add(ingArr);
         }
 
          System.out.println(allRecipes);

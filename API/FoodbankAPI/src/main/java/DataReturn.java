@@ -12,7 +12,7 @@ public class DataReturn {
     private String ingredientString;
     private int unit;
     private double price;
-    private ArrayList<Ingredient> ingredientsArray = new ArrayList<Ingredient>();
+    private ArrayList<IngredientsInRecipe> ingredientsArray = new ArrayList<IngredientsInRecipe>();
 
     public String getImageLink() { return imageLink;}
 
@@ -20,11 +20,11 @@ public class DataReturn {
 
     private String imageLink;
 
-    public ArrayList<Ingredient> getIngredientsArray() {
+    public ArrayList<IngredientsInRecipe> getIngredientsArray() {
         return ingredientsArray;
     }
 
-    public void setIngredientsArray(ArrayList<Ingredient> ingredientsArray) { this.ingredientsArray = ingredientsArray;}
+    public void setIngredientsArray(ArrayList<IngredientsInRecipe> ingredientsArray) { this.ingredientsArray = ingredientsArray;}
 
     public String getTitle() {
         return title;

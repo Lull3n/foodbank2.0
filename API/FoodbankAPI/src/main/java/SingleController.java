@@ -12,8 +12,6 @@ public class SingleController {
      * Creates an arrayList with Recipe-objects, representing the recipe table in the database
      **/
     public static ArrayList<Recipe> singleRecipe(String title) {
-
-
         //ArrayList<Recipe> list = DatabaseRunner.getRecipeByTitle(title);
         ArrayList<Recipe> list = DatabaseRunner.getRecipe(title);
         System.out.println(list);
@@ -50,7 +48,6 @@ public class SingleController {
         for (int i = 0; i < recipeList.size(); i++) {
             if (recipeList.get(i).getTitle().equals(title)) {
                 idRec = recipeList.get(i).getRecipe_id();
-
             }
         }
         ArrayList<Relations> relationsList = singleRelations(idRec);
@@ -76,12 +73,15 @@ public class SingleController {
             newDataReturn.setImageLink(rec.getImageLink());
             double price=0;
 
-            ArrayList<Ingredient> ingredientList = new ArrayList<Ingredient>();
+            ArrayList<IngredientsInRecipe> ingredientList = new ArrayList<IngredientsInRecipe>();
 
             for (int i = 0; i < relationsList.size(); i++) {
                 if (rec.getRecipe_id() == relationsList.get(i).getRecipe_id()) {
-                    Ingredient ingredient = ingredientHashMap.get(relationsList.get(i).getIngredient_id());
-                    ingredientList.add(ingredient);
+                    IngredientsInRecipe ingredientsInRecipe=new IngredientsInRecipe();
+                    ingredientsInRecipe.setIngredientName(ingredientHashMap.get(relationsList.get(i).getIngredient_id()).getIngredientTitle());
+                    ingredientsInRecipe.setUnitsOfIngredient(relationsList.get(i).getUnits());
+                    ingredientsInRecipe.setIngredientPriceInRecipe(relationsList.get(i).getPrice());
+                    ingredientList.add(ingredientsInRecipe);
                     price+=(relationsList.get(i).getPrice());
                 }
             }
@@ -91,9 +91,6 @@ public class SingleController {
             list.add(newDataReturn);
         }
 
-
-
-
         return list;
     }
     public static JsonArray convertAllRecipesToJson(String recipeTitle) {
@@ -102,14 +99,11 @@ public class SingleController {
 
         JsonArray allRecipes=new JsonArray();
 
-
-
         for(int i=0; i<dataFromDb.size(); i++) {
             JsonElement title = gson.toJsonTree(dataFromDb.get(i).getTitle());
             JsonElement portions = gson.toJsonTree(dataFromDb.get(i).getPortions());
             JsonElement description = gson.toJsonTree(dataFromDb.get(i).getDescription());
             JsonElement instructions = gson.toJsonTree(dataFromDb.get(i).getInstructions());
-
 
             //           JsonElement ingredients = gson.toJsonTree(dataFromDb.get(i).getIngredientsArray());
 
@@ -118,9 +112,9 @@ public class SingleController {
             int nbrOfIngredientsInRecipe=dataFromDb.get(i).getIngredientsArray().size();
             for (int j=0; j<nbrOfIngredientsInRecipe; j++) {
                 JsonObject ingredientObject=new JsonObject();
-                JsonElement ingredientName=gson.toJsonTree(dataFromDb.get(i).getIngredientsArray().get(j).getIngredientTitle());
-                JsonElement ingredientUnits=gson.toJsonTree(dataFromDb.get(i).getIngredientsArray().get(j).getCompUnit());
-                JsonElement ingredientPrice=gson.toJsonTree(dataFromDb.get(i).getIngredientsArray().get(j).getPrice());
+                JsonElement ingredientName=gson.toJsonTree(dataFromDb.get(i).getIngredientsArray().get(j).getIngredientName());
+                JsonElement ingredientUnits=gson.toJsonTree(dataFromDb.get(i).getIngredientsArray().get(j).getUnitsOfIngredient());
+                JsonElement ingredientPrice=gson.toJsonTree(dataFromDb.get(i).getIngredientsArray().get(j).getIngredientPriceInRecipe());
                 ingredientObject.add("name", ingredientName);
                 ingredientObject.add("units", ingredientUnits);
                 ingredientObject.add("price", ingredientPrice);
@@ -139,7 +133,7 @@ public class SingleController {
 
             //recipeObject.add("ingredients", ingredientsArray);
             ingArr.add("ingredients", ingredientsArray);
-            recipeObject.add("listOfIngredient",ingArr);
+            recipeObject.add("listOfIngredients",ingArr);
             recipeObject.add("price", price);
             recipeObject.add("image link", imageLink);
 
