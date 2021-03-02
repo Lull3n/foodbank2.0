@@ -157,20 +157,23 @@ public class DatabaseRunner {
     /**
      * This method gets the recipe by the title of the recipe
      */
-    public static  ArrayList<Recipe> getRecipeByTitle(String title) {
+    public static  ArrayList<Recipe> getRecipeByTitle(String recipeTtitle) {
         ArrayList<Recipe> fullList = new ArrayList<>();
 
         try {
             Connection connection = connect();
             Statement stmt = connection.createStatement();
-            String queryRecipe = "select * from FoodBank.dbo.recipes WHERE title =" + title + "";
+            String queryRecipe = "select * from FoodBank.dbo.recipes WHERE title=" + recipeTtitle ;
             ResultSet resultSet = stmt.executeQuery(queryRecipe);
 
             while (resultSet.next()) {
-                //Relations relations = new Relations();
                 Recipe recipe = new Recipe();
                 recipe.setCategory(resultSet.getInt(2));
+
                 recipe.setTitle(resultSet.getString(3));
+
+                System.out.println("GET TITLE "+recipe.getTitle());
+
                 recipe.setPortions(resultSet.getInt(4));
                 recipe.setDescription(resultSet.getString(5));
 
@@ -190,6 +193,67 @@ public class DatabaseRunner {
         }
         return fullList;
 
+    }
+    /**
+     * Selects all relations from the database and sets the Relations object
+     * with the collected data.
+     *
+     * @return Arraylist</ Relations> of relations objects
+     */
+    public static ArrayList<Relations> selectRelationsById(int recipeID) {
+        ArrayList<Relations> list = new ArrayList<Relations>();
+        try {
+            Connection connection = connect();
+            Statement stmt = connection.createStatement();
+            String query = "select * from FoodBank.dbo.relations where recipe_id = "+recipeID;
+            ResultSet resultSet = stmt.executeQuery(query);
+
+            while (resultSet.next()) {
+                Relations relations = new Relations();
+                relations.setRelations_id(resultSet.getInt(1));
+                relations.setRecipe_id(resultSet.getInt(2));
+                relations.setIngredient_id(resultSet.getInt(3));
+                relations.setUnits(resultSet.getInt(4));
+                relations.setPrice(resultSet.getFloat(5));
+
+                list.add(relations);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    /**
+     * Selects all ingredietns from the database
+     *
+     * @return Arraylist</ Ingredient> of ingredient objects
+     */
+    public static ArrayList<Ingredient> createIngredientListById(int ingredientID) {
+        ArrayList<Ingredient> ingredientList = new ArrayList<Ingredient>();
+        try {
+            Connection connection = connect();
+            Statement stmt = connection.createStatement();
+            String query = "select * from FoodBank.dbo.ingredients2 WHERE id ="+ingredientID;
+            ResultSet resultSet = stmt.executeQuery(query);
+
+            while (resultSet.next()) {
+                Ingredient ingredient = new Ingredient();
+                ingredient.setIngredient_id(resultSet.getInt(1));
+                ingredient.setIngredientTitle(resultSet.getString(2));
+                ingredient.setPrice(resultSet.getInt(3));
+                ingredient.setPriceType(resultSet.getString(4));
+                ingredient.setPricePerUnit(resultSet.getFloat(5));
+                ingredient.setCompUnit(resultSet.getString(6));
+
+                ingredientList.add(ingredient);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return ingredientList;
     }
 
     /**
@@ -250,27 +314,41 @@ public class DatabaseRunner {
    /**
     * Kaller på stored procedure getIngredientAndTitle
     * */
-/*
-    public static Ingredients getI (Recipe recipe, String title){
 
+    public static ArrayList<Recipe> getRecipe ( String title){
+        ArrayList<Recipe> list = new ArrayList<>();
         try {
             Connection connection = connect();
             Statement stmt = connection.createStatement();
-            String query = "{call FoodBank.dbo.getIngredientsAndTitle(" + title + ") }";
+            String query = "{call FoodBank.dbo.recipeByTitle(" + title + ") }";
             ResultSet resultSet = stmt.executeQuery(query);
             while (resultSet.next()){
-               Ingredients ingredients = new Ingredients();
-               ingredients.setTitle(resultSet.getString(2));
-               recipe.addToArray(ingredients);
-               return ingredients; //todo test!
+                Recipe recipe = new Recipe();
+                recipe.setCategory(resultSet.getInt(2));
+
+                recipe.setTitle(resultSet.getString(3));
+
+                System.out.println("GET TITLE "+recipe.getTitle());
+
+                recipe.setPortions(resultSet.getInt(4));
+                recipe.setDescription(resultSet.getString(5));
+
+                //todo finn en løsning på ingredienser
+                recipe.setIngredientsString(resultSet.getString(6));
+                //recipe.setIngredients((Ingredients) resultSet.getObject(6));
+
+                recipe.setInstructions(resultSet.getString(7));
+                recipe.setImageLink(resultSet.getString(8));
+                recipe.setLink(resultSet.getString(9));
+                list.add(recipe);
             }
 
 
-        } catch (SQLException | ClassNotFoundException throwables) {
+        } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        return null;
+        return list;
     }
 
-*/
+
 }
