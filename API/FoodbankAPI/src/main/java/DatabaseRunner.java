@@ -16,8 +16,8 @@ public class DatabaseRunner {
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             //fixme Skriv inn ditt brukernavn og passord til databasen
-            String user = "javaConnection";
-            String pw = "hejDatabasenFood";
+            String user = "sa";
+            String pw = "MauHjelp1!";
 
             String dbURL = "jdbc:sqlserver://localhost";
 
@@ -157,15 +157,13 @@ public class DatabaseRunner {
     /**
      * This method gets the recipe by the title of the recipe
      */
-  /*  public static void getRecipeByTitle(String title) {
-        ArrayList<Object> fullList = new ArrayList<>();
+    public static  ArrayList<Recipe> getRecipeByTitle(String title) {
+        ArrayList<Recipe> fullList = new ArrayList<>();
 
         try {
             Connection connection = connect();
             Statement stmt = connection.createStatement();
-            // String query = "select * from FoodBank.dbo.relations";
             String queryRecipe = "select * from FoodBank.dbo.recipes WHERE title =" + title + "";
-            // ResultSet resultSet = stmt.executeQuery(query);
             ResultSet resultSet = stmt.executeQuery(queryRecipe);
 
             while (resultSet.next()) {
@@ -174,14 +172,14 @@ public class DatabaseRunner {
                 recipe.setCategory(resultSet.getInt(2));
                 recipe.setTitle(resultSet.getString(3));
                 recipe.setPortions(resultSet.getInt(4));
-                recipe.setDescr(resultSet.getString(5));
+                recipe.setDescription(resultSet.getString(5));
 
                 //todo finn en løsning på ingredienser
                 recipe.setIngredientsString(resultSet.getString(6));
                 //recipe.setIngredients((Ingredients) resultSet.getObject(6));
 
                 recipe.setInstructions(resultSet.getString(7));
-                recipe.setImage(resultSet.getString(8));
+                recipe.setImageLink(resultSet.getString(8));
                 recipe.setLink(resultSet.getString(9));
                 fullList.add(recipe);
             }
@@ -189,11 +187,10 @@ public class DatabaseRunner {
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
         }
+        return fullList;
 
-    }*/
+    }
 
     /**
      * This method gets the ID of the ingredients by the recipe ID

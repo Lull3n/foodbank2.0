@@ -5,6 +5,7 @@
  */
 
 import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 
 import static spark.Spark.*;
 
@@ -15,7 +16,9 @@ public class API {
  **/
     public static void initAPI() {
 
-        // bare et utkast
+        /**
+         * Returns a JsonArray with ALL the recipes
+         * */
         get("/recipe", (request, response) -> {
             Controller controller = new Controller();
             System.out.println("Get all recipes");
@@ -24,16 +27,19 @@ public class API {
             response.header("Content-Type", "application/json");
             return recipeData;
         });
+        /**
+         * Expects a string with the recipes name and returns a
+         * recipe with that name
+         * */
+        get("/recipe/:title", (request, response) -> {
 
-        get("/recipe/:id", (request, response) -> {
-
-            String id = request.params("id");
+            String title = request.params("title");
             //Controller controller = new Controller();
-            System.out.println("Get recipe by id, but why would you?");
-            JsonArray recipeData = Controller.convertAllRecipesToJson();
+            System.out.println("Get recipe by title");
+            //JsonArray recipeData = Controller.convertAllRecipesToJson();
 
             response.header("Content-Type", "application/json");
-            return recipeData;
+            return null;
         });
     }
 }

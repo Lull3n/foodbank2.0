@@ -78,11 +78,15 @@ public class Controller {
           return dataReturnObjects;
     }
 
+
+
     public static JsonArray convertAllRecipesToJson() {
         ArrayList<DataReturn> dataFromDb = createDataReturnAllRecipes();
         Gson gson = new Gson();
 
         JsonArray allRecipes=new JsonArray();
+
+
 
         for(int i=0; i<dataFromDb.size(); i++) {
             JsonElement title = gson.toJsonTree(dataFromDb.get(i).getTitle());
@@ -110,21 +114,26 @@ public class Controller {
             //JsonElement unit = gson.toJsonTree(dataFromDb.get(i).getUnit());
             JsonElement price = gson.toJsonTree(dataFromDb.get(i).getPrice());
             JsonElement imageLink = gson.toJsonTree(dataFromDb.get(i).getImageLink());
-
             JsonObject recipeObject = new JsonObject();
+            JsonObject ingArr = new JsonObject();
             recipeObject.add("title", title);
             recipeObject.add("portions", portions);
             recipeObject.add("description", description);
             recipeObject.add("instructions", instructions);
-            recipeObject.add("ingredients", ingredientsArray);
+
+            //recipeObject.add("ingredients", ingredientsArray);
+            ingArr.add("ingredients", ingredientsArray);
+            recipeObject.add("listOfIngredient",ingArr);
             recipeObject.add("price", price);
             recipeObject.add("image link", imageLink);
 
-            allRecipes.add(recipeObject);
+           allRecipes.add(recipeObject);
+
+            //allRecipes.add(ingArr);
         }
 
          System.out.println(allRecipes);
-        return allRecipes;
+        return allRecipes ;
     }
 
     public static void main(String[] args) {
