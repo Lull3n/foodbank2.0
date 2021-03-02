@@ -12,7 +12,7 @@ public class DataReturn {
     private String ingredientString;
     private int unit;
     private double price;
-    private ArrayList<Ingredient> ingredientsArray = new ArrayList<>();
+    private ArrayList<Ingredient> ingredientsArray = new ArrayList<Ingredient>();
 
     public String getImageLink() { return imageLink;}
 

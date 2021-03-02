@@ -14,7 +14,7 @@ public class Recipe {
     private String instructions;
     private String imageLink;
     private String link;
-    private ArrayList<String> ingredientArray;
+    //private ArrayList<String> ingredientArray;
 
     public String getIngredientsString() {
         return ingredientsString;

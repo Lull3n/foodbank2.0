@@ -17,7 +17,7 @@ public class API {
 
         // bare et utkast
         get("/recipe", (request, response) -> {
-           // Controller controller = new Controller();
+            Controller controller = new Controller();
             System.out.println("Get all recipes");
             JsonArray recipeData = Controller.convertAllRecipesToJson();
 

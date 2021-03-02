@@ -1,5 +1,6 @@
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 /**
  * This class connects to the SQL database
@@ -11,7 +12,7 @@ public class DatabaseRunner {
      * This method creates a connection to the database
      * Remember to change username and password to your own :)
      */
-    public static Connection connect() throws ClassNotFoundException {
+    public static Connection connect() {
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             //fixme Skriv inn ditt brukernavn og passord til databasen
@@ -26,6 +27,8 @@ public class DatabaseRunner {
                 return conn;
             }
         } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } catch (ClassNotFoundException e) {
             System.out.println(e.getMessage());
         }
 
@@ -61,9 +64,7 @@ public class DatabaseRunner {
                 list.add(recipe);
             }
 
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        } catch (ClassNotFoundException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return list;
@@ -94,9 +95,7 @@ public class DatabaseRunner {
                 list.add(relations);
             }
 
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        } catch (ClassNotFoundException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return list;
@@ -107,8 +106,8 @@ public class DatabaseRunner {
      *
      * @return Arraylist</ Ingredient> of ingredient objects
      */
-    public static ArrayList<Ingredient> selectIngredients() {
-        ArrayList<Ingredient> list = new ArrayList<Ingredient>();
+    public static ArrayList<Ingredient> createIngredientList() {
+        ArrayList<Ingredient> ingredientList = new ArrayList<Ingredient>();
         try {
             Connection connection = connect();
             Statement stmt = connection.createStatement();
@@ -124,16 +123,36 @@ public class DatabaseRunner {
                 ingredient.setPricePerUnit(resultSet.getFloat(5));
                 ingredient.setCompUnit(resultSet.getString(6));
 
-                list.add(ingredient);
+                ingredientList.add(ingredient);
             }
 
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        } catch (ClassNotFoundException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
-        return list;
+        return ingredientList;
     }
+
+//    /**
+//     * This method gets all tuples with a specific recipe_id from the relations table
+//     * @param recipe
+//     * @return a linked list with relations
+//     */
+//    public static LinkedList<Relations> selectRelationsForReipe(int recipe_id) {
+//        LinkedList<Relations> recipeRelations = new LinkedList<Relations>();
+//
+//        try {
+//            Connection connection = connect();
+//            Statement stmt = connection.createStatement();
+//            String query = "select * from FoodBank.dbo.ingredients2 where recipe_id=;
+//            ResultSet resultSet = stmt.executeQuery(query);
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        } catch (ClassNotFoundException e) {
+//            e.printStackTrace();
+//        }
+//
+//    }
+
 
     /**
      * This method gets the recipe by the title of the recipe
