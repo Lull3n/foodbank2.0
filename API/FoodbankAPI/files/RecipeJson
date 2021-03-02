@@ -1,24 +1,22 @@
-{
-"category": "1",
-"title": "pizza",
-"portions": "2",
-"description": "blabla",
-"ingredients": ["cheese", "tomato", "meat"],
-"instructions": "Make it",
-"image": "www",
-"link": "www"
-}
 
-{
 "title": "",
 "portions": "",
 "description": "",
 
 "instructions": "",
 
-"mengde":"",
-"ingredients": "",
-"unit":"",
+"ingredients":
+    [
+        {
+            "Units": "",
+            "ingredient": "",
+            "price": ""
+        },
+        {
+            "units": "",
+            "ingredient": "",
+            "price" :""
+        }
 
-"price": ""
+"Totalprice": ""
 }
