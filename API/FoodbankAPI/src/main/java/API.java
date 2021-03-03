@@ -36,7 +36,7 @@ public class API {
             String title = request.params("title");
             //Controller controller = new Controller();
             System.out.println("Get recipe by title");
-            JsonArray recipe = SingleController.convertAllRecipesToJson(title);
+            JsonObject recipe = SingleController.convertASingleRecipeToJson(title);
             //JsonArray recipeData = Controller.convertAllRecipesToJson();
 
             response.header("Content-Type", "application/json");

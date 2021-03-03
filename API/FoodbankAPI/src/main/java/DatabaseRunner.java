@@ -1,5 +1,6 @@
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 
 /**
@@ -315,40 +316,37 @@ public class DatabaseRunner {
     * Kaller på stored procedure getIngredientAndTitle
     * */
 
-    public static ArrayList<Recipe> getRecipe ( String title){
-        ArrayList<Recipe> list = new ArrayList<>();
+    public static Recipe getRecipe (String title){
+        Recipe recipe = new Recipe();
+
         try {
             Connection connection = connect();
             Statement stmt = connection.createStatement();
-            String query = "{call FoodBank.dbo.recipeByTitle(" + title + ") }";
+            String query = "{call FoodBank.dbo.recipeByTitle('"+title+"') }";
             ResultSet resultSet = stmt.executeQuery(query);
-            while (resultSet.next()){
-                Recipe recipe = new Recipe();
-                recipe.setCategory(resultSet.getInt(2));
+            System.out.println(resultSet+"resultset ska skrivas ut här");
 
-                recipe.setTitle(resultSet.getString(3));
+            recipe.setCategory(resultSet.getInt(2));
+            recipe.setTitle(resultSet.getString(3));
+            System.out.println("GET TITLE " + recipe.getTitle());
+            recipe.setPortions(resultSet.getInt(4));
+            recipe.setDescription(resultSet.getString(5));
 
-                System.out.println("GET TITLE "+recipe.getTitle());
+            //todo finn en løsning på ingredienser
+            recipe.setIngredientsString(resultSet.getString(6));
+            //recipe.setIngredients((Ingredients) resultSet.getObject(6));
 
-                recipe.setPortions(resultSet.getInt(4));
-                recipe.setDescription(resultSet.getString(5));
-
-                //todo finn en løsning på ingredienser
-                recipe.setIngredientsString(resultSet.getString(6));
-                //recipe.setIngredients((Ingredients) resultSet.getObject(6));
-
-                recipe.setInstructions(resultSet.getString(7));
-                recipe.setImageLink(resultSet.getString(8));
-                recipe.setLink(resultSet.getString(9));
-                list.add(recipe);
-            }
-
+            recipe.setInstructions(resultSet.getString(7));
+            recipe.setImageLink(resultSet.getString(8));
+            recipe.setLink(resultSet.getString(9));
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        return list;
+        return recipe;
     }
+
+
 
 
 }
