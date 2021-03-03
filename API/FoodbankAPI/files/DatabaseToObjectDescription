@@ -1,0 +1,32 @@
+Klassen Recipe:
+Varje recipe-objekt motsvarar en rad i tabellen recipe i databasen. Varje kolumn i tabellen har ett attribut i klassen.
+
+Klassen Ingredient:
+Varje ingredient-objekt motsvarar en rad i tabellen ingredient i databasen. Varje kolumn i tabellen har ett attribut i
+klassen.
+
+Klassen Relations:
+Varje relations-objekt motsvarar en rad i tabellen relations i databasen. Varje kolumn i tabellen har ett attribut i
+klassen.
+
+Klassen DataReturn:
+Varje dataReturn-objekt motsvarar ett recept så som det ska skickas till klienten, dvs med alla ingredienser som
+element i en array.
+
+Klassen IngredientsInRecipe:
+Varje ingredientsInRecipe-objekt representerar en ingrediens i ett recept med attribut för antal enheter det ska vara
+av ingrediensen i aktuellt recept samt pris för just denna ingrediens i detta recept. 
+Ett recept representeras således av ett datatReturn-objekt med en lista innehållandes lika många element som receptet
+har ingredienser. Varje element i listan är ett ingredientInRecip-objekt.
+
+För att skapa ett Jsonobjekt att skicka till klienten:
+- Skapa en lista med recipe-objekt som representerar hela recipetabellen
+- Skapa en lista med ingredient-objekt som representerar hela ingredienstabellen
+- Skapa en lista med relations-objekt som representerar hela relations-tabellen
+- Skapa en lista med lika många dataReturn-objekt som det finns recept i reciep-tabellen
+- Varje dataReturn-objekt förses med en lista av ingredientsInRecipe-objekt, lika många objekt som receptet har
+  ingredienser. Attributen i ingredientsInRecipe-objeken sätts med värden från relations-objektet som motsvarar
+  aktuell ingrediens i aktuellt recept
+- ingredientsInRecipe-objekten och dataReturn-objekten parsas om till JsonObjekt som stoppas in i en Json-array
+
+
