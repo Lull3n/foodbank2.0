@@ -1,4 +1,10 @@
+DatabaseRunner.class
 IngredientsInRecipe.class
-Server.class
+Ingredient.class
 DataReturn.class
+API.class
 Recipe.class
+SingleController.class
+Server.class
+Controller.class
+Relations.class

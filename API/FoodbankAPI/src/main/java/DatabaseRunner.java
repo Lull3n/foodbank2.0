@@ -164,7 +164,7 @@ public class DatabaseRunner {
         try {
             Connection connection = connect();
             Statement stmt = connection.createStatement();
-            String queryRecipe = "select * from FoodBank.dbo.recipes WHERE title=" + recipeTtitle ;
+            String queryRecipe = "select * from FoodBank.dbo.recipes WHERE title=" + recipeTtitle;
             ResultSet resultSet = stmt.executeQuery(queryRecipe);
 
             while (resultSet.next()) {
@@ -318,27 +318,33 @@ public class DatabaseRunner {
 
     public static Recipe getRecipe (String title){
         Recipe recipe = new Recipe();
+        String query = "{ call FoodBank.dbo.recipeByTitle(?) }";
+        ResultSet resultSet;
 
-        try {
-            Connection connection = connect();
-            Statement stmt = connection.createStatement();
-            String query = "{call FoodBank.dbo.recipeByTitle('"+title+"') }";
-            ResultSet resultSet = stmt.executeQuery(query);
-            System.out.println(resultSet+"resultset ska skrivas ut här");
+        try (Connection connection = connect();
+             CallableStatement callStmt = connection.prepareCall(query)) {
 
-            recipe.setCategory(resultSet.getInt(2));
-            recipe.setTitle(resultSet.getString(3));
-            System.out.println("GET TITLE " + recipe.getTitle());
-            recipe.setPortions(resultSet.getInt(4));
-            recipe.setDescription(resultSet.getString(5));
+            callStmt.setString(1,title);
+            resultSet = callStmt.executeQuery();
 
-            //todo finn en løsning på ingredienser
-            recipe.setIngredientsString(resultSet.getString(6));
-            //recipe.setIngredients((Ingredients) resultSet.getObject(6));
+            while (resultSet.next()) {
+                System.out.println("Title: " + title);
+                System.out.println(resultSet + " resultset ska skrivas ut här");
 
-            recipe.setInstructions(resultSet.getString(7));
-            recipe.setImageLink(resultSet.getString(8));
-            recipe.setLink(resultSet.getString(9));
+                recipe.setCategory(resultSet.getInt(2));
+                recipe.setTitle(resultSet.getString(3));
+                System.out.println("GET TITLE " + recipe.getTitle());
+                recipe.setPortions(resultSet.getInt(4));
+                recipe.setDescription(resultSet.getString(5));
+
+                //todo finn en løsning på ingredienser
+                recipe.setIngredientsString(resultSet.getString(6));
+                //recipe.setIngredients((Ingredients) resultSet.getObject(6));
+
+                recipe.setInstructions(resultSet.getString(7));
+                recipe.setImageLink(resultSet.getString(8));
+                recipe.setLink(resultSet.getString(9));
+            }
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();

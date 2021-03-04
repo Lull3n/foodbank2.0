@@ -122,7 +122,7 @@ public class SingleController {
     }
 
     public static void main(String[] args) {
-        SingleController.convertASingleRecipeToJson("Pannkakor");
+        SingleController.convertASingleRecipeToJson("Fisksoppa");
     }
 
 }
