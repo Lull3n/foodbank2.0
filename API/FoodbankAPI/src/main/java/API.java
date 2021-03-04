@@ -10,10 +10,10 @@ import com.google.gson.JsonObject;
 import static spark.Spark.*;
 
 public class API {
-/**
- * Noting works
- * localhost:7000
- **/
+    /**
+     * Noting works
+     * localhost:7000
+     **/
     public static void initAPI() {
 
         /**
@@ -22,9 +22,15 @@ public class API {
         get("/recipe", (request, response) -> {
             Controller controller = new Controller();
             System.out.println("Get all recipes");
+
+
             JsonArray recipeData = Controller.convertAllRecipesToJson();
 
             response.header("Content-Type", "application/json");
+            if (response.status() == 500) {
+                System.out.println("Error 500");
+                return HttpResponseController.error500();
+            }
             return recipeData;
         });
         /**
@@ -32,15 +38,14 @@ public class API {
          * recipe with that name
          * */
         get("/recipe/:title", (request, response) -> {
-
-            String title = request.params("title");
-            //Controller controller = new Controller();
-            System.out.println("Get recipe by title");
-            JsonObject recipe = SingleController.convertASingleRecipeToJson(title);
-            //JsonArray recipeData = Controller.convertAllRecipesToJson();
-
             response.header("Content-Type", "application/json");
+            String title = request.params("title");
+
+            JsonObject recipe = SingleController.convertASingleRecipeToJson(title);
+
             return recipe;
+
+            //JsonArray recipeData = Controller.convertAllRecipesToJson();
         });
     }
 }

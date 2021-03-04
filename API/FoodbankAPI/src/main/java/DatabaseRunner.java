@@ -17,8 +17,8 @@ public class DatabaseRunner {
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             //fixme Skriv inn ditt brukernavn og passord til databasen
-            String user = "javaConnection";
-            String pw = "hejDatabasenFood";
+            String user = "sa";
+            String pw = "MauHjelp1!";
 
             String dbURL = "jdbc:sqlserver://localhost";
 
