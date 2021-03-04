@@ -7,7 +7,6 @@ public class Server {
 
         port(7000);
 
-
         API.initAPI();
 
         System.out.println("Post API request");

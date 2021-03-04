@@ -80,7 +80,6 @@ public class Controller {
         return dataReturnObjects;
     }
 
-
     public static JsonArray convertAllRecipesToJson() {
         ArrayList<DataReturn> dataFromDb = createDataReturnAllRecipes();
         Gson gson = new Gson();
@@ -119,7 +118,7 @@ public class Controller {
             recipeObject.add("totalPrice", price);
             recipeObject.add("imageLink", imageLink);
 
-           allRecipes.add(recipeObject);
+            allRecipes.add(recipeObject);
         }
 
          System.out.println(allRecipes);

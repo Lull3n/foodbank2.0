@@ -10,5 +10,8 @@
         <module name="FoodBankAPI" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="FoodBankAPI" target="11" />
+    </bytecodeTargetLevel>
   </component>
 </project>

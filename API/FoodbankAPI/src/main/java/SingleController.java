@@ -11,7 +11,6 @@ public class SingleController {
     /**
     * Creates an arrayList with Recipe-objects, representing the recipe table in the database
     */
-
     public static Recipe singleRecipe(String title) {
         Recipe recipe = DatabaseRunner.getRecipe(title);
         System.out.println(recipe);
@@ -19,24 +18,9 @@ public class SingleController {
         return recipe;
     }
 
-//*
-//     * Creates an arrayList with Relations-objects, representing the relations table in the database
-//     *
-
-    public static ArrayList<Relations> singleRelations(int id) {
-        ArrayList<Relations> list = DatabaseRunner.selectRelationsById(id);
-        return list;
-    }
-
-//*
-//     * Creates an arrayList with Ingredient-objects, representing the ingredient table in the database
-//     *
-
-    public static ArrayList<Ingredient> singleIngreditent(int id) {
-        ArrayList<Ingredient> list = DatabaseRunner.createIngredientListById(id);
-        return list;
-    }
-
+    /**
+    * Creates an arrayList with Ingredient-objects, representing the ingredient table in the database
+    */
     public static DataReturn createDataReturnSingle(String title) {
 
         Recipe singleRecipe=singleRecipe(title);
@@ -49,7 +33,6 @@ public class SingleController {
         singleDataReturn.setIngredientString(singleRecipe.getIngredientsString());
         singleDataReturn.setImageLink(singleRecipe.getImageLink());
 
-        // Nu ska vil sätta arrayen med ingredienser
 
         ArrayList<Ingredient> ingredientsList=Controller.getIngredientsFromDatabase();
         HashMap<Integer, Ingredient> ingredientHashMap = new HashMap<Integer, Ingredient>();
