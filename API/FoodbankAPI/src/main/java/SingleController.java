@@ -43,15 +43,16 @@ public class SingleController {
         ArrayList<Relations> relationsList=Controller.getRelationsFromDatabase();
         ArrayList<IngredientsInRecipe> list = new ArrayList<>();
         double price=0;
-        for (int i = 0; i < relationsList.size(); i++) {
-            if (singleRecipe.getRecipe_id() == relationsList.get(i).getRecipe_id()) {
-                IngredientsInRecipe ingredientInRecipe = new IngredientsInRecipe();
-                ingredientInRecipe.setIngredientName(ingredientHashMap.get(relationsList.get(i).getIngredient_id()).getIngredientTitle());
-                ingredientInRecipe.setUnitsOfIngredient(relationsList.get(i).getUnits());
-                ingredientInRecipe.setIngredientPriceInRecipe(relationsList.get(i).getPrice());
-                list.add(ingredientInRecipe);
-                price += (relationsList.get(i).getPrice());
-            }
+
+        ArrayList<Relations> recipeRelations= DatabaseRunner.getRelationsForRecipe(singleRecipe.getRecipe_id());
+        for (Relations relation:recipeRelations) {
+            IngredientsInRecipe ingredientsInRecipe = new IngredientsInRecipe();
+            ingredientsInRecipe.setIngredientName(ingredientHashMap.get(relation.getIngredient_id()).getIngredientTitle());
+            ingredientsInRecipe.setUnitsOfIngredient(relation.getUnits());
+            ingredientsInRecipe.setIngredientPriceInRecipe(relation.getPrice());
+            list.add(ingredientsInRecipe);
+            price += (relation.getPrice());
+
         }
 
         singleDataReturn.setIngredientsArray(list);
