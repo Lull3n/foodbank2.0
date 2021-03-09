@@ -1,7 +1,5 @@
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
 
 /**
  * This class connects to the SQL database
@@ -17,8 +15,8 @@ public class DatabaseRunner {
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             //fixme Skriv inn ditt brukernavn og passord til databasen
-            String user = "sa";
-            String pw = "MauHjelp1!";
+            String user = "FoodConnection";
+            String pw = "hejdatabasenfood";
 
             String dbURL = "jdbc:sqlserver://localhost";
 
@@ -163,5 +161,18 @@ public class DatabaseRunner {
             throwables.printStackTrace();
         }
         return recipe;
+    }
+
+
+    public static ArrayList<Recipe> getRecipeByCategory (int category){
+        ArrayList<Recipe> allRecipes = DatabaseRunner.selectRecipe();
+        ArrayList<Recipe> filteredRecipes = new ArrayList<>();
+        for (int i = 0; i < allRecipes.size(); i++){
+            Recipe recipe = allRecipes.get(i);
+            if (allRecipes.get(i).getCategory() == category) {
+                filteredRecipes.add(recipe);
+            }
+        }
+        return filteredRecipes;
     }
 }
