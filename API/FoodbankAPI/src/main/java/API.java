@@ -19,7 +19,7 @@ public class API {
         /**
          * Returns a JsonArray with ALL the recipes
          * */
-        get("/recipe", (request, response) -> {
+        get("/foodbank/api/recipe", (request, response) -> {
             Controller controller = new Controller();
             System.out.println("Get all recipes");
 
@@ -37,7 +37,7 @@ public class API {
          * Expects a string with the recipes name and returns a
          * recipe with that name
          * */
-        get("/recipe/:title", (request, response) -> {
+        get("/foodbank/api/recipe/:title", (request, response) -> {
             response.header("Content-Type", "application/json");
             String title = request.params("title");
 
@@ -46,6 +46,18 @@ public class API {
             return recipe;
 
             //JsonArray recipeData = Controller.convertAllRecipesToJson();
+        });
+
+        get("/foodbank/api/category/:category", (request, response) ->{
+            response.header("Content-Type","application/json");
+            String category = request.params("category");
+            System.out.println("Get all categories");
+            JsonArray categoryData = Controller.convertAllRecipesByCategoryToJson(Integer.parseInt(category));
+
+
+
+            return categoryData;
+
         });
     }
 }
