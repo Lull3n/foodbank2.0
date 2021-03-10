@@ -163,7 +163,14 @@ public class DatabaseRunner {
         return recipe;
     }
 
-
+    /**
+     * This method receives a category to filter recipes by
+     * First it creates an arrayList containing all the recipes
+     * Then it creates an empty arrayList which will contain the recipes with the correct category
+     * Then it loops through all the recipes and adds the recipes with the correct category to the filtered arrayList
+     * @param category what category to filter by
+     * @return an arrayList containing all recipes of a specific category
+     */
     public static ArrayList<Recipe> getRecipeByCategory (int category){
         ArrayList<Recipe> allRecipes = DatabaseRunner.selectRecipe();
         ArrayList<Recipe> filteredRecipes = new ArrayList<>();
