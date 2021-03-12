@@ -12,7 +12,7 @@ public class Controller {
         Database db = new Database();
         JsonCleaner.init();
         try {
-            JsonArray array  = (JsonArray) JsonParser.parseReader(new FileReader("files/coopSort.json"));
+            JsonArray array  = (JsonArray) JsonParser.parseReader(new FileReader("files/coopSort-2021-03-12.json"));
             JsonCleaner.cleanArray(array);
             db.insertJsonArray(array);
         } catch (Exception e){

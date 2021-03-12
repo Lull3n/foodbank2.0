@@ -89,6 +89,12 @@ public class API {
                 case "pasta" :
                     category = "3";
                     break;
+                case "vegetariskt" :
+                    category = "4";
+                    break;
+                case "veganskt" :
+                    category = "5";
+                    break;
             }
             JsonArray categoryData = Controller.convertAllRecipesByCategoryToJson(Integer.parseInt(category));
 
