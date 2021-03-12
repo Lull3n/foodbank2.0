@@ -1,13 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8c2a30c4-3bae-4d65-a732-f63bbe1aee64" name="Default Changelist" comment="" />
+    <list default="true" id="8c2a30c4-3bae-4d65-a732-f63bbe1aee64" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/API/FoodbankAPI/.idea/libraries/com_mashape_unirest_unirest_java_1_4_9.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/API/FoodbankAPI/src/main/java/WebScraper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Verktyg/Databasverktyg/IngredientsInserter/files/coopSort-2021-03-12.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/FoodbankAPI/.idea/FoodbankAPI.iml" beforeDir="false" afterPath="$PROJECT_DIR$/API/FoodbankAPI/.idea/FoodbankAPI.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/FoodbankAPI/src/main/java/API.java" beforeDir="false" afterPath="$PROJECT_DIR$/API/FoodbankAPI/src/main/java/API.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Verktyg/Databasverktyg/IngredientsInserter/.idea/libraries/com_google_code_gson_gson_2_8_6.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Verktyg/Databasverktyg/IngredientsInserter/.idea/libraries/com_google_code_gson_gson_2_8_6.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Verktyg/Databasverktyg/IngredientsInserter/src/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/Verktyg/Databasverktyg/IngredientsInserter/src/Controller.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Verktyg/Databasverktyg/IngredientsInserter/src/Database.java" beforeDir="false" afterPath="$PROJECT_DIR$/Verktyg/Databasverktyg/IngredientsInserter/src/Database.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Verktyg/Databasverktyg/RelationsAutoInserter/RelationsAutoInserter.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Verktyg/Databasverktyg/RelationsAutoInserter/RelationsAutoInserter.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Verktyg/Databasverktyg/RelationsInserter/RelationsInserter.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Verktyg/Databasverktyg/RelationsInserter/RelationsInserter.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Verktyg/Databasverktyg/coopSort.json" beforeDir="false" afterPath="$PROJECT_DIR$/Verktyg/Databasverktyg/coopSort.json" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1pbUBqYDu8nB4Do2fnP50UaoenW" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/Verktyg/Databasverktyg/IngredientsInserter" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\vikto\Documents\GitHub\foodbank2.0\Verktyg\Databasverktyg" />
+    </key>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
   <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="8c2a30c4-3bae-4d65-a732-f63bbe1aee64" name="Default Changelist" comment="" />
+      <created>1615451150170</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1615451150170</updated>
+    </task>
     <servers />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="740" y="275" key="FileChooserDialogImpl" timestamp="1615559750554">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="740" y="275" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1615559750554" />
   </component>
 </project>
