@@ -1,29 +1,35 @@
 package ri;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.text.MessageFormat;
-import java.util.Date;
 
-public class Controller {
+public class Controller
+{
 	public static void main(String[] args) {
 		new Controller();
 	}
 	
 	private Connector connector;
 
-	public Controller() {
+	public Controller()
+	{
 		GUI gui = new GUI();
 		gui.setController(this);
 		connector = new Connector();
 	}
 
+	/** Adjusting the user input into the correct message format and sends it to the Connector class
+	 * @param category
+	 * @param title
+	 * @param description
+	 * @param portions
+	 * @param link
+	 * @param imageLink
+	 * @param ingredients
+	 * @param instructions
+	 */
 	public void submit(int category, String title, String description, int portions, String link, String imageLink,
-			String ingredients, String instructions) {
+			String ingredients, String instructions)
+	{
 		System.out.println("Formatting strings...");
 		String ingredientsFix;
 		String instructionsFix;
