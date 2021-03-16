@@ -56,5 +56,6 @@
     <orderEntry type="library" name="org.testng:testng:6.14.31" level="project" />
     <orderEntry type="library" name="org.junit.vintage:junit-vintage-engine:5.2.0" level="project" />
     <orderEntry type="library" name="com.konghq:unirest-java:3.11.11" level="project" />
+    <orderEntry type="library" name="com.mashape.unirest:unirest-java:1.4.9" level="project" />
   </component>
 </module>

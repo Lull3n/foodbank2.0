@@ -11,7 +11,7 @@ public class Database {
     Connection connection;
     //com.microsoft.sqlserver:mssql-jdbc:8.4.1.jre14
     private String dbURL = "jdbc:sqlserver://localhost:1433;" +
-            "databaseName=FoodBank;user=javaConnection;password=hejDatabasenFood;";
+            "databaseName=FoodBank;user=FoodConnection;password=hejdatabasenfood;";
 
     public Database(){
 
