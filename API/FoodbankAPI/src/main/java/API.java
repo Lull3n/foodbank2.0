@@ -38,24 +38,18 @@ public class API {
 
         before((request, response) -> response.header("Access-Control-Allow-Origin", "*"));
 
+        Controller.setTablesAndProcedures("FoodBank.dbo.recipes",
+                "FoodBank.dbo.ingredients2",
+                "FoodBank.dbo.getRelationsForRecipe" );
 
         /**
          * Returns a JsonArray with ALL the recipes
          * */
-
-        get("/recipe", (request, response) -> {
-            Controller APIController=new Controller();
-            APIController.setTablesAndProcedures("FoodBank.dbo.recipes","FoodBank.dbo.ingredients2",
-                    "FoodBank.dbo.getRelationsForRecipe");
-            JsonArray recipeData = APIController.convertAllRecipesToJson();
-
         get("/foodbank/api/recipe", (request, response) -> {
             System.out.println("Get all recipes");
-            Controller.setRecipeTbl("FoodBank.dbo.recipes");
 
 
             JsonArray recipeData = Controller.convertAllRecipesToJson();
-
 
             response.header("Content-Type", "application/json");
             if (response.status() == 500) {
@@ -64,37 +58,28 @@ public class API {
             }
             return recipeData;
         });
-
         /**
-         * Expects a string with the recipes name and returns a recipe with the same name
+         * Expects a string with the recipes name and returns a
+         * recipe with that name
          * */
-
-        get("/recipe/:title", (request, response) -> {
-            SingleController APIController=new SingleController();
-            APIController.setTablesAndProcedures("FoodBank.dbo.recipes","FoodBank.dbo.ingredients2",
-                    "FoodBank.dbo.getRelationsForRecipe");
-
-
         get("/foodbank/api/recipe/:title", (request, response) -> {
-
             response.header("Content-Type", "application/json");
             String title = request.params("title");
-            SingleController.setRecipeTbl("FoodBank.dbo.recipes");
 
-            JsonObject recipe = APIController.convertASingleRecipeToJson(title);
+
+            JsonObject recipe = SingleController.convertASingleRecipeToJson(title);
 
             return recipe;
         });
 
         /**
-         * expects a string with a number 0-3, kött, kyckling, fisk or pasta
+         * expects a string with a number 0-5, kött, kyckling, fisk, pasta, vegetariskt or veganskt
          * returns all recipes with the specified category
          */
         get("/foodbank/api/category/:category", (request, response) ->{
             response.header("Content-Type","application/json");
-            Controller.setRecipeTbl("FoodBank.dbo.recipe");
             String category = request.params("category").toLowerCase();
-            System.out.println("Get all categories");
+            System.out.println("Get all recipes by categories");
             switch (category){
                 case "kött" :
                     category = "0";
