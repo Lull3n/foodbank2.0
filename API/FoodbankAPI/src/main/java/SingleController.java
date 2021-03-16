@@ -18,24 +18,6 @@ public class SingleController {
         SingleController.relationsProc =relationsProc;
     }
 
-    public static void setRecipeTbl(String recipeTbl) {
-        SingleController.recipeTbl = recipeTbl;
-    }
-
-    public static void setIngredientsTbl(String ingredientsTbl) {
-        SingleController.ingredientsTbl = ingredientsTbl;
-    }
-
-    public static void setRelationsProc(String relationsProc) {
-        SingleController.relationsProc = relationsProc;
-    }
-
-    /**
-     * Creates an arrayList with Recipe-objects, representing the recipe table in the database
-     */
-
-    /**
-
 
     /**
     * Gets a recipe object
@@ -52,7 +34,7 @@ public class SingleController {
      **/
 
     public static ArrayList<Ingredient> getIngredientsFromDatabase(){
-        ArrayList<Ingredient> list = DatabaseRunner.createIngredientList();
+        ArrayList<Ingredient> list = DatabaseRunner.createIngredientList("FoodBank.dbo.ingredients2");
         return list;
     }
 
@@ -101,7 +83,7 @@ public class SingleController {
         return singleDataReturn;
     }
 
-    public JsonObject convertASingleRecipeToJson(String recipeTitle) {
+    public static JsonObject convertASingleRecipeToJson(String recipeTitle) {
         DataReturn dataFromDb = createDataReturnSingle(recipeTitle);
 
         if(dataFromDb.getTitle() ==null){
@@ -109,8 +91,6 @@ public class SingleController {
         }
         else {
             Gson gson = new Gson();
-
-            //JsonArray singleRecipe = new JsonArray();
 
             JsonElement title = gson.toJsonTree(dataFromDb.getTitle());
             JsonElement portions = gson.toJsonTree(dataFromDb.getPortions());

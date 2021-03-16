@@ -111,7 +111,7 @@ public class DatabaseRunner {
         try {
             Connection connection = connect();
             Statement stmt = connection.createStatement();
-            String query = "select * from "+ingredientsTable;
+            String query = "select * from "+ ingredientsTable;
             ResultSet resultSet = stmt.executeQuery(query);
 
             while (resultSet.next()) {
@@ -195,7 +195,6 @@ public class DatabaseRunner {
     }
 
     /**
-
      * This method receives a category to filter recipes by
      * First it creates an arrayList containing all the recipes
      * Then it creates an empty arrayList which will contain the recipes with the correct category
@@ -204,12 +203,14 @@ public class DatabaseRunner {
      * @return an arrayList containing all recipes of a specific category
      */
     public static ArrayList<Recipe> getRecipeByCategory (int category){
-        ArrayList<Recipe> allRecipes = DatabaseRunner.selectRecipe();
+        ArrayList<Recipe> allRecipes = DatabaseRunner.selectRecipe("FoodBank.dbo.recipes");
         ArrayList<Recipe> filteredRecipes = new ArrayList<>();
         for (int i = 0; i < allRecipes.size(); i++){
             Recipe recipe = allRecipes.get(i);
+//            System.out.println(recipe.toString());
             if (allRecipes.get(i).getCategory() == category) {
                 filteredRecipes.add(recipe);
+                System.out.println("Recipe added: " + recipe.getCategory());
             }
         }
         return filteredRecipes;
