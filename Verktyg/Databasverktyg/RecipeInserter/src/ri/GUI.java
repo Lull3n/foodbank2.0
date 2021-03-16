@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -14,20 +13,20 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
-public class GUI extends JPanel {
+public class GUI extends JPanel
+{
 
 	private static final Dimension tfDimensions = new Dimension(200, 25);
 
 	private Controller controller;
 
 	private JLabel lblCategories = new JLabel("Kategori: ");
-	private String[] categories = { "Kött", "Kyckling", "Fisk", "Pasta" };
+	private String[] categories = { "KÃ¶tt", "Kyckling", "Fisk", "Pasta" };
 	private JComboBox<String> boxCategories = new JComboBox<String>(categories);
 
 	private JLabel lblTitle = new JLabel("Titel: ");
@@ -40,10 +39,10 @@ public class GUI extends JPanel {
 	private String[] portions = { "2", "3", "4", "5", "6", "7", "8", "9", "10" };
 	private JComboBox<String> boxPortions = new JComboBox<String>(portions);
 
-	private JLabel lblLink = new JLabel("Länk: ");
+	private JLabel lblLink = new JLabel("Lï¿½nk: ");
 	private JTextField tfLink = new JTextField("");
 
-	private JLabel lblImage = new JLabel("Bildlänk: ");
+	private JLabel lblImage = new JLabel("BildlÃ¤nk: ");
 	private JTextField tfImage = new JTextField("");
 
 	private JLabel lblIngredients = new JLabel("Ingredienser", SwingUtilities.CENTER);
@@ -55,7 +54,8 @@ public class GUI extends JPanel {
 	private JButton btnSubmit = new JButton("Submit");
 	private JLabel lblStatus = new JLabel("Ready to submit");
 
-	public GUI() {
+	public GUI()
+	{
 		init();
 		JFrame frame = new JFrame();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -65,18 +65,21 @@ public class GUI extends JPanel {
 		frame.setMinimumSize(new Dimension(800, 600));
 	}
 
-	public void setController(Controller controller) {
+	public void setController(Controller controller)
+	{
 		this.controller = controller;
 	}
 
-	private void init() {
+	private void init()
+	{
 		setLayout(new BorderLayout());
 		add(topPanel(), BorderLayout.NORTH);
 		add(midPanel(), BorderLayout.CENTER);
 		add(botPanel(), BorderLayout.SOUTH);
 	}
 
-	private JPanel toptopPanel() {
+	private JPanel toptopPanel()
+	{
 		JPanel panel = new JPanel();
 		panel.setLayout(new FlowLayout());
 		panel.add(lblCategories);
@@ -90,7 +93,8 @@ public class GUI extends JPanel {
 		return panel;
 	}
 
-	private JPanel topbotPanel() {
+	private JPanel topbotPanel()
+	{
 		JPanel panel = new JPanel();
 		panel.setLayout(new FlowLayout());
 		panel.add(lblPortions);
@@ -105,7 +109,8 @@ public class GUI extends JPanel {
 		return panel;
 	}
 
-	private JPanel topPanel() {
+	private JPanel topPanel()
+	{
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridLayout(2, 3));
 		panel.add(toptopPanel());
@@ -113,7 +118,8 @@ public class GUI extends JPanel {
 		return panel;
 	}
 
-	private JPanel midleftPanel() {
+	private JPanel midleftPanel()
+	{
 		JPanel panel = new JPanel();
 		panel.setLayout(new BorderLayout());
 		panel.add(lblIngredients, BorderLayout.NORTH);
@@ -124,7 +130,8 @@ public class GUI extends JPanel {
 		return panel;
 	}
 
-	private JPanel midrightPanel() {
+	private JPanel midrightPanel()
+	{
 		JPanel panel = new JPanel();
 		panel.setLayout(new BorderLayout());
 		panel.add(lblInstructions, BorderLayout.NORTH);
@@ -135,7 +142,8 @@ public class GUI extends JPanel {
 		return panel;
 	}
 
-	private JPanel midPanel() {
+	private JPanel midPanel()
+	{
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridLayout(1, 2));
 		panel.add(midleftPanel());
@@ -143,7 +151,8 @@ public class GUI extends JPanel {
 		return panel;
 	}
 
-	private JPanel botPanel() {
+	private JPanel botPanel()
+	{
 		JPanel panel = new JPanel();
 		panel.setLayout(new FlowLayout());
 		panel.add(btnSubmit);
@@ -152,14 +161,14 @@ public class GUI extends JPanel {
 		return panel;
 	}
 
-	public void setStatusText(String string) {
-		lblStatus.setText(string);
-	}
-
-	private class SubmitListener implements ActionListener {
-
+	/**
+	 * Reads the input of the user and sends the information to the Controller class
+	 */
+	private class SubmitListener implements ActionListener
+	{
 		@Override
-		public void actionPerformed(ActionEvent e) {
+		public void actionPerformed(ActionEvent e)
+		{
 			controller.submit(boxCategories.getSelectedIndex(), tfTitle.getText(), tfDescription.getText(),
 					boxPortions.getSelectedIndex(), tfLink.getText(), tfImage.getText(), taIngredients.getText(),
 					taInstructions.getText());
