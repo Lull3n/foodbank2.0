@@ -6,6 +6,9 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+/**
+ * Class that manages the operations between the java code and the Microsoft SQL Server database.
+ */
 public class Connector {
 	private Connection connection;
 	private String dbURL = "jdbc:sqlserver://localhost:1433;" +
@@ -32,7 +35,11 @@ public class Connector {
 		}
 		return null;
 	}
-	
+
+	/**
+	 * Reads all the relations from the database and writes it to an ArrayList.
+	 * @return The ArrayList containing the relations.
+	 */
 	public ArrayList<String> loadAllRelations() {
 		try {
 			connection = DriverManager.getConnection(dbURL);
@@ -53,6 +60,13 @@ public class Connector {
 		return null;
 	}
 
+	/**
+	 * Reads a specific ingredient from the database and calculates the price depending on
+	 * how many units of the ingredient.
+	 * @param id The unique number of the ingredient
+	 * @param array The column of the specific ingredient in the database
+	 * @return ArrayList containing the calculated price and the relation ID.
+	 */
 	public ArrayList<String> loadIngredient(int id, String[] array) {
 		try {
 			connection = DriverManager.getConnection(dbURL);
@@ -82,6 +96,12 @@ public class Connector {
 		return null;
 	}
 
+	/**
+	 * Inserts the caluclated price into the database
+	 * @param id The unique number for a relation
+	 * @param price The calculated price
+	 * @return boolean value
+	 */
 	public boolean insertRelationPrice(int id, float price) {
 		try {
 			connection = DriverManager.getConnection(dbURL);
