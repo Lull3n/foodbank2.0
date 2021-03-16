@@ -29,8 +29,8 @@ public class Controller {
      * @param category what category the recipe is included in (0-3)
      * @return an arrayList containing all recipes with the param category
      */
-    public static ArrayList<Recipe> getRecipeFromDatabaseByCategory(int category){
-        ArrayList<Recipe> list = DatabaseRunner.getRecipeByCategory(category);
+    public ArrayList<Recipe> getRecipeFromDatabaseByCategory(int category){
+        ArrayList<Recipe> list = DatabaseRunner.getRecipeByCategory(category, recipeTbl);
 
         return list;
     }
@@ -49,6 +49,11 @@ public class Controller {
      **/
     public ArrayList<Ingredient> getIngredientsFromDatabase(){
         ArrayList<Ingredient> list = DatabaseRunner.createIngredientList(ingredientsTbl);
+        return list;
+    }
+
+    public ArrayList<Relations> getRelationsFromDatabase() {
+        ArrayList<Relations> list = DatabaseRunner.selectRelations(recipeTbl);
         return list;
     }
 
@@ -138,7 +143,7 @@ public class Controller {
         return allRecipes ;
     }
 
-    public static ArrayList<DataReturn> createDataReturnAllRecipesByCategory(int category) {
+    public ArrayList<DataReturn> createDataReturnAllRecipesByCategory(int category) {
         ArrayList<Recipe> recipeList = getRecipeFromDatabaseByCategory(category);
         ArrayList<Relations> relationsList = getRelationsFromDatabase();
         ArrayList<Ingredient> ingredientsList = getIngredientsFromDatabase();
@@ -178,7 +183,7 @@ public class Controller {
         return dataReturnObjects;
     }
 
-    public static JsonArray convertAllRecipesByCategoryToJson(int category) {
+    public JsonArray convertAllRecipesByCategoryToJson(int category) {
         ArrayList<DataReturn> dataFromDb = createDataReturnAllRecipesByCategory(category);
         Gson gson = new Gson();
         JsonArray allRecipes=new JsonArray();
