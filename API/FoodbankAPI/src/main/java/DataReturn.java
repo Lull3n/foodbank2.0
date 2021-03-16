@@ -10,7 +10,6 @@ public class DataReturn {
     private String description;
     private String instructions;
     private String ingredientString;
-    //private int unit;
     private double price;
     private ArrayList<IngredientsInRecipe> ingredientsArray = new ArrayList<IngredientsInRecipe>();
     private String imageLink;
@@ -64,14 +63,6 @@ public class DataReturn {
     public void setIngredientString(String ingredientString) {
         this.ingredientString = ingredientString;
     }
-//
-//    public int getUnit() {
-//        return unit;
-//    }
-//
-//    public void setUnit(int unit) {
-//        this.unit = unit;
-//    }
 
     public double getPrice() {
         return price;

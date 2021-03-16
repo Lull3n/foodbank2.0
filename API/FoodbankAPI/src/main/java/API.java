@@ -42,12 +42,20 @@ public class API {
         /**
          * Returns a JsonArray with ALL the recipes
          * */
+
+        get("/recipe", (request, response) -> {
+            Controller APIController=new Controller();
+            APIController.setTablesAndProcedures("FoodBank.dbo.recipes","FoodBank.dbo.ingredients2",
+                    "FoodBank.dbo.getRelationsForRecipe");
+            JsonArray recipeData = APIController.convertAllRecipesToJson();
+
         get("/foodbank/api/recipe", (request, response) -> {
             System.out.println("Get all recipes");
             Controller.setRecipeTbl("FoodBank.dbo.recipes");
 
 
             JsonArray recipeData = Controller.convertAllRecipesToJson();
+
 
             response.header("Content-Type", "application/json");
             if (response.status() == 500) {
@@ -56,16 +64,24 @@ public class API {
             }
             return recipeData;
         });
+
         /**
-         * Expects a string with the recipes name and returns a
-         * recipe with that name
+         * Expects a string with the recipes name and returns a recipe with the same name
          * */
+
+        get("/recipe/:title", (request, response) -> {
+            SingleController APIController=new SingleController();
+            APIController.setTablesAndProcedures("FoodBank.dbo.recipes","FoodBank.dbo.ingredients2",
+                    "FoodBank.dbo.getRelationsForRecipe");
+
+
         get("/foodbank/api/recipe/:title", (request, response) -> {
+
             response.header("Content-Type", "application/json");
             String title = request.params("title");
             SingleController.setRecipeTbl("FoodBank.dbo.recipes");
 
-            JsonObject recipe = SingleController.convertASingleRecipeToJson(title);
+            JsonObject recipe = APIController.convertASingleRecipeToJson(title);
 
             return recipe;
         });

@@ -12,6 +12,7 @@ import java.util.HashMap;
  * end user is sending request to the API.
  */
 public class Controller {
+
     private static String recipeTbl;
     private static String ingredientsTbl;
     private static String relationsProc;
@@ -32,17 +33,13 @@ public class Controller {
 
     public static void setRelationsProc(String relationsProc) {
         Controller.relationsProc = relationsProc;
+
     }
 
     /**
+
      * Creates an arrayList with Recipe-objects, representing the recipe table in the database
-     **/
-    public static ArrayList<Recipe> getRecipeFromDatabase() {
-        ArrayList<Recipe> list =DatabaseRunner.selectRecipe();
-        return list;
-    }
 
-    /**
      * @param category what category the recipe is included in (0-3)
      * @return an arrayList containing all recipes with the param category
      */
@@ -56,9 +53,10 @@ public class Controller {
 
     /**
      * Creates an arrayList with Relations-objects, representing the relations table in the database
+
      **/
-    public static ArrayList<Relations> getRelationsFromDatabase() {
-        ArrayList<Relations> list = DatabaseRunner.selectRelations();
+    public ArrayList<Recipe> getRecipeFromDatabase() {
+        ArrayList<Recipe> list =DatabaseRunner.selectRecipe(recipeTbl);
         return list;
     }
 
@@ -66,44 +64,42 @@ public class Controller {
     /**
      * Creates an arrayList with Ingredient-objects, representing the ingredient table in the database
      **/
-    public static ArrayList<Ingredient> getIngredientsFromDatabase(){
-        ArrayList<Ingredient> list = DatabaseRunner.createIngredientList();
+    public ArrayList<Ingredient> getIngredientsFromDatabase(){
+        ArrayList<Ingredient> list = DatabaseRunner.createIngredientList(ingredientsTbl);
         return list;
     }
 
     /**
      * Creates an arrayList with representations of all recipes and included relations from the database
      **/
-    public static ArrayList<DataReturn> createDataReturnAllRecipes() {
+    public ArrayList<DataReturn> createDataReturnAllRecipes() {
         ArrayList<Recipe> recipeList = getRecipeFromDatabase();
-        ArrayList<Relations> relationsList = getRelationsFromDatabase();
         ArrayList<Ingredient> ingredientsList = getIngredientsFromDatabase();
         ArrayList<DataReturn> dataReturnObjects = new ArrayList<>();
+
         HashMap<Integer, Ingredient> ingredientHashMap = new HashMap<Integer, Ingredient>();
         for (Ingredient ingredient : ingredientsList) {
             ingredientHashMap.put(ingredient.getIngredient_id(), ingredient);
         }
 
-        for (Recipe rec : recipeList) {
+        for (Recipe recipe : recipeList) {
             DataReturn newDataReturn = new DataReturn();
-            newDataReturn.setTitle(rec.getTitle());
-            newDataReturn.setPortions(rec.getPortions());
-            newDataReturn.setDescription(rec.getDescription());
-            newDataReturn.setInstructions(rec.getInstructions());
-            newDataReturn.setImageLink(rec.getImageLink());
+            newDataReturn.setTitle(recipe.getTitle());
+            newDataReturn.setPortions(recipe.getPortions());
+            newDataReturn.setDescription(recipe.getDescription());
+            newDataReturn.setInstructions(recipe.getInstructions());
+            newDataReturn.setImageLink(recipe.getImageLink());
             double price = 0;
 
             ArrayList<IngredientsInRecipe> ingredientList = new ArrayList<IngredientsInRecipe>();
-
-            for (int i = 0; i < relationsList.size(); i++) {
-                if (rec.getRecipe_id() == relationsList.get(i).getRecipe_id()) {
-                    IngredientsInRecipe ingredientsInRecipe = new IngredientsInRecipe();
-                    ingredientsInRecipe.setIngredientName(ingredientHashMap.get(relationsList.get(i).getIngredient_id()).getIngredientTitle());
-                    ingredientsInRecipe.setUnitsOfIngredient(relationsList.get(i).getUnits());
-                    ingredientsInRecipe.setIngredientPriceInRecipe(relationsList.get(i).getPrice());
-                    ingredientList.add(ingredientsInRecipe);
-                    price += (relationsList.get(i).getPrice());
-                }
+            ArrayList<Relations> recipeRelations= DatabaseRunner.getRelationsForRecipe(recipe.getRecipe_id(), relationsProc);
+            for (Relations relation:recipeRelations) {
+                IngredientsInRecipe ingredientsInRecipe = new IngredientsInRecipe();
+                ingredientsInRecipe.setIngredientName(ingredientHashMap.get(relation.getIngredient_id()).getIngredientTitle());
+                ingredientsInRecipe.setUnitsOfIngredient(relation.getUnits());
+                ingredientsInRecipe.setIngredientPriceInRecipe(relation.getPrice());
+                ingredientList.add(ingredientsInRecipe);
+                price += (relation.getPrice());
             }
 
             newDataReturn.setPrice(price);
@@ -114,7 +110,7 @@ public class Controller {
         return dataReturnObjects;
     }
 
-    public static JsonArray convertAllRecipesToJson() {
+    public JsonArray convertAllRecipesToJson() {
         ArrayList<DataReturn> dataFromDb = createDataReturnAllRecipes();
         Gson gson = new Gson();
         JsonArray allRecipes=new JsonArray();
@@ -245,6 +241,9 @@ public class Controller {
     }
 
     public static void main(String[] args) {
-        Controller.convertAllRecipesToJson();
+        Controller controller=new Controller();
+        controller.setTablesAndProcedures("FoodBank.dbo.recipes", "FoodBank.dbo.ingredients2",
+                "FoodBank.dbo.getRelationsForRecipe");
+        controller.convertAllRecipesToJson();
     }
 }

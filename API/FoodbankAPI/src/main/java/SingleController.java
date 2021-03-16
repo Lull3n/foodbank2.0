@@ -8,7 +8,6 @@ import java.util.HashMap;
 
 public class SingleController {
 
-
     private static String recipeTbl;
     private static String ingredientsTbl;
     private static String relationsProc;
@@ -36,20 +35,22 @@ public class SingleController {
      */
 
     /**
+
+
+    /**
     * Gets a recipe object
      * @param title the title of the recipe
      * @return the recipe
     */
     public static Recipe singleRecipe(String title) {
         Recipe recipe = DatabaseRunner.getRecipe(title);
-        System.out.println(recipe);
-
         return recipe;
     }
 
     /**
      * Creates an arrayList with Ingredient-objects, representing the ingredient table in the database
      **/
+
     public static ArrayList<Ingredient> getIngredientsFromDatabase(){
         ArrayList<Ingredient> list = DatabaseRunner.createIngredientList();
         return list;
@@ -73,25 +74,25 @@ public class SingleController {
         singleDataReturn.setIngredientString(singleRecipe.getIngredientsString());
         singleDataReturn.setImageLink(singleRecipe.getImageLink());
 
-
-        ArrayList<Ingredient> ingredientsList=Controller.getIngredientsFromDatabase();
+        ArrayList<Ingredient> ingredientsList=getIngredientsFromDatabase();
         HashMap<Integer, Ingredient> ingredientHashMap = new HashMap<Integer, Ingredient>();
         for(Ingredient ingredient:ingredientsList) {
             ingredientHashMap.put(ingredient.getIngredient_id(), ingredient);
         }
 
-        ArrayList<Relations> relationsList=Controller.getRelationsFromDatabase();
         ArrayList<IngredientsInRecipe> list = new ArrayList<>();
         double price=0;
-        for (int i = 0; i < relationsList.size(); i++) {
-            if (singleRecipe.getRecipe_id() == relationsList.get(i).getRecipe_id()) {
-                IngredientsInRecipe ingredientInRecipe = new IngredientsInRecipe();
-                ingredientInRecipe.setIngredientName(ingredientHashMap.get(relationsList.get(i).getIngredient_id()).getIngredientTitle());
-                ingredientInRecipe.setUnitsOfIngredient(relationsList.get(i).getUnits());
-                ingredientInRecipe.setIngredientPriceInRecipe(relationsList.get(i).getPrice());
-                list.add(ingredientInRecipe);
-                price += (relationsList.get(i).getPrice());
-            }
+
+        ArrayList<Relations> recipeRelations= DatabaseRunner.getRelationsForRecipe(singleRecipe.getRecipe_id(),
+                relationsProc);
+        for (Relations relation:recipeRelations) {
+            IngredientsInRecipe ingredientsInRecipe = new IngredientsInRecipe();
+            ingredientsInRecipe.setIngredientName(ingredientHashMap.get(relation.getIngredient_id()).getIngredientTitle());
+            ingredientsInRecipe.setUnitsOfIngredient(relation.getUnits());
+            ingredientsInRecipe.setIngredientPriceInRecipe(relation.getPrice());
+            list.add(ingredientsInRecipe);
+            price += (relation.getPrice());
+
         }
 
         singleDataReturn.setIngredientsArray(list);
@@ -100,7 +101,7 @@ public class SingleController {
         return singleDataReturn;
     }
 
-    public static JsonObject convertASingleRecipeToJson(String recipeTitle) {
+    public JsonObject convertASingleRecipeToJson(String recipeTitle) {
         DataReturn dataFromDb = createDataReturnSingle(recipeTitle);
 
         if(dataFromDb.getTitle() ==null){
@@ -109,7 +110,7 @@ public class SingleController {
         else {
             Gson gson = new Gson();
 
-            JsonArray singleRecipe = new JsonArray();
+            //JsonArray singleRecipe = new JsonArray();
 
             JsonElement title = gson.toJsonTree(dataFromDb.getTitle());
             JsonElement portions = gson.toJsonTree(dataFromDb.getPortions());
@@ -151,7 +152,8 @@ public class SingleController {
     }
 
     public static void main(String[] args) {
-        SingleController.convertASingleRecipeToJson("Fisksoppa");
+        SingleController singleController=new SingleController();
+        singleController.convertASingleRecipeToJson("Fisksoppa");
     }
-
 }
+

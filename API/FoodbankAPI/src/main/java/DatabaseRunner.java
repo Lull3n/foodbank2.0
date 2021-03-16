@@ -16,15 +16,15 @@ public class DatabaseRunner {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             //fixme Skriv inn ditt brukernavn og passord til databasen
 
-            String user = "FoodConnection";
-            String pw = "hejdatabasenfood";
+            String user = "javaConnection";
+            String pw = "hejDatabasenFood";
 
 
             String dbURL = "jdbc:sqlserver://localhost";
 
             Connection conn = DriverManager.getConnection(dbURL, user, pw);
             if (conn != null) {
-                System.out.println("Connected");
+                //System.out.println("Connected");
                 return conn;
             }
         } catch (SQLException e) {
@@ -42,12 +42,12 @@ public class DatabaseRunner {
      *
      * @return Arraylist</ Recipe> of recipe objects
      */
-    public static ArrayList<Recipe> selectRecipe() {
+    public static ArrayList<Recipe> selectRecipe(String recipeTable) {
         ArrayList<Recipe> list = new ArrayList<Recipe>();
         try {
             Connection connection = connect();
             Statement stmt = connection.createStatement();
-            String query = "select * from FoodBank.dbo.recipes";
+            String query = "select * from "+recipeTable;
             ResultSet resultSet = stmt.executeQuery(query);
 
             while (resultSet.next()) {
@@ -77,12 +77,12 @@ public class DatabaseRunner {
      *
      * @return Arraylist</ Relations> of relations objects
      */
-    public static ArrayList<Relations> selectRelations() {
+    public static ArrayList<Relations> selectRelations(String relationsTable) {
         ArrayList<Relations> list = new ArrayList<Relations>();
         try {
             Connection connection = connect();
             Statement stmt = connection.createStatement();
-            String query = "select * from FoodBank.dbo.relations";
+            String query = "select * from "+relationsTable; //relations
             ResultSet resultSet = stmt.executeQuery(query);
 
             while (resultSet.next()) {
@@ -104,15 +104,14 @@ public class DatabaseRunner {
 
     /**
      * Selects all ingredients from the database
-     *
      * @return Arraylist</ Ingredient> of ingredient objects
      */
-    public static ArrayList<Ingredient> createIngredientList() {
+    public static ArrayList<Ingredient> createIngredientList(String ingredientsTable) {
         ArrayList<Ingredient> ingredientList = new ArrayList<Ingredient>();
         try {
             Connection connection = connect();
             Statement stmt = connection.createStatement();
-            String query = "select * from FoodBank.dbo.ingredients2";
+            String query = "select * from "+ingredientsTable;
             ResultSet resultSet = stmt.executeQuery(query);
 
             while (resultSet.next()) {
@@ -196,6 +195,7 @@ public class DatabaseRunner {
     }
 
     /**
+
      * This method receives a category to filter recipes by
      * First it creates an arrayList containing all the recipes
      * Then it creates an empty arrayList which will contain the recipes with the correct category
@@ -213,5 +213,6 @@ public class DatabaseRunner {
             }
         }
         return filteredRecipes;
+
     }
 }
