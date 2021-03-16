@@ -15,8 +15,10 @@ public class DatabaseRunner {
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             //fixme Skriv inn ditt brukernavn og passord til databasen
+
             String user = "FoodConnection";
             String pw = "hejdatabasenfood";
+
 
             String dbURL = "jdbc:sqlserver://localhost";
 
@@ -133,7 +135,7 @@ public class DatabaseRunner {
 
    /**
     * Kaller på stored procedure getIngredientAndTitle
-    * */
+    */
     public static Recipe getRecipe (String title){
         Recipe recipe = new Recipe();
         String query = "{ call FoodBank.dbo.recipeByTitle(?) }";
@@ -161,6 +163,36 @@ public class DatabaseRunner {
             throwables.printStackTrace();
         }
         return recipe;
+    }
+
+    /**
+     * Kaller på stored procedure getRelationsForRecipe
+     * */
+    public static ArrayList<Relations> getRelationsForRecipe(int recipe_id, String procedure) {
+        ArrayList<Relations> relationList = new ArrayList<>();
+        String query = "{ call " + procedure + "(?) }";
+        ResultSet resultSet;
+
+        try (Connection connection = connect();
+             CallableStatement callStmt = connection.prepareCall(query)) {
+            callStmt.setInt(1, recipe_id);
+            resultSet = callStmt.executeQuery();
+
+            while (resultSet.next()) {
+                Relations newRelation = new Relations();
+                newRelation.setRelations_id(resultSet.getInt(1));
+                newRelation.setRecipe_id(resultSet.getInt(2));
+                newRelation.setIngredient_id(resultSet.getInt(3));
+                newRelation.setUnits(resultSet.getInt(4));
+                newRelation.setPrice(resultSet.getFloat(5));
+                relationList.add(newRelation);
+            }
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return relationList;
     }
 
     /**

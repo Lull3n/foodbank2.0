@@ -8,8 +8,37 @@ import java.util.HashMap;
 
 public class SingleController {
 
+
+    private static String recipeTbl;
+    private static String ingredientsTbl;
+    private static String relationsProc;
+
+    public static void setTablesAndProcedures(String recipeTbl, String ingredientsTbl, String relationsProc) {
+        SingleController.recipeTbl =recipeTbl;
+        SingleController.ingredientsTbl =ingredientsTbl;
+        SingleController.relationsProc =relationsProc;
+    }
+
+    public static void setRecipeTbl(String recipeTbl) {
+        SingleController.recipeTbl = recipeTbl;
+    }
+
+    public static void setIngredientsTbl(String ingredientsTbl) {
+        SingleController.ingredientsTbl = ingredientsTbl;
+    }
+
+    public static void setRelationsProc(String relationsProc) {
+        SingleController.relationsProc = relationsProc;
+    }
+
     /**
-    * Creates an arrayList with Recipe-objects, representing the recipe table in the database
+     * Creates an arrayList with Recipe-objects, representing the recipe table in the database
+     */
+
+    /**
+    * Gets a recipe object
+     * @param title the title of the recipe
+     * @return the recipe
     */
     public static Recipe singleRecipe(String title) {
         Recipe recipe = DatabaseRunner.getRecipe(title);
@@ -19,8 +48,19 @@ public class SingleController {
     }
 
     /**
-    * Creates an arrayList with Ingredient-objects, representing the ingredient table in the database
-    */
+     * Creates an arrayList with Ingredient-objects, representing the ingredient table in the database
+     **/
+    public static ArrayList<Ingredient> getIngredientsFromDatabase(){
+        ArrayList<Ingredient> list = DatabaseRunner.createIngredientList();
+        return list;
+    }
+
+    /**
+     * Creates a data return object representing a single recipe
+     * @param title the title of the recipe
+     * @return the data return object representing a recipe
+     */
+
     public static DataReturn createDataReturnSingle(String title) {
 
         Recipe singleRecipe=singleRecipe(title);
