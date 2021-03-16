@@ -1,0 +1,22 @@
+
+"title": "",
+"portions": "",
+"description": "",
+
+"instructions": "",
+
+"ingredients":
+    [
+        {
+            "Units": "",
+            "ingredient": "",
+            "price": ""
+        },
+        {
+            "units": "",
+            "ingredient": "",
+            "price" :""
+        }
+
+"Totalprice": ""
+}

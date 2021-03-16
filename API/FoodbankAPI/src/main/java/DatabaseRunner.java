@@ -19,9 +19,6 @@ public class DatabaseRunner {
             String user = "javaConnection";
             String pw = "hejDatabasenFood";
 
-            String user = "FoodConnection";
-            String pw = "hejdatabasenfood";
-
 
             String dbURL = "jdbc:sqlserver://localhost";
 
@@ -137,7 +134,7 @@ public class DatabaseRunner {
 
    /**
     * Kaller på stored procedure getIngredientAndTitle
-    * */
+    */
     public static Recipe getRecipe (String title){
         Recipe recipe = new Recipe();
         String query = "{ call FoodBank.dbo.recipeByTitle(?) }";
@@ -168,21 +165,20 @@ public class DatabaseRunner {
     }
 
     /**
-
      * Kaller på stored procedure getRelationsForRecipe
      * */
     public static ArrayList<Relations> getRelationsForRecipe(int recipe_id, String procedure) {
-        ArrayList<Relations> relationList=new ArrayList<>();
-        String query = "{ call "+procedure+"(?) }";
+        ArrayList<Relations> relationList = new ArrayList<>();
+        String query = "{ call " + procedure + "(?) }";
         ResultSet resultSet;
 
-        try (Connection connection=connect();
-             CallableStatement callStmt=connection.prepareCall(query)) {
-            callStmt.setInt(1,recipe_id);
-            resultSet=callStmt.executeQuery();
+        try (Connection connection = connect();
+             CallableStatement callStmt = connection.prepareCall(query)) {
+            callStmt.setInt(1, recipe_id);
+            resultSet = callStmt.executeQuery();
 
-            while(resultSet.next()) {
-                Relations newRelation=new Relations();
+            while (resultSet.next()) {
+                Relations newRelation = new Relations();
                 newRelation.setRelations_id(resultSet.getInt(1));
                 newRelation.setRecipe_id(resultSet.getInt(2));
                 newRelation.setIngredient_id(resultSet.getInt(3));
@@ -196,6 +192,9 @@ public class DatabaseRunner {
         }
 
         return relationList;
+    }
+
+    /**
 
      * This method receives a category to filter recipes by
      * First it creates an arrayList containing all the recipes

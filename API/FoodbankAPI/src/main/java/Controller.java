@@ -12,14 +12,28 @@ import java.util.HashMap;
  * end user is sending request to the API.
  */
 public class Controller {
-    String recipeTbl;
-    String ingredientsTbl;
-    String relationsProc;
 
-    public void setTablesAndProcedures(String recipeTbl, String ingredientsTbl, String relationsProc) {
-        this.recipeTbl=recipeTbl;
-        this.ingredientsTbl=ingredientsTbl;
-        this.relationsProc=relationsProc;
+    private static String recipeTbl;
+    private static String ingredientsTbl;
+    private static String relationsProc;
+
+    public static void setTablesAndProcedures(String recipeTbl, String ingredientsTbl, String relationsProc) {
+        Controller.recipeTbl =recipeTbl;
+        Controller.ingredientsTbl =ingredientsTbl;
+        Controller.relationsProc =relationsProc;
+    }
+
+    public static void setRecipeTbl(String recipeTbl){
+        Controller.recipeTbl = recipeTbl;
+    }
+
+    public static void setIngredientsTbl(String ingredientsTbl) {
+        Controller.ingredientsTbl = ingredientsTbl;
+    }
+
+    public static void setRelationsProc(String relationsProc) {
+        Controller.relationsProc = relationsProc;
+
     }
 
     /**
@@ -35,6 +49,8 @@ public class Controller {
         return list;
     }
 
+
+
     /**
      * Creates an arrayList with Relations-objects, representing the relations table in the database
 
@@ -43,6 +59,7 @@ public class Controller {
         ArrayList<Recipe> list =DatabaseRunner.selectRecipe(recipeTbl);
         return list;
     }
+
 
     /**
      * Creates an arrayList with Ingredient-objects, representing the ingredient table in the database

@@ -8,17 +8,36 @@ import java.util.HashMap;
 
 public class SingleController {
 
-    String recipeTbl;
-    String ingredientsTbl;
-    String relationsProc;
+    private static String recipeTbl;
+    private static String ingredientsTbl;
+    private static String relationsProc;
 
-    public void setTablesAndProcedures(String recipeTbl, String ingredientsTbl, String relationsProc) {
-        this.recipeTbl=recipeTbl;
-        this.ingredientsTbl=ingredientsTbl;
-        this.relationsProc=relationsProc;
+    public static void setTablesAndProcedures(String recipeTbl, String ingredientsTbl, String relationsProc) {
+        SingleController.recipeTbl =recipeTbl;
+        SingleController.ingredientsTbl =ingredientsTbl;
+        SingleController.relationsProc =relationsProc;
     }
 
-/**
+    public static void setRecipeTbl(String recipeTbl) {
+        SingleController.recipeTbl = recipeTbl;
+    }
+
+    public static void setIngredientsTbl(String ingredientsTbl) {
+        SingleController.ingredientsTbl = ingredientsTbl;
+    }
+
+    public static void setRelationsProc(String relationsProc) {
+        SingleController.relationsProc = relationsProc;
+    }
+
+    /**
+     * Creates an arrayList with Recipe-objects, representing the recipe table in the database
+     */
+
+    /**
+
+
+    /**
     * Gets a recipe object
      * @param title the title of the recipe
      * @return the recipe
@@ -31,8 +50,9 @@ public class SingleController {
     /**
      * Creates an arrayList with Ingredient-objects, representing the ingredient table in the database
      **/
-    public ArrayList<Ingredient> getIngredientsFromDatabase(){
-        ArrayList<Ingredient> list = DatabaseRunner.createIngredientList(ingredientsTbl);
+
+    public static ArrayList<Ingredient> getIngredientsFromDatabase(){
+        ArrayList<Ingredient> list = DatabaseRunner.createIngredientList();
         return list;
     }
 
@@ -41,7 +61,8 @@ public class SingleController {
      * @param title the title of the recipe
      * @return the data return object representing a recipe
      */
-    public DataReturn createDataReturnSingle(String title) {
+
+    public static DataReturn createDataReturnSingle(String title) {
 
         Recipe singleRecipe=singleRecipe(title);
         DataReturn singleDataReturn=new DataReturn();

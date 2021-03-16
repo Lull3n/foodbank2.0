@@ -51,6 +51,7 @@ public class API {
 
         get("/foodbank/api/recipe", (request, response) -> {
             System.out.println("Get all recipes");
+            Controller.setRecipeTbl("FoodBank.dbo.recipes");
 
 
             JsonArray recipeData = Controller.convertAllRecipesToJson();
@@ -78,6 +79,7 @@ public class API {
 
             response.header("Content-Type", "application/json");
             String title = request.params("title");
+            SingleController.setRecipeTbl("FoodBank.dbo.recipes");
 
             JsonObject recipe = APIController.convertASingleRecipeToJson(title);
 
@@ -90,6 +92,7 @@ public class API {
          */
         get("/foodbank/api/category/:category", (request, response) ->{
             response.header("Content-Type","application/json");
+            Controller.setRecipeTbl("FoodBank.dbo.recipe");
             String category = request.params("category").toLowerCase();
             System.out.println("Get all categories");
             switch (category){
