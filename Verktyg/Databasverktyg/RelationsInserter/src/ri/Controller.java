@@ -1,7 +1,5 @@
 package ri;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
@@ -16,12 +14,9 @@ public class Controller {
 	private WordParser wordParser;
 	private WordMap wordMap;
 
-	private ResultSet recipes;
-	private ResultSet[] ingredients;
-	private ResultSet ingredient;
-	private ResultSet recipeIngredients;
 
-	public Controller() {
+	public Controller()
+	{
 		gui = new GUI();
 		gui.setController(this);
 		connector = new Connector();
@@ -30,8 +25,11 @@ public class Controller {
 		wordMap = new WordMap();
 	}
 
-	public void LoadRecipes() {
-
+	/**
+	 * Loads the recipes and displaying them in the GUI
+	 */
+	public void LoadRecipes()
+	{
 		ArrayList <String > recipesArray = connector.loadRecipes();
 		String[] strings = {""};
 		recipesArray.toArray(strings);
@@ -39,7 +37,12 @@ public class Controller {
 		gui.setRecipes(strings);
 	}
 
-	public void LoadRecipeIngredients(Object item) {
+	/**
+	 * Loads the ingredients of a specific recipe and displaying them in the GUI
+	 * @param item The recipe name
+	 */
+	public void LoadRecipeIngredients(Object item)
+	{
 		String title = (String) item;
 		String ingredientsString = connector.loadRecipeIngredients(title).toLowerCase();
 
@@ -51,7 +54,8 @@ public class Controller {
 		gui.updateRecipeIngredients(ingredientsStringArray);
 	}
 
-	public void parseQuery(String selectedValue) {
+	public void parseQuery(String selectedValue)
+	{
 		if (selectedValue == null)
 			return;
 		System.out.println(selectedValue);
@@ -79,7 +83,8 @@ public class Controller {
 		gui.updateDatabaseIngredients(ingredientsListArray);
 	}
 
-	public void sendQuery(Object selectedItem, Object[] array) {
+	public void sendQuery(Object selectedItem, Object[] array)
+	{
 		String selectedRecipe = (String) selectedItem;
 		String[] selectedIngredients = new String[array.length];
 		for (int i = 0; i < array.length; i++) {

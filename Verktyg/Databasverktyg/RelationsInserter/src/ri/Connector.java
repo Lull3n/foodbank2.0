@@ -9,25 +9,37 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
-public class Connector {
+
+/**
+ * Class that manages the interaction between the java code and the Microsoft SQL Server database
+ */
+public class Connector
+{
 	private Connection connection;
-	//com.microsoft.sqlserver:mssql-jdbc:8.4.1.jre14
 	private String dbURL = "jdbc:sqlserver://localhost:1433;" +
 			"databaseName=FoodBank;user=javaConnection;password=hejDatabasenFood;";
-	public Connector() {
 
-		try {
+	public Connector()
+	{
+		try
+		{
 			System.out.println("Connecting to MySQL database...");
-			//Class.forName("com.mysql.jdbc.Driver");
-			//connection = DriverManager.getConnection("jdbc:sqlite:../../database/sqliteDb.db");
-			//System.out.println("Successfully connected");
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			e.printStackTrace();
 		}
 	}
-	
-	public ArrayList<String> loadRecipes() {
-		try {
+
+	/**
+	 * Loads all the recipes from the database into an ArrayList
+	 * @return The recipe names
+	 */
+	public ArrayList<String> loadRecipes()
+	{
+		ArrayList<String> result = null;
+		try
+		{
 			connection = DriverManager.getConnection(dbURL);
 			System.out.println("connection established");
 			String query = "SELECT * FROM recipes";
@@ -35,96 +47,133 @@ public class Connector {
 			ArrayList<String> results = new ArrayList();
 
 			ResultSet set = statement.executeQuery(query);
-			while (set.next()){
+
+			while (set.next())
+			{
 				results.add(set.getString("title"));
 			}
 			connection.close();
-			return results;
-		} catch (Exception e) {
+			result = results;
+		}
+		catch (Exception e)
+		{
 			e.printStackTrace();
 		}
-		return null;
+		return result;
 	}
-	
-	public String loadRecipeIngredients(String title) {
+
+	/**
+	 * Loads all the ingredients from a specific recipe
+	 * @param title The recipe name
+	 * @return The ingredients
+	 */
+	public String loadRecipeIngredients(String title)
+	{
 		String ret = "";
-		try {
+		try
+		{
 			connection = DriverManager.getConnection(dbURL);
 			String query = "SELECT * FROM recipes WHERE title='" + title + "'";
 			Statement statement = connection.createStatement();
 			ResultSet set = statement.executeQuery(query);
 
-			if(set.next()){
+			if(set.next())
+			{
 				ret = set.getString("ingredients");
 			}
 
 			connection.close();
-
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			e.printStackTrace();
 		}
 		return ret;
 	}
 
-	public ResultSet loadDatabaseIngredients(String result) {
-		try {
-			String query = "SELECT * FROM ingredients2 WHERE title LIKE '%" + result + "%'";
-			Statement statement = connection.createStatement();
-			System.out.println("Got ingredient with query: " + query);
-			return statement.executeQuery(query);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
-
-	public int getRecipeId(String selectedRecipe) {
-		try {
+	/**
+	 * Loads a specific recipe and returns the recipe id
+	 * @param selectedRecipe The recipe
+	 * @return The unique recipe id
+	 */
+	public int getRecipeId(String selectedRecipe)
+	{
+		try
+		{
 			connection = DriverManager.getConnection(dbURL);
 			String query = "SELECT * FROM recipes WHERE title='" + selectedRecipe + "'";
 			Statement statement = connection.createStatement();
 			ResultSet resultSet = statement.executeQuery(query);
-			if(resultSet != null) {
+
+			if(resultSet != null)
+			{
 				resultSet.next();
 				return resultSet.getInt("recipe_id");
 			}
 			connection.close();
 				
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			e.printStackTrace();
 		}
 		return -1;
 	}
 
-	public int sendRelation(int recipeId, String ingredientId, String ingredientUnit) {
+	/**
+	 * Inserts a relation into the database
+	 * @param recipeId
+	 * @param ingredientId
+	 * @param ingredientUnit
+	 * @return
+	 */
+	public int sendRelation(int recipeId, String ingredientId, String ingredientUnit)
+	{
 		int ret = 0;
-		try { connection = DriverManager.getConnection(dbURL);
+
+		try
+		{
+			connection = DriverManager.getConnection(dbURL);
 			String query = "INSERT INTO relations (recipe_id,ingredients_id,units) VALUES (?,?,?)";
-			try {
+			try
+			{
 				PreparedStatement statement = connection.prepareStatement(query);
 				statement.setInt(1, recipeId);
 				statement.setInt(2, Integer.parseInt(ingredientId));
 				statement.setInt(3, Integer.parseInt(ingredientUnit));
 				ret = statement.executeUpdate();
 				connection.close();
-			} catch (Exception e) {
+			}
+			catch (Exception e)
+			{
 				e.printStackTrace();
 			}
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			e.printStackTrace();
 		}
 
 		return ret;
 	}
 
-	public LinkedList<String> loadDatabaseIngredient(String result) {
-		try {
+	/**
+	 * Loads a specifc ingredient and returns the column
+	 * @param result The name of the ingredient
+	 * @return The ingredient column
+	 */
+	public LinkedList<String> loadDatabaseIngredient(String result)
+	{
+		try
+		{
 			connection = DriverManager.getConnection(dbURL);
 			String query = "SELECT * FROM ingredients2 WHERE title LIKE '%" + result + "%'";
 			Statement statement = connection.createStatement();
 			ResultSet ingredient = statement.executeQuery(query);
 			LinkedList<String> ingredientsList = new LinkedList<>();
-			while (ingredient.next()) {
+
+			while (ingredient.next())
+			{
 				System.out.println("Got ingredient: " + ingredient.getString("title"));
 				String res = "#";
 				res += ingredient.getInt("id") + " ";
@@ -138,7 +187,9 @@ public class Connector {
 			System.out.println("Got ingredient with query: " + query);
 			connection.close();
 			return ingredientsList;
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			e.printStackTrace();
 		}
 		return null;
