@@ -114,10 +114,8 @@ public class API {
             }
             JsonArray categoryData = Controller.convertAllRecipesByCategoryToJson(Integer.parseInt(category));
 
-
-
             return categoryData;
-
         });
+
     }
 }

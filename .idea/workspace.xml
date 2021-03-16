@@ -2,18 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8c2a30c4-3bae-4d65-a732-f63bbe1aee64" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/API/FoodbankAPI/.idea/libraries/com_mashape_unirest_unirest_java_1_4_9.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/FoodbankAPI/src/main/java/WebScraper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Verktyg/Databasverktyg/IngredientsInserter/files/coopSort-2021-03-12.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/FoodbankAPI/.idea/FoodbankAPI.iml" beforeDir="false" afterPath="$PROJECT_DIR$/API/FoodbankAPI/.idea/FoodbankAPI.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/FoodbankAPI/src/main/java/API.java" beforeDir="false" afterPath="$PROJECT_DIR$/API/FoodbankAPI/src/main/java/API.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Verktyg/Databasverktyg/IngredientsInserter/.idea/libraries/com_google_code_gson_gson_2_8_6.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Verktyg/Databasverktyg/IngredientsInserter/.idea/libraries/com_google_code_gson_gson_2_8_6.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Verktyg/Databasverktyg/IngredientsInserter/src/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/Verktyg/Databasverktyg/IngredientsInserter/src/Controller.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Verktyg/Databasverktyg/IngredientsInserter/src/Database.java" beforeDir="false" afterPath="$PROJECT_DIR$/Verktyg/Databasverktyg/IngredientsInserter/src/Database.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Verktyg/Databasverktyg/RelationsAutoInserter/RelationsAutoInserter.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Verktyg/Databasverktyg/RelationsAutoInserter/RelationsAutoInserter.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Verktyg/Databasverktyg/RelationsInserter/RelationsInserter.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Verktyg/Databasverktyg/RelationsInserter/RelationsInserter.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Verktyg/Databasverktyg/coopSort.json" beforeDir="false" afterPath="$PROJECT_DIR$/Verktyg/Databasverktyg/coopSort.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/FoodbankAPI/src/main/java/WebScraper.java" beforeDir="false" afterPath="$PROJECT_DIR$/API/FoodbankAPI/src/main/java/WebScraper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Verktyg/database/.idea/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/Verktyg/database/.idea/.gitignore" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,7 +22,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/Verktyg/Databasverktyg/IngredientsInserter" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/API/FoodbankAPI" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -52,9 +43,9 @@
     <servers />
   </component>
   <component name="WindowStateProjectService">
-    <state x="740" y="275" key="FileChooserDialogImpl" timestamp="1615559750554">
+    <state x="740" y="275" key="FileChooserDialogImpl" timestamp="1615820315709">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="740" y="275" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1615559750554" />
+    <state x="740" y="275" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1615820315709" />
   </component>
 </project>

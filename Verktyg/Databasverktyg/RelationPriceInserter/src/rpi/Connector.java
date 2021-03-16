@@ -59,19 +59,18 @@ public class Connector {
 			String query = "SELECT * FROM ingredients2 WHERE id=" + id;
 			Statement statement = connection.createStatement();
 			ResultSet set = statement.executeQuery(query);
-			ArrayList<String> relationPrices = null;
+			ArrayList<String> relationPrices = new ArrayList<>();
 			while(set.next()) {
-				if(relationPrices == null) relationPrices = new ArrayList<>();
-				System.out.println("Calculating price for ingredient id: " + array[2]);
+//				System.out.println("Calculating price for ingredient id: " + array[2]);
 				float relationUnits = Float.parseFloat(array[3]);
-				System.out.println("Relation units before division: " + relationUnits);
+//				System.out.println("Relation units before division: " + relationUnits);
 				float relationUnitsDivided = (relationUnits / 1000);
-				System.out.println("Relation units after division: " + relationUnitsDivided);
+//				System.out.println("Relation units after division: " + relationUnitsDivided);
 				float relationPrice = relationUnitsDivided * set.getFloat("price");
-				System.out.println("Calculated price: " + relationPrice);
-				System.out.println("Inserting string into array: " + array[0] + " " + relationPrice);
+//				System.out.println("Calculated price: " + relationPrice);
+//				System.out.println("Inserting string into array: " + array[0] + " " + relationPrice);
 				relationPrices.add(array[0] + " " + relationPrice);
-				System.out.println("------------------------------------------------");
+//				System.out.println("------------------------------------------------");
 			}
 
 			connection.close();
@@ -85,6 +84,7 @@ public class Connector {
 	public boolean insertRelationPrice(int id, float price) {
 		try {
 			connection = DriverManager.getConnection(dbURL);
+			System.out.println("Price insert");
 			String query = "UPDATE relations SET price=" + price + " WHERE relation_id=" + id;
 			Statement statement = connection.createStatement();
 			statement.executeUpdate(query);
