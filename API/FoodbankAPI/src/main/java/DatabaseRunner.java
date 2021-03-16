@@ -19,10 +19,6 @@ public class DatabaseRunner {
             String user = "javaConnection";
             String pw = "hejDatabasenFood";
 
-            String user = "FoodConnection";
-            String pw = "hejdatabasenfood";
-
-
             String dbURL = "jdbc:sqlserver://localhost";
 
             Connection conn = DriverManager.getConnection(dbURL, user, pw);
@@ -172,17 +168,17 @@ public class DatabaseRunner {
      * Kaller på stored procedure getRelationsForRecipe
      * */
     public static ArrayList<Relations> getRelationsForRecipe(int recipe_id, String procedure) {
-        ArrayList<Relations> relationList=new ArrayList<>();
-        String query = "{ call "+procedure+"(?) }";
+        ArrayList<Relations> relationList = new ArrayList<>();
+        String query = "{ call " + procedure + "(?) }";
         ResultSet resultSet;
 
-        try (Connection connection=connect();
-             CallableStatement callStmt=connection.prepareCall(query)) {
-            callStmt.setInt(1,recipe_id);
-            resultSet=callStmt.executeQuery();
+        try (Connection connection = connect();
+             CallableStatement callStmt = connection.prepareCall(query)) {
+            callStmt.setInt(1, recipe_id);
+            resultSet = callStmt.executeQuery();
 
-            while(resultSet.next()) {
-                Relations newRelation=new Relations();
+            while (resultSet.next()) {
+                Relations newRelation = new Relations();
                 newRelation.setRelations_id(resultSet.getInt(1));
                 newRelation.setRecipe_id(resultSet.getInt(2));
                 newRelation.setIngredient_id(resultSet.getInt(3));
@@ -196,16 +192,17 @@ public class DatabaseRunner {
         }
 
         return relationList;
+    }
 
-     * This method receives a category to filter recipes by
+     /** This method receives a category to filter recipes by
      * First it creates an arrayList containing all the recipes
      * Then it creates an empty arrayList which will contain the recipes with the correct category
      * Then it loops through all the recipes and adds the recipes with the correct category to the filtered arrayList
      * @param category what category to filter by
      * @return an arrayList containing all recipes of a specific category
      */
-    public static ArrayList<Recipe> getRecipeByCategory (int category){
-        ArrayList<Recipe> allRecipes = DatabaseRunner.selectRecipe();
+    public static ArrayList<Recipe> getRecipeByCategory (int category, String recipeTable){
+        ArrayList<Recipe> allRecipes = DatabaseRunner.selectRecipe(recipeTable);
         ArrayList<Recipe> filteredRecipes = new ArrayList<>();
         for (int i = 0; i < allRecipes.size(); i++){
             Recipe recipe = allRecipes.get(i);

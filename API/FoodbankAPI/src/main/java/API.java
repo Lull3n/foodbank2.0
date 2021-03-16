@@ -49,13 +49,6 @@ public class API {
                     "FoodBank.dbo.getRelationsForRecipe");
             JsonArray recipeData = APIController.convertAllRecipesToJson();
 
-        get("/foodbank/api/recipe", (request, response) -> {
-            System.out.println("Get all recipes");
-
-
-            JsonArray recipeData = Controller.convertAllRecipesToJson();
-
-
             response.header("Content-Type", "application/json");
             if (response.status() == 500) {
                 System.out.println("Error 500");
@@ -73,9 +66,6 @@ public class API {
             APIController.setTablesAndProcedures("FoodBank.dbo.recipes","FoodBank.dbo.ingredients2",
                     "FoodBank.dbo.getRelationsForRecipe");
 
-
-        get("/foodbank/api/recipe/:title", (request, response) -> {
-
             response.header("Content-Type", "application/json");
             String title = request.params("title");
 
@@ -92,6 +82,9 @@ public class API {
             response.header("Content-Type","application/json");
             String category = request.params("category").toLowerCase();
             System.out.println("Get all categories");
+            Controller APIController=new Controller();
+            APIController.setTablesAndProcedures("FoodBank.dbo.recipes","FoodBank.dbo.ingredients2",
+                    "FoodBank.dbo.getRelationsForRecipe");
             switch (category){
                 case "kött" :
                     category = "0";
@@ -112,7 +105,7 @@ public class API {
                     category = "5";
                     break;
             }
-            JsonArray categoryData = Controller.convertAllRecipesByCategoryToJson(Integer.parseInt(category));
+            JsonArray categoryData = APIController.convertAllRecipesByCategoryToJson(Integer.parseInt(category));
 
             return categoryData;
         });
