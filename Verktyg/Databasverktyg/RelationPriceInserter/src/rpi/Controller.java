@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 
 /**
- * Controller class that
+ * Controller class
  */
 public class Controller
 {
