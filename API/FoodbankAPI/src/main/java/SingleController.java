@@ -8,20 +8,40 @@ import java.util.HashMap;
 
 public class SingleController {
 
-    /**
-    * Creates an arrayList with Recipe-objects, representing the recipe table in the database
+    String recipeTbl;
+    String ingredientsTbl;
+    String relationsProc;
+
+    public void setTablesAndProcedures(String recipeTbl, String ingredientsTbl, String relationsProc) {
+        this.recipeTbl=recipeTbl;
+        this.ingredientsTbl=ingredientsTbl;
+        this.relationsProc=relationsProc;
+    }
+
+/**
+    * Gets a recipe object
+     * @param title the title of the recipe
+     * @return the recipe
     */
     public static Recipe singleRecipe(String title) {
         Recipe recipe = DatabaseRunner.getRecipe(title);
-        System.out.println(recipe);
-
         return recipe;
     }
 
     /**
-    * Creates an arrayList with Ingredient-objects, representing the ingredient table in the database
-    */
-    public static DataReturn createDataReturnSingle(String title) {
+     * Creates an arrayList with Ingredient-objects, representing the ingredient table in the database
+     **/
+    public ArrayList<Ingredient> getIngredientsFromDatabase(){
+        ArrayList<Ingredient> list = DatabaseRunner.createIngredientList(ingredientsTbl);
+        return list;
+    }
+
+    /**
+     * Creates a data return object representing a single recipe
+     * @param title the title of the recipe
+     * @return the data return object representing a recipe
+     */
+    public DataReturn createDataReturnSingle(String title) {
 
         Recipe singleRecipe=singleRecipe(title);
         DataReturn singleDataReturn=new DataReturn();
@@ -33,18 +53,17 @@ public class SingleController {
         singleDataReturn.setIngredientString(singleRecipe.getIngredientsString());
         singleDataReturn.setImageLink(singleRecipe.getImageLink());
 
-
-        ArrayList<Ingredient> ingredientsList=Controller.getIngredientsFromDatabase();
+        ArrayList<Ingredient> ingredientsList=getIngredientsFromDatabase();
         HashMap<Integer, Ingredient> ingredientHashMap = new HashMap<Integer, Ingredient>();
         for(Ingredient ingredient:ingredientsList) {
             ingredientHashMap.put(ingredient.getIngredient_id(), ingredient);
         }
 
-        ArrayList<Relations> relationsList=Controller.getRelationsFromDatabase();
         ArrayList<IngredientsInRecipe> list = new ArrayList<>();
         double price=0;
 
-        ArrayList<Relations> recipeRelations= DatabaseRunner.getRelationsForRecipe(singleRecipe.getRecipe_id());
+        ArrayList<Relations> recipeRelations= DatabaseRunner.getRelationsForRecipe(singleRecipe.getRecipe_id(),
+                relationsProc);
         for (Relations relation:recipeRelations) {
             IngredientsInRecipe ingredientsInRecipe = new IngredientsInRecipe();
             ingredientsInRecipe.setIngredientName(ingredientHashMap.get(relation.getIngredient_id()).getIngredientTitle());
@@ -61,7 +80,7 @@ public class SingleController {
         return singleDataReturn;
     }
 
-    public static JsonObject convertASingleRecipeToJson(String recipeTitle) {
+    public JsonObject convertASingleRecipeToJson(String recipeTitle) {
         DataReturn dataFromDb = createDataReturnSingle(recipeTitle);
 
         if(dataFromDb.getTitle() ==null){
@@ -70,7 +89,7 @@ public class SingleController {
         else {
             Gson gson = new Gson();
 
-            JsonArray singleRecipe = new JsonArray();
+            //JsonArray singleRecipe = new JsonArray();
 
             JsonElement title = gson.toJsonTree(dataFromDb.getTitle());
             JsonElement portions = gson.toJsonTree(dataFromDb.getPortions());
@@ -112,7 +131,8 @@ public class SingleController {
     }
 
     public static void main(String[] args) {
-        SingleController.convertASingleRecipeToJson("Fisksoppa");
+        SingleController singleController=new SingleController();
+        singleController.convertASingleRecipeToJson("Fisksoppa");
     }
-
 }
+

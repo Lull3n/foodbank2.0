@@ -24,7 +24,7 @@ public class DatabaseRunner {
 
             Connection conn = DriverManager.getConnection(dbURL, user, pw);
             if (conn != null) {
-                System.out.println("Connected");
+                //System.out.println("Connected");
                 return conn;
             }
         } catch (SQLException e) {
@@ -42,12 +42,12 @@ public class DatabaseRunner {
      *
      * @return Arraylist</ Recipe> of recipe objects
      */
-    public static ArrayList<Recipe> selectRecipe() {
+    public static ArrayList<Recipe> selectRecipe(String recipeTable) {
         ArrayList<Recipe> list = new ArrayList<Recipe>();
         try {
             Connection connection = connect();
             Statement stmt = connection.createStatement();
-            String query = "select * from FoodBank.dbo.recipes";
+            String query = "select * from "+recipeTable;
             ResultSet resultSet = stmt.executeQuery(query);
 
             while (resultSet.next()) {
@@ -77,12 +77,12 @@ public class DatabaseRunner {
      *
      * @return Arraylist</ Relations> of relations objects
      */
-    public static ArrayList<Relations> selectRelations() {
+    public static ArrayList<Relations> selectRelations(String relationsTable) {
         ArrayList<Relations> list = new ArrayList<Relations>();
         try {
             Connection connection = connect();
             Statement stmt = connection.createStatement();
-            String query = "select * from FoodBank.dbo.relations";
+            String query = "select * from "+relationsTable; //relations
             ResultSet resultSet = stmt.executeQuery(query);
 
             while (resultSet.next()) {
@@ -104,15 +104,14 @@ public class DatabaseRunner {
 
     /**
      * Selects all ingredients from the database
-     *
      * @return Arraylist</ Ingredient> of ingredient objects
      */
-    public static ArrayList<Ingredient> createIngredientList() {
+    public static ArrayList<Ingredient> createIngredientList(String ingredientsTable) {
         ArrayList<Ingredient> ingredientList = new ArrayList<Ingredient>();
         try {
             Connection connection = connect();
             Statement stmt = connection.createStatement();
-            String query = "select * from FoodBank.dbo.ingredients2";
+            String query = "select * from "+ingredientsTable;
             ResultSet resultSet = stmt.executeQuery(query);
 
             while (resultSet.next()) {
@@ -168,9 +167,9 @@ public class DatabaseRunner {
     /**
      * Kaller på stored procedure getRelationsForRecipe
      * */
-    public static ArrayList<Relations> getRelationsForRecipe(int recipe_id) {
+    public static ArrayList<Relations> getRelationsForRecipe(int recipe_id, String procedure) {
         ArrayList<Relations> relationList=new ArrayList<>();
-        String query = "{ call FoodBank.dbo.getRelationsForRecipe(?) }";
+        String query = "{ call "+procedure+"(?) }";
         ResultSet resultSet;
 
         try (Connection connection=connect();
