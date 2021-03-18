@@ -188,7 +188,7 @@ public class DatabaseRunner {
             }
 
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            //throwables.printStackTrace();
         }
 
         return relationList;

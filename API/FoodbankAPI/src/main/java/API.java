@@ -67,7 +67,7 @@ public class API {
             String title = request.params("title");
 
 
-            JsonObject recipe = SingleController.convertASingleRecipeToJson(title);
+            JsonObject recipe = SingleController.convertASingleRecipeToJson();
 
             return recipe;
         });

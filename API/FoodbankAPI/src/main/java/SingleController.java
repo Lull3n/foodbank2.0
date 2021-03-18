@@ -11,21 +11,22 @@ public class SingleController {
     private static String recipeTbl;
     private static String ingredientsTbl;
     private static String relationsProc;
+    private static String recipeTitle;
 
-    public static void setTablesAndProcedures(String recipeTbl, String ingredientsTbl, String relationsProc) {
-        SingleController.recipeTbl =recipeTbl;
-        SingleController.ingredientsTbl =ingredientsTbl;
-        SingleController.relationsProc =relationsProc;
+    public static void setTablesAndProcedures(String recipeTbl, String ingredientsTbl, String relationsProc, String recipeTitle) {
+        SingleController.recipeTbl=recipeTbl;
+        SingleController.ingredientsTbl=ingredientsTbl;
+        SingleController.relationsProc=relationsProc;
+        SingleController.recipeTitle=recipeTitle;
     }
 
 
     /**
     * Gets a recipe object
-     * @param title the title of the recipe
      * @return the recipe
     */
-    public static Recipe singleRecipe(String title) {
-        Recipe recipe = DatabaseRunner.getRecipe(title);
+    public static Recipe singleRecipe() {
+        Recipe recipe = DatabaseRunner.getRecipe(recipeTitle);
         return recipe;
     }
 
@@ -34,19 +35,18 @@ public class SingleController {
      **/
 
     public static ArrayList<Ingredient> getIngredientsFromDatabase(){
-        ArrayList<Ingredient> list = DatabaseRunner.createIngredientList("FoodBank.dbo.ingredients2");
+        ArrayList<Ingredient> list = DatabaseRunner.createIngredientList(ingredientsTbl);
         return list;
     }
 
     /**
      * Creates a data return object representing a single recipe
-     * @param title the title of the recipe
      * @return the data return object representing a recipe
      */
 
-    public static DataReturn createDataReturnSingle(String title) {
+    public static DataReturn createDataReturnSingle() {
 
-        Recipe singleRecipe=singleRecipe(title);
+        Recipe singleRecipe=singleRecipe();
         DataReturn singleDataReturn=new DataReturn();
 
         singleDataReturn.setTitle(singleRecipe.getTitle());
@@ -83,8 +83,8 @@ public class SingleController {
         return singleDataReturn;
     }
 
-    public static JsonObject convertASingleRecipeToJson(String recipeTitle) {
-        DataReturn dataFromDb = createDataReturnSingle(recipeTitle);
+    public static JsonObject convertASingleRecipeToJson() {
+        DataReturn dataFromDb = createDataReturnSingle();
 
         if(dataFromDb.getTitle() ==null){
             return HttpResponseController.error404();
@@ -132,8 +132,9 @@ public class SingleController {
     }
 
     public static void main(String[] args) {
-        SingleController singleController=new SingleController();
-        singleController.convertASingleRecipeToJson("Fisksoppa");
+        setTablesAndProcedures("FoodBank.dbo.recipes", "FoodBank.dbo.ingredients2",
+                "FoodBank.dbo.getRelationsForRecipe", "Fisksoppa");
+        convertASingleRecipeToJson();
     }
 }
 

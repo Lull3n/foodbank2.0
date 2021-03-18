@@ -243,7 +243,7 @@ public class Controller {
     }
 
     public static void main(String[] args) {
-        Controller controller=new Controller();
+        //Controller controller=new Controller();
         setTablesAndProcedures("FoodBank.dbo.recipes", "FoodBank.dbo.ingredients2",
                 "FoodBank.dbo.getRelationsForRecipe");
         convertAllRecipesToJson();
