@@ -77,7 +77,7 @@ public class API {
          * expects a string with a number 0-5, kött, kyckling, fisk, pasta, vegetariskt or veganskt
          * returns all recipes with the specified category
          */
-        get("/foodbank/api/category/:category", (request, response) ->{
+        get("/foodbank/api/recipe/category/:category", (request, response) ->{
             response.header("Content-Type","application/json");
             String category = request.params("category").toLowerCase();
             System.out.println("Get all recipes by categories");
