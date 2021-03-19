@@ -65,6 +65,7 @@ public class API {
         get("/foodbank/api/recipe/:title", (request, response) -> {
             response.header("Content-Type", "application/json");
             String title = request.params("title");
+            SingleController.setRecipeTitle(title);
 
 
             JsonObject recipe = SingleController.convertASingleRecipeToJson();

@@ -20,6 +20,10 @@ public class SingleController {
         SingleController.recipeTitle=recipeTitle;
     }
 
+    public static void setRecipeTitle(String recipeTitle){
+        SingleController.recipeTitle=recipeTitle;
+    }
+
 
     /**
     * Gets a recipe object
