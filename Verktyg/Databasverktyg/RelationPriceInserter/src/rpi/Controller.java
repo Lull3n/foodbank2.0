@@ -1,54 +1,72 @@
 package rpi;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-public class Controller {
+/**
+ * Controller class
+ */
+public class Controller
+{
 	private Connector connector;
-	
+
 	private LinkedList<String> relationStrings;
+
 	private ArrayList<String> relationPrices;
 	
-	public Controller() {
+	public Controller()
+	{
 		connector = new Connector();
-		
 		relationStrings = new LinkedList<>();
 		relationPrices = new ArrayList<>();
 	}
-	
-	private void loadRelations() {
+
+	/**
+	 * Reads all relations from the database and inserts into a LinkedList
+	 */
+	private void loadRelations()
+	{
 		ArrayList<String> strings = connector.loadAllRelations();
-		if(strings != null) {
-			for (String string : strings) {
+
+		if(strings != null)
+		{
+			for (String string : strings)
+			{
 				relationStrings.add(string);
 			}
 		}
 	}
-	
-	private void insertPrices() {
+
+	/**
+	 * Inserts the calculated prices into the database
+	 */
+	private void insertPrices()
+	{
 		int count = 0;
-		for(String s : relationStrings) {
+
+		for(String s : relationStrings)
+		{
 			String[] array = s.split(" ");
 			relationPrices = connector.loadIngredient(Integer.parseInt(array[2]), array);
 			System.out.println("Fetching ingredient id: " + array[2]);
-			for(String ss : relationPrices) {
+
+			for(String ss : relationPrices)
+			{
 				String[] priceArray = ss.split(" ");
-				System.out.print("Inserting relation price: " + s + " ... ");
-				if(connector.insertRelationPrice(Integer.parseInt(priceArray[0]), Float.parseFloat(priceArray[1]))) {
+				System.out.print("Inserting relation price: " + ss + " ... ");
+				if(connector.insertRelationPrice(Integer.parseInt(priceArray[0]), Float.parseFloat(priceArray[1])))
+				{
 					System.out.println(priceArray[0]  + " " + priceArray[1]);
 					count++;
 					System.out.println("DONE");
-				} else
+				}
+				else
 					System.out.println("FAILED");
 			}
 
 		}
 		System.out.println("Successfully added " + relationPrices.size() + " items:");
 		System.out.println("Adding prices to Database...");
-
-
-		
 		System.out.println("Added " + count + " items to database.");
 	}
 	
