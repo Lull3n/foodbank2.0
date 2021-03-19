@@ -130,10 +130,5 @@ public class SingleController {
             return recipeObject;
         }
     }
-
-    public static void main(String[] args) {
-        SingleController singleController=new SingleController();
-        singleController.convertASingleRecipeToJson("Fisksoppa");
-    }
 }
 

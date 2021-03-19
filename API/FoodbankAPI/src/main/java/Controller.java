@@ -23,23 +23,8 @@ public class Controller {
         Controller.relationsProc =relationsProc;
     }
 
-    public static void setRecipeTbl(String recipeTbl){
-        Controller.recipeTbl = recipeTbl;
-    }
-
-    public static void setIngredientsTbl(String ingredientsTbl) {
-        Controller.ingredientsTbl = ingredientsTbl;
-    }
-
-    public static void setRelationsProc(String relationsProc) {
-        Controller.relationsProc = relationsProc;
-
-    }
-
     /**
-
      * Creates an arrayList with Recipe-objects, representing the recipe table in the database
-
      * @param category what category the recipe is included in (0-3)
      * @return an arrayList containing all recipes with the param category
      */
@@ -48,12 +33,6 @@ public class Controller {
 
         return list;
     }
-
-    public static ArrayList<Relations> getRelationsFromDatabase() {
-        ArrayList<Relations> list = DatabaseRunner.selectRelations("FoodBank.dbo.relations");
-        return list;
-    }
-
 
     /**
      * Creates an arrayList with Relations-objects, representing the relations table in the database
@@ -114,6 +93,10 @@ public class Controller {
         return dataReturnObjects;
     }
 
+    /**
+     * Converts all gathered recipes from createDataReturnAllRecipes to JsonArray which will be used in the API
+     * @return JsonArray containing all recipes
+     */
     public static JsonArray convertAllRecipesToJson() {
         ArrayList<DataReturn> dataFromDb = createDataReturnAllRecipes();
         Gson gson = new Gson();
@@ -159,6 +142,9 @@ public class Controller {
         return allRecipes ;
     }
 
+    /**
+     * Creates an arrayList with representations of all recipes by a specific category and included relations from the database
+     **/
     public static ArrayList<DataReturn> createDataReturnAllRecipesByCategory(int category) {
         ArrayList<Recipe> recipeList = getRecipeFromDatabaseByCategory(category);
         ArrayList<Ingredient> ingredientsList = getIngredientsFromDatabase();
@@ -197,6 +183,11 @@ public class Controller {
         return dataReturnObjects;
     }
 
+    /**
+     * Converts all recipes gathered by createDataReturnAllRecipesByCategory to Json
+     * @param category the category of the gathered recipes
+     * @return JsonArray containing all gathered recipes
+     */
     public static JsonArray convertAllRecipesByCategoryToJson(int category) {
         ArrayList<DataReturn> dataFromDb = createDataReturnAllRecipesByCategory(category);
         Gson gson = new Gson();
@@ -240,12 +231,5 @@ public class Controller {
 
         System.out.println(allRecipes);
         return allRecipes ;
-    }
-
-    public static void main(String[] args) {
-        Controller controller=new Controller();
-        setTablesAndProcedures("FoodBank.dbo.recipes", "FoodBank.dbo.ingredients2",
-                "FoodBank.dbo.getRelationsForRecipe");
-        convertAllRecipesToJson();
     }
 }

@@ -17,8 +17,6 @@ public class WebScraper {
     private void postScraperRequest(){
         HttpResponse<JsonNode> postResponse;
         String postStatus;
-
-        //Does not work 403 forbidden
         try {
             postResponse = Unirest.post("https://api.webscraper.io/api/v1/scraping-job?api_token=PraKnld9vsPzFXUZaaXp5nKLhLKZcb8zEY1q1HqnPMsrxKQxwvVFqXVunxM1")
                             .queryString("JSON:", "{\n" +
@@ -41,11 +39,10 @@ public class WebScraper {
     }
 
     /**
-     * Is supposed to get information from a scraping job but only returns one item.
-     * Possible solution: find another web scraping api
+     * gets data from a specific scraper job and writes data to json file
+     * scraping data is returned in String format
      */
     private void getScraperJob() {
-//    HttpResponse<JsonNode> response;
     HttpResponse<String> response;
     String[] responseString;
 
@@ -53,35 +50,30 @@ public class WebScraper {
 
 
         File file = new File("files/Coop information.json");
-        /*response = Unirest.get("https://api.webscraper.io/api/v1/scraping-job/3798112/json?api_token=PraKnld9vsPzFXUZaaXp5nKLhLKZcb8zEY1q1HqnPMsrxKQxwvVFqXVunxM1")
-                            .queryString("format","json")
-                            .asJson();*/
         response = Unirest.get("https://api.webscraper.io/api/v1/scraping-job/3798112/json?api_token=PraKnld9vsPzFXUZaaXp5nKLhLKZcb8zEY1q1HqnPMsrxKQxwvVFqXVunxM1")
                             .queryString("format", "string")
                             .asString();
         if (response == null){
-            System.out.println("Response was null :(");
+            System.out.println("Response was null");
         } else {
             file.createNewFile();
             System.out.println("Response valid. Writing to file");
             FileWriter fileWriter = new FileWriter(file);
-            responseString = response.getBody().split(",");
-//            System.out.println(response.getStatus() + " " + response.getStatusText() + "\n" + response.getBody());
+            responseString = response.getBody().split("}");
             fileWriter.write("[" + "\n");
             for (String s : responseString) {
-                System.out.println(s);
-                System.out.println("charAt(0): " + s.charAt(0) + " || charAt(length-1): " + s.charAt(s.length() - 1));
-                if (s.charAt(0) == '{') {
-//                    System.out.println("Open");
-                    fileWriter.write("{" + "\n");
-                    fileWriter.write(s.substring(1) + "," + "\n");
-                }
-                else if (s.charAt(s.length() - 1) == '}'){
-//                    System.out.println("Close");
-                    fileWriter.write(s.substring(0, s.length() - 1) + "\n");
-                    fileWriter.write("}," + "\n");
-                } else {
-                    fileWriter.write(s + "," + "\n");
+                String[] objectString = s.split(",");
+                for (int i = 0; i < objectString.length; i++){
+                    if (objectString[i].charAt(0) == '{') {
+                        fileWriter.write("{" + "\n");
+                        fileWriter.write(objectString[i].substring(1) + "," + "\n");
+                    } else if (objectString.length - 1 == i){
+                        fileWriter.write(objectString[i] + "\n");
+                        fileWriter.write("},");
+                    } else {
+                        System.out.println(objectString[i].substring(0, 3));
+                        fileWriter.write(objectString[i] + "," + "\n");
+                    }
                 }
             }
             fileWriter.write("]");

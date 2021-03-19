@@ -1,3 +1,7 @@
+/**
+ * Class representing ingredients in recipe
+ */
+
 public class IngredientsInRecipe {
 
     private String ingredientName;
