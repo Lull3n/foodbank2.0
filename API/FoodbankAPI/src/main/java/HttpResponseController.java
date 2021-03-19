@@ -31,7 +31,7 @@ public class HttpResponseController {
         Gson gson = new Gson();
         JsonElement message = gson.toJsonTree("Recipe does not exist");
         obj.add("Error", message);
-       ;
+
 
         return obj;
 

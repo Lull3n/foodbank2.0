@@ -130,11 +130,5 @@ public class SingleController {
             return recipeObject;
         }
     }
-
-    public static void main(String[] args) {
-        setTablesAndProcedures("FoodBank.dbo.recipes", "FoodBank.dbo.ingredients2",
-                "FoodBank.dbo.getRelationsForRecipe", "Fisksoppa");
-        convertASingleRecipeToJson();
-    }
 }
 

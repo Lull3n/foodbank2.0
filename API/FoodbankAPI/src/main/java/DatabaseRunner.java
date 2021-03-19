@@ -133,7 +133,7 @@ public class DatabaseRunner {
     }
 
    /**
-    * Kaller på stored procedure getIngredientAndTitle
+    * Calls the procedure getIngredientAndTitle
     */
     public static Recipe getRecipe (String title){
         Recipe recipe = new Recipe();
@@ -165,7 +165,7 @@ public class DatabaseRunner {
     }
 
     /**
-     * Kaller på stored procedure getRelationsForRecipe
+     * Calls the procedure getRelationsForRecipe
      * */
     public static ArrayList<Relations> getRelationsForRecipe(int recipe_id, String procedure) {
         ArrayList<Relations> relationList = new ArrayList<>();
@@ -207,10 +207,8 @@ public class DatabaseRunner {
         ArrayList<Recipe> filteredRecipes = new ArrayList<>();
         for (int i = 0; i < allRecipes.size(); i++){
             Recipe recipe = allRecipes.get(i);
-//            System.out.println(recipe.toString());
             if (allRecipes.get(i).getCategory() == category) {
                 filteredRecipes.add(recipe);
-                System.out.println("Recipe added: " + recipe.getCategory());
             }
         }
         return filteredRecipes;

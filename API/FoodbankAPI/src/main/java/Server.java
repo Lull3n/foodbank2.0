@@ -1,5 +1,9 @@
 import static spark.Spark.port;
 
+/**
+ * Class representing the API-server
+ */
+
 public class Server {
 
     public static void main(String[] args) {
