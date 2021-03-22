@@ -122,9 +122,9 @@ public class Connector
 
 	/**
 	 * Inserts a relation into the database
-	 * @param recipeId
-	 * @param ingredientId
-	 * @param ingredientUnit
+	 * @param recipeId Unique recipe id
+	 * @param ingredientId Unique ingredient id
+	 * @param ingredientUnit Amount of ingredient
 	 * @return
 	 */
 	public int sendRelation(int recipeId, String ingredientId, String ingredientUnit)
