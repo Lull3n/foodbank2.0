@@ -39,9 +39,9 @@ För att köra RecipeInserter:
 För att köra RelationsInserter
 - För att detta verktyget ska fungera behöver databasen innehålla både recept och ingredienser
 - Öppna paketet foodbank2.0/Verktyg/Databasverktyg/RelationsInserter
-- Kör klassen Controller.java
-  - Använd verktyget för att skapa relationer mellan recept och ingredienser
+  - Kör klassen Controller.java
+    - Använd verktyget för att skapa relationer mellan recept och ingredienser
 - Öppna paketet foodbank2.0/Verktyg/Databasverktyg/RelationsAutoInserter
-- Kör klassen Controller.java
+  - Kör klassen Controller.java
 - Öppna paketet foodbank2.0/Verktyg/Databasverktyg/RelationsPriceInserter
-- Kör klassen Controller.java
+  - Kör klassen Controller.java
