@@ -33,14 +33,14 @@ public class Connector
 
 	/**
 	 * Inserts a recipe to the database
-	 * @param category
-	 * @param title
-	 * @param description
-	 * @param portions
-	 * @param link
-	 * @param imageLink
-	 * @param ingredients
-	 * @param instructions
+	 * @param category Category of the recipe
+	 * @param title Title of the recipe
+	 * @param description Description of the recipe
+	 * @param portions Amount of portions with the recipe
+	 * @param link Link to the recipe on the web
+	 * @param imageLink Picture of the recipe
+	 * @param ingredients The ingredients of the recipe
+	 * @param instructions How to cook the recipe
 	 * @return boolean value
 	 */
 	public boolean query(int category, String title, String description, int portions, String link, String imageLink,

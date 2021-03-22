@@ -18,14 +18,14 @@ public class Controller
 	}
 
 	/** Adjusting the user input into the correct message format and sends it to the Connector class
-	 * @param category
-	 * @param title
-	 * @param description
-	 * @param portions
-	 * @param link
-	 * @param imageLink
-	 * @param ingredients
-	 * @param instructions
+	 * @param category Category of the recipe
+	 * @param title Title of the recipe
+	 * @param description Description of the recipe
+	 * @param portions Amount of portions with the recipe
+	 * @param link Link to the recipe on the web
+	 * @param imageLink Picture of the recipe
+	 * @param ingredients The ingredients of the recipe
+	 * @param instructions How to cook the recipe
 	 */
 	public void submit(int category, String title, String description, int portions, String link, String imageLink,
 			String ingredients, String instructions)
