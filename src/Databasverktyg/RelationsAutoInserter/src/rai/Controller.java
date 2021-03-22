@@ -42,7 +42,10 @@ public class Controller {
 		unitMap = new UnitMap(wordMap, wordList, wordParser);
 		itemStrings = new LinkedList<String>();
 	}
-	
+
+	/**
+	 * Loads a specific recipe from the database based on currentRecipeId
+	 */
 	private void getRecipeIngredients() {
 	 	RecipeEntity recipe = connector.loadRecipe(currentRecipeId);
 	 	if(recipe != null) {
@@ -54,11 +57,11 @@ public class Controller {
 			combineLists();
 		}
 	}
-	
-	public int getRecipeId() {
-		return currentRecipeId;
-	}
-	
+
+	/**
+	 * Takes an ingredient and makes sure it's the correct format
+	 * @param title Ingredient name
+	 */
 	private void getIngredients(String title) {
 		if (title == null)
 			return;
@@ -87,7 +90,10 @@ public class Controller {
 			getDatabaseIngredients(result);
 		}
 	}
-	
+
+	/**
+	 * Combining two lists to create a Item object
+	 */
 	private void combineLists() {
 		int index = 1;
 		for(String s : itemStrings) {
@@ -117,7 +123,13 @@ public class Controller {
 	private String parseItemUnits(String title) {
 		return unitMap.parseUnits(title);
 	}
-	
+
+	/**
+	 * Adds a parsed message to the itemStrings list
+	 * @param units Amount of the ingredient
+	 * @param title Ingredient name
+	 * @param portions How many portions
+	 */
 	private void parseItemUnits(String units, String title, int portions) {
 		String parsedItem = unitMap.parseUnits(units, title, portions);
 		String[] parsedItemArray = parsedItem.split(":");
@@ -128,13 +140,21 @@ public class Controller {
 		itemStrings.add(parsedItem);
 	}
 
+	/**
+	 * Gets ingredients from the database
+	 * @param query Ingredient name
+	 */
 	private void getDatabaseIngredients(String query) {
 		System.out.println("Getting ingredients like: " + query);
 		priceItems = connector.getDatabaseIngredients(query);
 
 		if(priceItems != null) excludeItems(query);
 	}
-	
+
+	/**
+	 * Removes ingredient from the excludemap textfile
+	 * @param item Ingredient name
+	 */
 	private void excludeItems(String item) {
 		String excludeItems = excludeMap.get(item);
 		if(excludeItems != null) {

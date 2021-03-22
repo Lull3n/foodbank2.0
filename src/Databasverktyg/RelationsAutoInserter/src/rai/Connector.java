@@ -8,6 +8,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
+/**
+ *  Class that manages the interaction between the java code and the Microsoft SQL Server database
+ */
 public class Connector {
 private Connection connection;
 	//com.microsoft.sqlserver:mssql-jdbc:8.4.1.jre14
@@ -24,7 +27,12 @@ private Connection connection;
 			e.printStackTrace();
 		}
 	}
-	
+
+	/**
+	 * Method that loads a specific recipe
+	 * @param id Unique id of the recipe
+	 * @return RecipeEntity object including ingredients and portions
+	 */
 	public RecipeEntity loadRecipe(int id) {
 		RecipeEntity ret = null;
 		try {
@@ -45,7 +53,12 @@ private Connection connection;
 		}
 		return ret;
 	}
-	
+
+	/**
+	 * Method that loads a specific ingredient
+	 * @param like The ingredient name
+	 * @return PriceItem object including the ingredient id, name, price and pricetype
+	 */
 	public LinkedList<PriceItem> getDatabaseIngredients(String like) {
 		LinkedList<PriceItem> ret = new LinkedList<>();
 		try {
@@ -70,20 +83,12 @@ private Connection connection;
 		}
 		return null;
 	}
-	
-	public ResultSet getRecipePortions(String title) {
-		try {
-			String query = "SELECT * FROM aj1757.recipes WHERE title='" + title + "'";
-			System.out.println(query);
-			Statement statement = connection.createStatement();
-			ResultSet set = statement.executeQuery(query);
-			return set;
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
 
+	/**
+	 * Method that inserts a relation to the database
+	 * @param i Item object
+	 * @param recipeId Unique recipe id
+	 */
 	public void sendRelation(Item i, int recipeId) {
 		try {
 			connection = DriverManager.getConnection(dbURL);
