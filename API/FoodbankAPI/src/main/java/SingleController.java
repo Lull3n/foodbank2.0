@@ -13,11 +13,10 @@ public class SingleController {
     private static String relationsProc;
     private static String recipeTitle;
 
-    public static void setTablesAndProcedures(String recipeTbl, String ingredientsTbl, String relationsProc, String recipeTitle) {
+    public static void setTablesAndProcedures(String recipeTbl, String ingredientsTbl, String relationsProc) {
         SingleController.recipeTbl=recipeTbl;
         SingleController.ingredientsTbl=ingredientsTbl;
         SingleController.relationsProc=relationsProc;
-        SingleController.recipeTitle=recipeTitle;
     }
 
     public static void setRecipeTitle(String recipeTitle){

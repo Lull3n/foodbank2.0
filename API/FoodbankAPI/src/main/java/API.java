@@ -42,6 +42,10 @@ public class API {
                 "FoodBank.dbo.ingredients2",
                 "FoodBank.dbo.getRelationsForRecipe" );
 
+        SingleController.setTablesAndProcedures("FoodBank.dbo.recipes",
+                "FoodBank.dbo.ingredients2",
+                "FoodBank.dbo.getRelationsForRecipe" );
+
         /**
          * Returns a JsonArray with ALL the recipes
          * */
